@@ -75,7 +75,7 @@ print("Removed - ", removed_item)
 print(testDictionary)
 pause()
 
-# Delete a non-existent entry with pop(key, defaultValue) 
+# Iterate over a dictionary
 print("8. Iterating a dictionary by key value.\n")
 for key in testDictionary.keys():
     print("Key = ", key, "\t Value = ", testDictionary[key])
