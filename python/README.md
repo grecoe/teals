@@ -30,6 +30,6 @@ Index:
 |6_while.py|Introduction to the while statement.<br>Keywords: while, break|
 |7_for.py|Introduction to the for statement.<br>Keywords: for, break, in, range()|
 |8_list.py|Introduction to the for statement.<br>Keywords: [] constructor, [] indexer,  len(), index(), append(), insert(), extend(), pop()|
-|9_dictionary.py|Introduction to the for statement.<br>Keywords: TBD|
+|9_dictionary.py|Introduction to the for statement.<br>Keywords: {} constructor, [] key index, del, pop()|
 |10_functions.py|Introduction to the for statement.<br>Keywords: def, return|
 
