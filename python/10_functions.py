@@ -1,4 +1,8 @@
 '''
+    Functions coming soon.....
+'''
+
+'''
     Functions are a way to consolidate repetative or complex code.
 
     Main idea is to break down complex functionality to smaller problems. Smaller problems
