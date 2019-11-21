@@ -9,5 +9,7 @@ There are a couple of folders here:
 
     Python - Basic python introduction to types and control structures
     Advanced - Advanced Python Topics
+    Practice - Some deep dive practices
+    Questions - Where I answer questions from the class or Issues that were opened
     (There will be more to come as the year goes on.)
 
