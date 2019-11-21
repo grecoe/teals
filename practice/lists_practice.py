@@ -11,7 +11,6 @@ def listSummary(printedList):
 
 
 os.system('cls')
-# https://www.w3resource.com/python-exercises/list/
 
 # Create
 print("1. Create a list of strings\n")
