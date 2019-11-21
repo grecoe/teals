@@ -27,6 +27,7 @@
         pop([N])        - Removes an item from the list. pop() removes the last element or
                           pop(N), where N is a valid index in the list removes the item at 
                           the specified index. 
+        in              - Does an element exist in the list?
 
 
     Keywords:
@@ -84,3 +85,5 @@ print("10.", names)
 names.pop(1)
 print("11.", names)
 
+# Does somethign exist in the list?
+print("12.", 'Jenson' in names)
