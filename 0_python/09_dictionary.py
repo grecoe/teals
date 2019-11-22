@@ -51,5 +51,5 @@ print("6.1", schools)
 for key in schools.keys():
     print("Key = ", key, "Value = ", schools[key])
 
-# Does a key even exist?
+# Does a key even exist. Use 'in' to see if something is in a collectin?
 print("7.", 'Florida' in schools.keys())
