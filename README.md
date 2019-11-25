@@ -7,9 +7,9 @@ Please, if you have any questions, want to see other examples, or whatever it is
 
 There are a couple of folders here:
 
-    Python - Basic python introduction to types and control structures
-    Advanced - Advanced Python Topics
-    Practice - Some deep dive practices
-    Questions - Where I answer questions from the class or Issues that were opened
-    (There will be more to come as the year goes on.)
+    0_python - Basic python introduction to types and control structures
+    1_practice - Some deep dive practices
+    2_advanced - Advanced Python Topics
+    3_quiz - Quizzes that ask questions and keep score.
+    questions - Where I answer questions from the class or Issues that were opened
 
