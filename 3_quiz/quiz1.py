@@ -47,5 +47,14 @@ complex3 = Comparision(complex1, complex2, CompareOp.opand)
 complex4 = Comparision(complex3, True, CompareOp.opor)
 promptTest(complex4)
 
+# Question 4: (('a' == 'b') or ('spider' == 'spider')) and ((True) and ( 8 <= 10 ))
+complex1 = Comparision('a', 'b', CompareOp.eq)
+complex2 = Comparision('spider', 'spider', CompareOp.eq)
+complex3 = Comparision(complex1, complex2, CompareOp.opor)
+complex4 = Comparision(8 , 10, CompareOp.lte)
+complex5 = Comparision(True, complex4, CompareOp.opand)
+complex6 = Comparision(complex3, complex5, CompareOp.opand)
+promptTest(complex6)
+
 
 showResults()

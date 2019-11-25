@@ -33,29 +33,31 @@ class Comparision:
     def executeStatement(self):
         returnValue = None
 
-        if self.compare.value == 1:
+        if self.compare.value == CompareOp.eq.value:
             returnValue = self.getValue(self.left) == self.getValue(self.right)
-        elif self.compare.value == 2:
+        elif self.compare.value == CompareOp.lt.value:
             returnValue = self.getValue(self.left) < self.getValue(self.right)
-        elif self.compare.value == 3:
+        elif self.compare.value == CompareOp.lte.value:
             returnValue = self.getValue(self.left) <= self.getValue(self.right)
-        elif self.compare.value == 4:
+        elif self.compare.value == CompareOp.gt.value:
             returnValue = self.getValue(self.left) > self.getValue(self.right)
-        elif self.compare.value == 5:
+        elif self.compare.value == CompareOp.gte.value:
             returnValue = self.getValue(self.left) >= self.getValue(self.right)
-        elif self.compare.value == 6:
+        elif self.compare.value == CompareOp.opand.value:
             returnValue = self.getValue(self.left) and self.getValue(self.right)
-        elif self.compare.value == 7:
+        elif self.compare.value == CompareOp.opor.value:
             returnValue = self.getValue(self.left) or self.getValue(self.right)
 
         return returnValue
 
     def getPrintableVersion(self, obj):
-
+        returnValue = obj
         if obj.__class__.__name__ == "Comparision":
-            return "({})".format(obj.getStatement())
-        
-        return obj
+            returnValue = "({})".format(obj.getStatement())
+        elif obj.__class__.__name__ == "str":
+            returnValue = "'" + obj + "'"
+
+        return returnValue
 
     def getValue(self, obj):
         if obj.__class__.__name__ == "Comparision":

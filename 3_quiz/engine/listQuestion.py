@@ -68,3 +68,24 @@ class listQuestion:
 
         print("\nThe result would be ", executedValue , "you said", userSelectedValue)
         return executedValue == userSelectedValue
+
+    def getContainsResponse(self):
+        returnValue = False
+        print('If the list currently is : ', self.listop.list, "\n")
+        print("     ", self.listop.getStatement())
+
+        print('\nWhat does the call return?: ')
+
+        getChoice = userInput(["True", "False"])
+        userChoice = getChoice.getUserChoice()
+
+        chosen = True
+        if userChoice == "False":
+            chosen = False
+
+            
+        executedValue = self.listop.executeStatement()
+        userSelectedValue = chosen
+
+        print("\nThe result would be ", executedValue , "you said", userSelectedValue)
+        return executedValue == userSelectedValue        

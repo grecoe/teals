@@ -13,7 +13,7 @@ class userInput:
     def getUserChoice(self):
 
         for option in self.options.keys():
-            print(str(option) + '. =', self.options[option] )
+            print(str(option) + '. ', self.options[option] )
 
         userChoice = int(input("\nWhat is your answer? : > "))
 

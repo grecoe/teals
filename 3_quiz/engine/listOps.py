@@ -27,21 +27,24 @@ class Lists:
         op = self.switchLookup[self.listop.value]
         
         returnValue = None
-        if self.listop.value == 1:
+        if self.listop.value == ListOps.index.value:
             indexValues = None
             if len(self.arguments) > 1:
                 indexValues = "{}:{}".format(self.arguments[0], self.arguments[1])
             else:
                 indexValues = self.arguments[0]
             returnValue = self.listname + op.format(indexValues)
-        elif self.listop.value == 2 or self.listop.value == 3:
+        elif self.listop.value == ListOps.append.value or self.listop.value == ListOps.extend.value:
             returnValue = self.listname + "." + op.format(self.arguments[0])
-        elif self.listop.value == 4:
+        elif self.listop.value == ListOps.pop.value:
             returnValue = self.listname + "." + op.format('')
             if len(self.arguments) > 0:
                 returnValue = self.listname + "." + op.format(self.arguments[0])
-        elif self.listop.value == 5:
-            returnValue = str(self.arguments[0]) + " in " + self.listname
+        elif self.listop.value == ListOps.contains.value:
+            arg = str(self.arguments[0])
+            if self.arguments[0].__class__.__name__ == "str":
+                arg = "'" + self.arguments[0] + "'"
+            returnValue = arg + " in " + self.listname
                 
         return returnValue
 
@@ -49,22 +52,22 @@ class Lists:
     def executeStatement(self):
         returnValue = None
 
-        if self.listop.value == 1:
+        if self.listop.value == ListOps.index.value:
             if len(self.arguments) > 1:
                 returnValue = self.list[int(self.arguments[0]) : int(self.arguments[1])]
             else:
                 returnValue = self.list[int(self.arguments[0])]
-        elif self.listop.value == 2:
+        elif self.listop.value == ListOps.append.value:
             self.list.append(self.arguments[0])
             returnValue = self.list
-        elif self.listop.value == 3:
+        elif self.listop.value == ListOps.extend.value:
             self.list.extend(self.arguments[0])
             returnValue = self.list
-        elif self.listop.value == 4:
+        elif self.listop.value == ListOps.pop.value:
             if len(self.arguments) > 0:
                 returnValue = self.list.pop(self.arguments[0])
             else:
                 returnValue = self.list.pop()
-        elif self.listop.value == 5:
+        elif self.listop.value == ListOps.contains.value:
             returnValue = self.arguments[0] in self.list
         return returnValue
