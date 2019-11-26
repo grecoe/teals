@@ -1,10 +1,14 @@
 '''
-    A parameter in Python is simply some named object that contains some sort of information
-    your program needs. 
+    A parameter in Python is simply some named object that contains some sort 
+    of information your program needs. 
 
     A parameter in python can hold ANY valid Python object. 
 
-    In the example below, we use a variable called myVar and set it to various values and print them. 
+    In the example below, we use a variable called myVar and set it to various 
+    values and print them. 
+
+    But, it's important to note that the name myVar is not special, you can change
+    that name to anything you want!
 
     NOTE: 
     
