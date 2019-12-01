@@ -1,5 +1,28 @@
 '''
-    Slight mod to make check for a winner
+    The game of tic-tac-toe seems so easy, but it does take some thought in to 
+    how you present it, how you get each player to make a selection, determine 
+    a winner, and end the game (in a tie or otherwise)
+
+    This program works on topics covered elsewhere in this repository
+
+    0_Python\00_parameters.py
+    0_Python\01_boolean.py
+    0_Python\02_castin.py
+    0_Python\03_input.py
+    0_Python\04_comparisons.py
+    0_Python\05_if.py
+    0_Python\06_while.py
+    0_Python\07_for.py
+    0_Python\08_list.py
+    0_Python\07_functions.py
+
+    2_advanced\exceptions.py
+
+    Concepts used here but not in the repo:
+
+    set()               : https://www.geeksforgeeks.org/python-set-method/
+    os.system('cls')    : https://www.geeksforgeeks.org/python-os-system-method/
+    math.sqrt()         : https://www.geeksforgeeks.org/python-math-function-sqrt/
 '''
 import os
 import math 
