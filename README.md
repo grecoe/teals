@@ -1,4 +1,4 @@
-# Teals Scripts
+# Intro to Computer Science (Python)
 <sub>Dan Grecoe - A Microsoft Employee </sub>
 
 This repo was put together for my first teaching experience with [Teals](https://www.microsoft.com/en-us/teals/about) with  Mr. Norton from [Essex North Shore](https://essexnorthshore.org/). 
