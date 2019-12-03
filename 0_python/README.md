@@ -16,7 +16,7 @@ This folder contains tutorials on things that we are covering in class. Basicall
 
 The files are numbered to keep them in some sort of order in which you can learn. Open them up, the comments guide you through it. 
 
-Index:
+## Index
 
 
 |File|Description|
