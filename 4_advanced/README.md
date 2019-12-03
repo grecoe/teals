@@ -4,6 +4,7 @@
 |File|Description|
 |--------|--------------|
 |ducktyping.py|What is duck typing and Python? .<br><br>Python is not a strongly typed language meaning that if an object supports a call, it just works. <br><br>If it walks like a duck and quacks like a duck... |
+|programargs.py|Introduction to argparse and program arguments.|
 |dir.py|Introduction to investigating an object.<br><br>Some times you want to know what type of an object you have. Other times, you want to investigate what methods or properties it has. |
 |exceptions.py|Introduction to python exceptions.<br><br>In programming 'exceptional' events can occur that could crash your program. Learn how to catch those types of issues. |
 |listcomprehension.py|Introduction to Python's list comprehension. <br><br>List comprehension is unique to Python and allows you to write compact statements to filter through a list. |
