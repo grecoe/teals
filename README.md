@@ -5,7 +5,7 @@ This repo was put together for my first teaching experience with [Teals](https:/
 
 This repository is meant to help beginner Computer Science students with Python.  
 
-The contents are:
+## Contents
 
 |Name|Type|Content|
 |----------|-------------|-------------|
@@ -17,3 +17,11 @@ The contents are:
 |questions|Directory|A place where I can answer specific questions sent to me. <br><br>Using the tab above called "Issues" you can submit questions and I will answer them as soon as I can.|
 |README.md|file|This file you are reading right now.|
 
+## Getting code locally
+
+1. Create a directory on your computer. Name it anything you want, but make sure you remember it. 
+2. Open a command prompt, bash, or Powershell.
+3. Use the change directory (cd) command to point to the directory you created.
+    - Example: `cd c:\teals`
+4. Issue the following command in whatever prompt you used to create the directory.
+    - `git clone https://github.com/grecoe/teals.git`
