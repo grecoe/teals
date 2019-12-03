@@ -32,4 +32,5 @@ Index:
 |8_list.py|Introduction to the for statement.<br>Keywords: [] constructor, [] indexer,  len(), index(), append(), insert(), extend(), pop()|
 |9_dictionary.py|Introduction to the for statement.<br>Keywords: {} constructor, [] key index, del, pop()|
 |10_functions.py|Introduction to the for statement.<br>Keywords: def, return|
+|11_file.py|Introduction to files.<br>Keywords: with, open()|
 
