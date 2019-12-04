@@ -25,3 +25,8 @@ This repository is meant to help beginner Computer Science students with Python.
     - Example: `cd c:\teals`
 4. Issue the following command in whatever prompt you used to create the directory.
     - `git clone https://github.com/grecoe/teals.git`
+    
+## Updating code locally
+
+1. Go to the directory you cloned the repo on the command line.
+2. Type the command git pull
