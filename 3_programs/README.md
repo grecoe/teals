@@ -9,4 +9,6 @@ This folder has some programs using Python. They are all graded such as:
 <br>
 300_XXX -> Difficult
 <br>
-400_XXX -> Very Difficult
+400_XXX -> Advanced
+<br>
+500_XXX -> Expert
