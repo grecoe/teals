@@ -1,0 +1,17 @@
+right
+right
+grab
+right
+up
+left
+fight
+
+left
+left
+up
+right
+grab
+right
+fight
+
+
