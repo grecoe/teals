@@ -280,7 +280,27 @@ class Floor:
 '''
     Program starts here.....
 '''
-# Build up the floor plans
+
+'''
+    Build floor plans. 
+
+    Legend: 
+        ^ Stairs Up
+        ! Stairs Down
+        $ Jewels 
+        # Sword
+        M Monster
+        B Boss
+        X Start
+
+        -----------------
+        | ! | $ | B | ! |
+        -----------------
+        | ^ |   | M | ^!|
+        -----------------
+        | X |   | # | ^ |
+        -----------------
+'''
 fp = [
         [room_content.empty], 
         [room_content.empty], 
