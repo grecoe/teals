@@ -13,4 +13,5 @@
 |classes.py|Introduction to classes .<br><br>Classes are a data structure in most programming languages, including Python. This is a simple example on what constitutes a 'class'. |
 |request.py|Example HTTP request. .<br><br>Programs very frequently need to make connections to other machines or the internet to collect information. This example shows how to make a call to an HTTP endpoint. |
 |threads.py|Example of using threads. .<br><br>Threads are a seperate execution context and a very advanced topic. This trivial example shows how to create threads in Python. |
+|righttriangles.py|Example of using math library to do basic math operations. .<br><br>Right triangles have unique properties. This example shows how to do many of those calculations including sin, cos, and tan functions to find angles. |
 

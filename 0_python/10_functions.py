@@ -4,13 +4,17 @@
     Main idea is to break down complex functionality to smaller problems. Smaller problems
     are then turned into functions. 
 
-    Functions should be well named to understand what they are doing. 
+    Functions should be:
+        1. Well named to understand what they are doing.
+        2. Documented for users of the function
+        3. Perform one set of actions  
 '''
 
 import os
 
 def pause(message = '\nEnter to continue....', clear = True):
-    input(message)
+    if message:
+        input(message)
     if clear: 
         os.system('cls')
 
@@ -42,7 +46,7 @@ print('''
     Use a return statement!
 
     def add(x, y):
-    return x + y
+        return x + y
     ''')
 pause()
 
@@ -51,7 +55,7 @@ print('''
     The return statment can take comma separated items and return them in that order. You
     can also put stuff in a list. 
 
-    def doubleTheseNumbers(x, y):")
+    def doubleTheseNumbers(x, y):
         return x*2, y*2'
     ''')
 pause()
