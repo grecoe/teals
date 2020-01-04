@@ -11,6 +11,7 @@
 '''
 
 import os
+from os import path
 
 def pause(message = '\nEnter to continue....', clear = True):
     if message:

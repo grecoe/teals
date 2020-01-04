@@ -23,13 +23,12 @@ weights = { "2" : 2,
             "K" : 13,
             "A" : 14}
 
-
-'''
-    playingCard
-
-    This class represents a single card. It's face value, suit and weight. 
-'''
 class playingCard:
+    '''
+        playingCard
+
+        This class represents a single card. It's face value, suit and weight. 
+    '''
     def __init__(self, cardFace, suit, weight):
         self.face = cardFace
         self.suit = suit
@@ -41,195 +40,183 @@ class playingCard:
     def getVisual(self):
         return "{}{}".format(self.face, self.suit)
 
+def createDecks(shuffle_count):
+    '''
+        Create a deck of cards that is shuffled, then split for the two players
+    '''
+    global cards
+    global suits
+    global weights
+    deck = []
+    for suit in suits:
+        for card in cards:
+            deck.append(playingCard(card, suit, weights[card]))
+
+    for i in range(shuffle_count):
+        random.shuffle(deck)
+
+    players = [[],[]]
+    for i in range(len(deck)):
+        players[i % 2].append(deck[i]) 
+
+    return players   
+
+def doWar(player_deck1, player_deck2, war_count):
+    '''
+        doWar() function happens when the two players have identical cards. 
+
+        PARAMETERS:
+        player_deck1 : List of integers representing a deck of cards for Player 1
+        player_deck2 : List of integers representing a deck of cards for Player 1
+        war_count    : Integer representing the number of cards that are at risk. 
+                       Total cards a player can lose are war_count + 1. The war_count 
+                       at risk and one more to see who wins. 
+
+        RETURNS:
+        The return of the function is a 3 part tuple that can be accessed just like 
+        a list, that is, with indexes. 
+
+        result[0] - Flip card of the first player after flipping the war_count cards
+        result[1] - Flip card of the second player after flipping the war_count cards
+        result[2] - All of the cards, including the flip cards, that are at risk. 
+
+        NOTES:
+        If a player loses because of a forfiet then losers cards are all added to the risk cards.
+        Whomever forfiets will have no return flip card, which is a special case to look for.
+
+        If no forfiet happens it is up to the caller to detemine the winner with the return
+        results of the call.  
+
+        RULES:
+            - If either player does not have enough cards to continue, they forfiet their
+              remaining cards to the other (in the risk cards) and end up with an empty deck. 
+            - Cards at risk are war_count + 1 for each player. Whomever wins takes all the cards
+            - If another war occurs, the function is called recursively until there is a winner
+              of the war or someone runs out of cards and forfiets.
+    '''
+    player1_flip = None
+    player2_flip = None
+    risk_cards = []
+
+    '''
+        Determine if either player does not have enough cards to continue. If so
+        move the losers deck onto the winners deck and select one random flip card
+        from the winner. 
+    '''
+    if len(player_deck1) < war_count + 1:
+        risk_cards.extend(player_deck1.copy())
+        player_deck1.clear()
+        player2_flip = player_deck2[-1]
+    elif len(player_deck2) < war_count + 1:
+        risk_cards.extend(player_deck2.copy())
+        player_deck2.clear()
+        player1_flip = player_deck1[-1]
+
+    '''
+        If there was no forfiet, collect war_count cards from each players
+        deck and add them to the risk cards. 
+
+        Next, take the last (top) card from each players deck as the flip card,
+        also adding them to the risk cards. 
+    '''
+    if len(player_deck1) and len(player_deck2):
+        '''
+            Collect all the at risk cards
+        '''
+        for i in range(war_count):
+            risk_cards.append(player_deck1.pop())
+            risk_cards.append(player_deck2.pop())
+
+        '''
+            Get the final card they will flip, also added to the risk cards
+        '''
+        player1_flip = player_deck1.pop()
+        player2_flip = player_deck2.pop()
+        risk_cards.extend([player1_flip, player2_flip])
+
+    '''
+        If the result is that both players have flipped the same card value again, 
+        call the function again until one either loses all their cards or there is
+        a clear winner in the war. 
+    '''
+    while player1_flip and player2_flip and (player1_flip.weight == player2_flip.weight):
+        print("Continuation War")
+        player1_flip, player2_flip, risk = doWar(player_deck1, player_deck2, war_count)
+        risk_cards.extend(risk)
+
+    '''
+        Return the results of the war. 
+    '''
+    return player1_flip, player2_flip, risk_cards
+
+def prependCards(deck, cards):
+    '''
+        We don't want to just add the win cards to the top of the deck, they should be added to 
+        the bottom of the deck. To do so, reverse the stack to add so they are prepended in the order
+        they were recieved. 
+    '''
+    cards.reverse()
+    for card in cards:
+        deck.insert(0,card)
+ 
 '''
-    playingCardDeck
+    Game play.
 
-    This class represents a full deck (52) of playing cards. 
+    Add in a max turns because sometimes it just doesn't get there quickly. 
 '''
-class playingCardDeck:
-    def __init__(self):
-        self.deck = []
-        self.shuffledDeck = []
-        self._buildDeck()
-
-    def _buildDeck(self):
-        for suit in suits:
-            for card in cards:
-                self.deck.append(playingCard(card, suit, weights[card]))
-
-    def shuffleDeck(self):
-        options = list(range(1,53,1))
-        shuffle = random.shuffle(options)
-        for opt in options:
-            self.shuffledDeck.append(self.deck[opt - 1])
-
-    def splitDeck(self):
-        sets = []
-        sets.append([])
-        sets.append([])
-        currentSet = 0
-        for card in self.shuffledDeck:
-            sets[currentSet%2].append(card)
-            currentSet += 1
-
-        return sets[0], sets[1]
-
-'''
-    warPlayer
-
-    This class is a game player that has a name and a set of cards
-    they are playing with. 
-'''
-class warPlayer:
-    def __init__(self, name, cards):
-        self.name = name
-        self.personalDeck = cards
-
-    def cardCount(self):
-        return len(self.personalDeck)
-
-    def getTopCard(self):
-        return self.personalDeck.pop(0)
-
-    def addCards(self, cardCollection):
-        for card in cardCollection:
-            self.personalDeck.append(card)
-
-'''
-    playTie:
-
-    In war if there the cards are of equal weight, then the players go to war.
-
-    In this case, they remove 'cardsAtRisk' number of cards from the deck and then compare 
-    the next one. If it's a tie, they redo this step. If one wins, the winner takes all the cards
-    from the war. 
-
-    If a user doens't have enough cards to play the war, then they forfiet all their cards to the opponent
-    and lose the game (eventually).
-'''
-def playTie(player1, player2, cardsAtRisk):
-    riskCards = []
-    winningPlayer = None
-
-    while True:
-        if player1.cardCount() < cardsAtRisk + 1:
-            print(player1.name, " doesn't have enough cards, it's a forfiet.") 
-            winningPlayer = player2
-            while player1.cardCount() > 0:
-                riskCards.append(player1.getTopCard())
-            break
-        elif player2.cardCount() < cardsAtRisk + 1:
-            print(player2.name, " doesn't have enough cards, it's a forfiet.") 
-            winningPlayer = player1
-            while player2.cardCount() > 0:
-                riskCards.append(player2.getTopCard())
-            break
-
-        for c in range(1,cardsAtRisk + 1, 1):
-            riskCards.append(player1.getTopCard())
-            riskCards.append(player2.getTopCard())
-
-        p1Card = player1.getTopCard()
-        p2Card = player2.getTopCard()
-        riskCards.append(p1Card)
-        riskCards.append(p2Card)
-
-        if p1Card.wins(p2Card):
-            winningPlayer = player1
-            print(player1.name, " wins the war with ", p1Card.getVisual(), " and ", player2.name, " lost with card ", p2Card.getVisual()) 
-            break
-        elif p2Card.wins(p1Card):
-            winningPlayer = player2
-            print(player2.name, " wins the war with ", p2Card.getVisual(), " and ", player1.name, " lost with card ", p1Card.getVisual()) 
-            break
-        else:
-            print("Its another tie! {} - {}, {} - {}".format(player1.name, p1Card.getVisual(), player2.name, p2Card.getVisual()) )
-
-    if  not winningPlayer is None:
-        print(winningPlayer.name, " wins the WAR!")
-        winningPlayer.addCards(riskCards)
-        settled = True
-
-    return winningPlayer
-        
-'''
-    Actual game play
-'''
-# Build the deck to play with
-cardDeck = playingCardDeck()
-
-player1 = input("Who is the first player?: ")
-player2 = input("Who is the second player?: ")
-
-# Shuffle the deck
-print("Shuffling the deck....")
-cardDeck.shuffleDeck()
-
-# Split the deck into 2
-print("Dealing cards")
-player1Cards, player2Cards = cardDeck.splitDeck()
-
-# Generate the users with a name and a set of cards. 
-print("Generate user objects")
-warPlayer1 = warPlayer(player1, player1Cards)
-warPlayer2 = warPlayer(player2, player2Cards)
-
-# Start actually playing 
-print("Start game")
-
-# If the game goes on too long, lets create a flag that will let us
-# simply end the game. 
-turnMaximumBeforeTheyGetBored = 100
-
-## Stats to track
+# Create the player decks
+players = createDecks(7)
+# Track number of turns
 turns = 0
-wars = 0
-turnsWon = {}
-turnsWon[warPlayer1.name] = 0
-turnsWon[warPlayer2.name] = 0
-warWins = {}
-warWins[warPlayer1.name] = 0
-warWins[warPlayer2.name] = 0
-## Stats to track
+# Artificial limit in case there are no winners by this number
+max_turns = 4000
 
-# Continuously loop until someone has no cards (or they get bored!)
-while warPlayer1.cardCount() > 0 and warPlayer2.cardCount() > 0:
+while len(players[0]) and len(players[1]):
+    '''
+        Game over when there are no cards in one of the decks OR
+        if we hit the maximum amount of turns. Occassionally this 
+        can run for a long long time if we don't....
+    '''
     turns += 1
-
-    # Sometimes you just have to quit because you're bored :)
-    if turns > turnMaximumBeforeTheyGetBored:
-        print("{} and {} got bored and quit. ".format(warPlayer1.name, warPlayer2.name))
+    if turns >= max_turns:
         break
 
-    p1Card = warPlayer1.getTopCard()
-    p2Card = warPlayer2.getTopCard()
+    p1Card = players[0].pop()
+    p2Card = players[1].pop()
 
-    print(warPlayer1.name, " plays ", p1Card.getVisual(), "and ", warPlayer2.name, " plays card ", p2Card.getVisual()) 
-
-    winningPlayer = None
-    if p1Card.wins(p2Card):
-        winningPlayer = warPlayer1
-    elif p2Card.wins(p1Card):
-        winningPlayer = warPlayer2
+    current_cards = [p1Card, p2Card]
+    print("P1 = {}, P2 = {}".format(p1Card.getVisual(),p2Card.getVisual()))
+    if p1Card.weight > p2Card.weight:
+        prependCards(players[0], current_cards) 
+    elif p2Card.weight > p1Card.weight:
+        prependCards(players[1], current_cards) 
     else:
-        winningPlayer = playTie(warPlayer1, warPlayer2, 3)
-        wars += 1
-        warWins[winningPlayer.name] += 1
+        print("War")
+        # Cards are equal, doWar() and see who wins
+        p1, p2, risk = doWar(players[0], players[1], 3)
+
+        winner_list = None
+        if not p1 or (p2 and p1.weight < p2.weight) :
+            winner_list = players[1]
+        elif not p2 or (p1 and p1.weight > p2.weight) : 
+            winner_list = players[0]
+
+        # Winner gets risk cards and current cards
+        prependCards(winner_list, risk) 
+        prependCards(winner_list, current_cards) 
 
 
-    turnsWon[winningPlayer.name] += 1
-    print(winningPlayer.name, " wins the match!\n")
-    winningPlayer.addCards([p1Card, p2Card])
+'''
+    Because we might stop the game before it really ends, figure out who won
+'''
+winner = None
+if len(players[0]) and len(players[1]):
+    if len(players[0]) > len(players[1]):
+        winner = "Player 1"
+    else: 
+        winner = "Player 2"
+else:
+    winner = "Player 1" if len(players[0]) > 0 else "Player 2"
 
-
-# Print out information about the game that was just played. 
-print("Game over in {} turns! ".format(turns))
-print("Game maximum turns = ", turnMaximumBeforeTheyGetBored)
-for key in turnsWon.keys():
-    print(key, " won ", turnsWon[key], " times. ")
-print("Total Wars Fought  : ", wars)
-for key in warWins.keys():
-    print(key, " won ", warWins[key], " wars. ")
-
-print("Card count at the end:")
-print("{} : {} - {} : {}".format(warPlayer1.name, warPlayer1.cardCount(), warPlayer2.name, warPlayer2.cardCount()))
+print("{} won the game in {} turns".format(winner, turns))
+print(len(players[0]), len(players[1]))
