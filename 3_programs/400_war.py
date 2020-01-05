@@ -4,9 +4,13 @@
 '''
 import random
 
-deck = []
-shuffledDeck = []
+'''
+    Items we need for creating a deck:
 
+    1 -> Card face : 2-> A
+    2 -> Four suits D(Diamonds), H(Hearts), C(Clubs), S(Spades)
+    3 -> Weight associated with each card
+'''
 cards = ["2","3","4","5","6","7","8","9","10","J","Q","K","A"]
 suits = ["D", "H", "C", "S"]
 weights = { "2" : 2,
@@ -23,34 +27,35 @@ weights = { "2" : 2,
             "K" : 13,
             "A" : 14}
 
-class playingCard:
-    '''
-        playingCard
+'''
+    A card will be represented by a list of two items:
 
-        This class represents a single card. It's face value, suit and weight. 
-    '''
-    def __init__(self, cardFace, suit, weight):
-        self.face = cardFace
-        self.suit = suit
-        self.weight = weight
-    
-    def wins(self, card):
-        return self.weight > card.weight
-
-    def getVisual(self):
-        return "{}{}".format(self.face, self.suit)
+    Index 0 -> Card weight
+    Index 1 -> Card face to display 
+'''
+PlayingCardWeight = 1
+PlayingCardFace = 0
 
 def createDecks(shuffle_count):
     '''
         Create a deck of cards that is shuffled, then split for the two players
+
+        The deck is a list of lists. Each sub list is represented as a card where
+            sub[0] == card face 
+            sub[1] == card weight
+
+        The return is two lists representing the decks of each player. 
     '''
     global cards
     global suits
     global weights
+    global PlayingCardFace
+    global PlayingCardWeight
+
     deck = []
     for suit in suits:
         for card in cards:
-            deck.append(playingCard(card, suit, weights[card]))
+            deck.append(["{}{}".format(card, suit), weights[card]])
 
     for i in range(shuffle_count):
         random.shuffle(deck)
@@ -139,7 +144,7 @@ def doWar(player_deck1, player_deck2, war_count):
         call the function again until one either loses all their cards or there is
         a clear winner in the war. 
     '''
-    while player1_flip and player2_flip and (player1_flip.weight == player2_flip.weight):
+    while player1_flip and player2_flip and (player1_flip[PlayingCardWeight] == player2_flip[PlayingCardWeight]):
         print("Continuation War")
         player1_flip, player2_flip, risk = doWar(player_deck1, player_deck2, war_count)
         risk_cards.extend(risk)
@@ -185,10 +190,10 @@ while len(players[0]) and len(players[1]):
     p2Card = players[1].pop()
 
     current_cards = [p1Card, p2Card]
-    print("P1 = {}, P2 = {}".format(p1Card.getVisual(),p2Card.getVisual()))
-    if p1Card.weight > p2Card.weight:
+    print("P1 = {}, P2 = {}".format(p1Card[PlayingCardFace],p2Card[PlayingCardFace]))
+    if p1Card[PlayingCardWeight] > p2Card[PlayingCardWeight]:
         prependCards(players[0], current_cards) 
-    elif p2Card.weight > p1Card.weight:
+    elif p2Card[PlayingCardWeight] > p1Card[PlayingCardWeight]:
         prependCards(players[1], current_cards) 
     else:
         print("War")
@@ -196,9 +201,9 @@ while len(players[0]) and len(players[1]):
         p1, p2, risk = doWar(players[0], players[1], 3)
 
         winner_list = None
-        if not p1 or (p2 and p1.weight < p2.weight) :
+        if not p1 or (p2 and p1[PlayingCardWeight] < p2[PlayingCardWeight]) :
             winner_list = players[1]
-        elif not p2 or (p1 and p1.weight > p2.weight) : 
+        elif not p2 or (p1 and p1[PlayingCardWeight] > p2[PlayingCardWeight]) : 
             winner_list = players[0]
 
         # Winner gets risk cards and current cards
