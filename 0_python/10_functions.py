@@ -86,6 +86,13 @@ print('''
 
     def doubleTheseNumbers(x, y):
         return x*2, y*2'
+
+    # Call the function and collect the result in 
+    # separate parameters.
+    val1, val2 = doubleTheseNumbers(1,3)
+    # Print the return values. 
+    print(val1, val2)
+
     ''')
 pause()
 
@@ -94,6 +101,11 @@ print('''
 
     def doubleTheseNumbers(x, y):
         return [x*2, y*2]
+
+    # Call the function and collect the result in the list
+    return_list = doubleTheseNumbers(1,3)
+    # Access the list content by index.
+    print(return_list[0], return_list[1])
 ''')
 pause()
 
