@@ -5,3 +5,5 @@
 war.py
 warclean.py
 decks.py
+gui.py
+quiz.py

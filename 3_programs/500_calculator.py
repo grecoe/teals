@@ -1,11 +1,12 @@
 '''
     As a carry over from functions and divide and conquer, this application creates a very 
-    basic, text based, calculator. 
+    basic, text based, calculator that works on numbers and operators. 
 
     It should be able to accept inputs such as:
 
-        10 + 5 * 7 - 89
+        (5+2) * 9
         ((2%3 * 7) - (87 / 14)) + 21 - (34 * 7 / 3)
+        10 + 5 * 7 - 89
         etc...
     
     Inputs are limited to:
@@ -16,6 +17,14 @@
     When considering how to do this we need to look at what are the order of operations
     for doing mathmatical equations:
         1. Execute within a parameter first
+            EX: (5+2) * 9
+                First we must solve the parenthesis (5+2) = 7
+                Then we solve 7 * 9
+            EX: ((5+2) * (4+5))
+                Solve the inner parenthesis
+                    5+2 = 7
+                    4+5 = 9
+                Then solve (7*9)
         2. Operators (*,+,-, etc) have an order in which to execute
 
     This seems simple, right? Well it takes a bit of massaging to get it done. There are 
