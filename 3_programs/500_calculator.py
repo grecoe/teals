@@ -37,6 +37,8 @@
     5. Solve the original equation 
 
 '''
+import inspect 
+import math
 
 '''
     Set up operations for the calculator, you can add more or 
@@ -44,24 +46,27 @@
 '''
 def sum(left,right):
     return left + right
-def sub(left,right):
+def subtract(left,right):
     return left - right
-def mult(left,right):
+def multiply(left,right):
     return left * right
-def div(left,right):
+def divide(left,right):
     return left / right
-def mod(left,right):
+def modulo(left,right):
     return left % right
 def square(left,right):
     return left ** right
+def square_root(right):
+    return math.sqrt(right)
 
 calculator_operations = {
-                   '%' : mod,
+                   '<' : square_root,
+                   '%' : modulo,
                    '^' : square,
-                   '*' : mult,
-                   '/' : div,
+                   '*' : multiply,
+                   '/' : divide,
                    '+' : sum,
-                   '-' : sub,
+                   '-' : subtract,
                 }
 
 class Calculator:
@@ -86,6 +91,35 @@ class Calculator:
         reduced_equation = self._resolveParenthesis()
         self.result = self._calculateResult(reduced_equation)
         return self.result
+
+    def printHelp(self):
+
+        print('''Calculator Usage:
+            Enter in an equation that consists of integers, floating point numbers, and
+            parenthesis, combined with any of the following operators: ''')
+
+        for op in self.operations.keys():
+            members = inspect.getmembers(self.operations[op])
+            parameter_count = Calculator._getFunctionParamsCount(self.operations[op])
+            function_name = None
+            for member in members:
+                if member[0] == '__name__':
+                    function_name = member[1]
+                    break
+
+            usage = ""
+            if parameter_count == 2:
+                usage = "               USAGE: A {} B".format(op)
+            elif parameter_count == 1:
+                usage = "               USAGE: {}A".format(op)
+            else:
+                raise Exception("Function {} parameter issue".format(function_name))
+
+
+            output = "            {} : {}".format(op, function_name)
+            print(output)
+            print(usage)
+
 
     '''
       Private helpers to parse equation to a list of usable items.
@@ -233,6 +267,25 @@ class Calculator:
         Private helper to calculate results
     '''
     @staticmethod
+    def _getFunctionParamsCount(function):
+        '''
+            Get the number of parameters for a function
+
+            PARAMETER: 
+                function : An actual function to determine number of 
+                           parameters to accept. This is primarily used
+                           for square root '<' because it only takes a single
+                           parameter.
+
+                           It is used on the operatons function. 
+
+            RETURNS:
+                Number of parameters. 
+        '''
+        sig = inspect.signature(function)
+        return len(sig.parameters)
+
+    @staticmethod
     def _getIndexes(sequence, obj):
         '''
             Python allows you to find an object in a sequence with the 
@@ -287,10 +340,15 @@ class Calculator:
                     op_index +1 = Right side of operation
                     op_index    = The index of the operator.
                 4. Resolve the operation using the function stored in the 
-                   global operations dictionary value using the operator 
+                   variable operations dictionary value using the operator 
                    as the look up value. 
-                5. Pop op_index and op_index + 1 to remove them from the list.
-                6. Set op_index -1 to the calculated value
+                4. Determine how many parameters there are required for the operation.
+                    4.1 If operands == 2
+                        - Pop op_index and op_index + 1 to remove them from the list.
+                        - Set op_index -1 to the calculated value
+                    4.2 If operands == 1
+                        - Pop op_index + 1 to remove it from the list
+                        - Set op_index to the calculated value
     
                 We will run the aboe steps until all operations have been checked
                 which will result in a list with exactly one value, the final 
@@ -313,23 +371,45 @@ class Calculator:
                 op_fn = self.operations[op_id]
     
                 '''
-                    We looked up the operation function above. Now call it 
-                    with the left and right arguments and get the result. 
+                    Find out how many arguments are required for the operation
                 '''
-                result = op_fn(list_copy[left], list_copy[right])
+                op_arg_count = Calculator._getFunctionParamsCount(op_fn)
+
+                if op_arg_count == 2: 
+                    '''
+                        Call the actual operation function 
+                    '''
+                    result = op_fn(list_copy[left], list_copy[right])
     
-                '''
-                    This line just lets the user know what we are calculating right now. 
-                '''
-                print("Calculating : {} {} {} = {}".format(list_copy[left], op_id, list_copy[right], result))
+                    '''
+                        This line just lets the user know what we are calculating right now. 
+                    '''
+                    print("Calculating : {} {} {} = {}".format(list_copy[left], op_id, list_copy[right], result))
     
-                '''
-                    Finally, remove the right and op items from the list and 
-                    replace the left item with the calculated value.
-                '''
-                list_copy.pop(right)
-                list_copy.pop(idx)
-                list_copy[left] = result
+                    '''
+                        Finally, remove the right and op items from the list and 
+                        replace the left item with the calculated value.
+                    '''
+                    list_copy.pop(right)
+                    list_copy.pop(idx)
+                    list_copy[left] = result
+                elif op_arg_count == 1:
+                    '''
+                        Call the actual operation function 
+                    '''
+                    result = op_fn(list_copy[right])
+
+                    '''
+                        This line just lets the user know what we are calculating right now. 
+                    '''
+                    print("Calculating : {} {} = {}".format(op_id, list_copy[right], result))
+
+                    '''
+                        Finally, remove the right and replace teh  op with the result.
+                    '''
+                    list_copy.pop(right)
+                    list_copy[idx] = result
+
     
         return list_copy[0]
 
@@ -361,10 +441,14 @@ while True:
     print("")
     user_equation = input("Enter Equation: > ")
 
+    calc = Calculator(user_equation, calculator_operations)
+
     if user_equation in ['q','Q','quit', 'Quit']:
         print("Thanks for using Calculator")
         break
+    if user_equation in ['h','H','?']:
+        calc.printHelp()
+        continue
 
-    calc = Calculator(user_equation, calculator_operations)
     calc.resolveEquation()
     print(calc.equation, '=', calc.result)
