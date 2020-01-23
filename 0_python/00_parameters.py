@@ -33,3 +33,43 @@ myVar = "hello"
 print("myVar is a", type(myVar), "and the value is", myVar)
 myVar = 1.0
 print("myVar is a", type(myVar), "and the value is", myVar)
+
+
+'''
+    Now we've seen that myVar has been used to hold an int, string and float. 
+
+    We can create new parameters that point to an existing parameter. This can be thought of as an 'alias' to 
+    the existing parameter.  
+'''
+myNewVar = myVar
+print("Immutable alias myNewVar=", myNewVar,"myVar=", myVar)
+
+'''
+    However, if we change one of these variables, it won't change the other...why?
+
+    These types of data are immutable. That is, a 5 is always a 5 and can't be anything else. 
+'''
+myVar = 7
+print("Immutable alias myNewVar=", myNewVar,"myVar=", myVar)
+
+'''
+    How does this work with things that are mutable (you can change them)?
+
+    What types are mutable? Well for starters, lists and dictionaries (which you won't get to for a while)
+'''
+myVar = [1,2,3,4]
+myNewVar = myVar
+print("Mutable alias myNewVar=", myNewVar,"myVar=", myVar)
+
+'''
+    Since the value is mutable, if we change one we change the other as well....the alias is just a pointer
+    to the same memory space in the computer.
+'''
+myNewVar[1] = "changed"
+print("Mutable alias myNewVar=", myNewVar,"myVar=", myVar)
+
+'''
+    So aliasing is just providing another parameter that points to the same memory. If you changed a mutable 
+    type, everything that is pointing to it will have the changes. If you point to an immutable type, only 
+    the alias you modified is changed.
+'''

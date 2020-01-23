@@ -54,7 +54,7 @@ def divide(left,right):
     return left / right
 def modulo(left,right):
     return left % right
-def square(left,right):
+def pow(left,right):
     return left ** right
 def square_root(right):
     return math.sqrt(right)
@@ -62,7 +62,7 @@ def square_root(right):
 calculator_operations = {
                    '<' : square_root,
                    '%' : modulo,
-                   '^' : square,
+                   '^' : pow,
                    '*' : multiply,
                    '/' : divide,
                    '+' : sum,
@@ -96,7 +96,9 @@ class Calculator:
 
         print('''Calculator Usage:
             Enter in an equation that consists of integers, floating point numbers, and
-            parenthesis, combined with any of the following operators: ''')
+            parenthesis, combined with any of the operators that follow. 
+            
+            The order of execution for operators are from top to bottom: ''')
 
         for op in self.operations.keys():
             members = inspect.getmembers(self.operations[op])
