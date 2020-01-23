@@ -82,9 +82,9 @@ class Calculator:
 
 
     def resolveEquation(self):
-        calc._disassembleEquation(self.equation)
-        reduced_equation = calc._resolveParenthesis()
-        self.result = calc._calculateResult(reduced_equation)
+        self._disassembleEquation(self.equation)
+        reduced_equation = self._resolveParenthesis()
+        self.result = self._calculateResult(reduced_equation)
         return self.result
 
     '''
