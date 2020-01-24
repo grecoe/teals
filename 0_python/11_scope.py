@@ -2,6 +2,13 @@
     Variables can be in scope globally or locally, this tells you what 
     you have access to. 
 
+    Locally available variables have a more limited scope than global variables. 
+    That is, a variable declared inside of a function can only be seen within the 
+    function. Once the function returns, the variable is gone. 
+
+    Globally available variables are visible throughout your program, even inside of 
+    functions. 
+
     Keywords:
         locals(), globals()
 '''
@@ -46,6 +53,8 @@ print("Change global variable in a function")
 print(my_first_variable)
 
 def changeFirstVariable():
+    # To have a global variable accessible within a function
+    # you declare it with the global keyword in your function.
     global my_first_variable
     my_first_variable += 1
 

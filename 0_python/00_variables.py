@@ -1,8 +1,8 @@
 '''
-    A parameter in Python is simply some named object that contains some sort 
+    A variable in Python is simply some named object that contains some sort 
     of information your program needs. 
 
-    A parameter in python can hold ANY valid Python object. 
+    A variable in python can hold ANY valid Python object. 
 
     In the example below, we use a variable called myVar and set it to various 
     values and print them. 
@@ -36,10 +36,15 @@ print("myVar is a", type(myVar), "and the value is", myVar)
 
 
 '''
+    New Keyword:    IMMUTABLE. An immutable object is one that cannot be changed. For now, 
+                    all we have seen are numbers and strings. These types in Python are immutable.
+                    When changing the value of an immutable variable, you really are getting a 
+                    different object placed within that variable. 
+
     Now we've seen that myVar has been used to hold an int, string and float. 
 
-    We can create new parameters that point to an existing parameter. This can be thought of as an 'alias' to 
-    the existing parameter.  
+    We can create new parameters that point to an existing parameter. This can 
+    be thought of as an 'alias' to the existing parameter.  
 '''
 myNewVar = myVar
 print("Immutable alias myNewVar=", myNewVar,"myVar=", myVar)
@@ -53,6 +58,11 @@ myVar = 7
 print("Immutable alias myNewVar=", myNewVar,"myVar=", myVar)
 
 '''
+    New Keyword:    MUTABLE. A mutable object is one that CAN be changed without changing the 
+                    underlying memory object. For now, I will introduce this concept using a list
+                    which you won't see for a bit. However, you should come back to this file after
+                    you get through 08_list or 09_dictionary, two mutable types in Python. 
+
     How does this work with things that are mutable (you can change them)?
 
     What types are mutable? Well for starters, lists and dictionaries (which you won't get to for a while)
