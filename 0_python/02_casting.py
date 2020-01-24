@@ -28,18 +28,19 @@
 stringInt = "100"
 stringFloat = "1.5"
 
-# Cast these to the type you want.
+# Cast the above strings to the type you want.
 myInt = int(stringInt)
 print("Int = ", myInt)
 
 myFloat = float(stringFloat)
 print("Float = ", myFloat)
 
-# You can use casting in the print function!
+# Casting any type to string results in a string. 
+# You can even use casting in the print function! 
 print("String = ", str(myInt))
 print("String = ", str(myFloat))
 
-# But be careful, you might not get what you expect!
+# But be careful, you might not get what you expect! You will get an error in your program!
 print(int("This is clearly not an integer!"))
 
 

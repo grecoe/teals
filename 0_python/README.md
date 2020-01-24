@@ -21,16 +21,20 @@ The files are numbered to keep them in some sort of order in which you can learn
 
 |File|Description|
 |--------|--------------|
-|0_parameters.py|Introduction to python parameters.<br>Keywords: parameter, print(), type() |
-|1_boolean.py|Introduction to boolean values and boolean math.<br>Keywords: boolean, True, False, and, or|
-|2_casting.py|Introduction to casting values to different types.<br>Keywords: casting, int(), float(), str() |
-|3_input.py|Introduction to getting user input.<br>Keywords: input() |
-|4_comparisons.py|Introduction basic value comparisons.<br>Keywords: comparison, ==, !=, <, <=, >, >= |
-|5_if.py|Introduction to the if statement.<br>Keywords: if, elif, else|
-|6_while.py|Introduction to the while statement.<br>Keywords: while, break|
-|7_for.py|Introduction to the for statement.<br>Keywords: for, break, in, range()|
-|8_list.py|Introduction to the for statement.<br>Keywords: [] constructor, [] indexer,  len(), index(), append(), insert(), extend(), pop()|
-|9_dictionary.py|Introduction to the for statement.<br>Keywords: {} constructor, [] key index, del, pop()|
+|00_parameters.py|Introduction to python parameters.<br>Keywords: parameter, print(), type() |
+|01_boolean.py|Introduction to boolean values and boolean math.<br>Keywords: boolean, True, False, and, or|
+|02_casting.py|Introduction to casting values to different types.<br>Keywords: casting, int(), float(), str() |
+|03_comparisons.py|Introduction basic value comparisons.<br>Keywords: comparison, ==, !=, <, <=, >, >= |
+|04_input.py|Introduction to getting user input.<br>Keywords: input() |
+|05_if.py|Introduction to the if statement.<br>Keywords: if, elif, else|
+|06_while.py|Introduction to the while statement.<br>Keywords: while, break|
+|07_for.py|Introduction to the for statement.<br>Keywords: for, break, in, range()|
+|08_list.py|Introduction to the for statement.<br>Keywords: [] constructor, [] indexer,  len(), index(), append(), insert(), extend(), pop()|
+|09_dictionary.py|Introduction to the for statement.<br>Keywords: {} constructor, [] key index, del, pop()|
 |10_functions.py|Introduction to the for statement.<br>Keywords: def, return|
 |11_file.py|Introduction to files.<br>Keywords: with, open()|
 
+## Introduction To Python Structures
+Use these files, in numeric order, to walk new Python students through the basic building blocks of the language. 
+
+Building one upon the other, by the end of this section, students should have gained a strong understanding of basic python programming. 

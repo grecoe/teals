@@ -13,6 +13,9 @@
     <=  : Less than or equal
     >   : Greater than
     >=  : Greater than or equal 
+    and : Both sides are true
+    or  : One side is true
+    not : Toggle from True to Fals or vice versa
 
     Using numbers an booleans these make the most sense. Of course, you can use them on strings 
     and other types, but the use there becomes much more complicated. 
@@ -30,3 +33,10 @@ print("3.", 2 < 2)
 print("4.", 2 <= 2)
 print("5.", 3 > 3)
 print("6.", 3 >= 3)
+print("7.", True and True)
+print("8.", True and False)
+print("9.", True or False)
+print("10.", False or False)
+print("11.", not True)
+print("12.", not False)
+
