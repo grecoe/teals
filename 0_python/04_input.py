@@ -8,12 +8,16 @@
    NOTE: 
         input() ALWAYS returns a string value of what the user entered. If you need another type
         you will be responsible for casting it to antoher value type. See 2_casting.py for more. 
-
-    Keywords:
-        input()
 '''
 
-# Run this a couple of times with different values, it prints out teh string you entered and 
-# tries to cast it to an integer in the print statment. 
-myAgeString = input("So, how old are you? > ")
-print("String = ", myAgeString, "Int = ", int(myAgeString))
+'''
+    input() Always returns a string, no matter what you ask the user to input. 
+'''
+user_input = input("Enter your age> ")
+print(type(user_input), user_input)
+
+'''
+    But, we can use casting like we did in 02_casting
+'''
+user_input = input("Enter your age> ")
+print(type(user(input)), user_input, "Int Value = ", int(myAgeString))

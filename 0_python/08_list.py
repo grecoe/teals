@@ -28,10 +28,6 @@
                           pop(N), where N is a valid index in the list removes the item at 
                           the specified index. 
         in              - Does an element exist in the list?
-
-
-    Keywords:
-        [] constructor, [] indexer,  len(), index(), append(), insert(), extend(), pop()  
 '''
 
 # [] constructor

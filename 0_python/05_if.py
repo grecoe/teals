@@ -37,9 +37,6 @@
 
             1_boolean.py
             4_comparisons.py
-
-    Keywords:
-        if, elif, else
 '''
 
 doorOpen = True

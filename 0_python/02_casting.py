@@ -21,22 +21,29 @@
         For example, trying to cast the string 'Essex North' to an integer doesn't make sense right?
         Well the Python language would agree and will cause an error. 
     
-    Keywords:
-        casting, int(), float(), str()
 '''
 
+'''
+    Create two variables that hold either integer or floating point values. 
+
+    Then we'll cast them to an actual numeric type and print out the values.
+
+    What happens if you cast a float to an integer?
+'''
 stringInt = "100"
 stringFloat = "1.5"
 
-# Cast the above strings to the type you want.
 myInt = int(stringInt)
 print("Int = ", myInt)
 
 myFloat = float(stringFloat)
 print("Float = ", myFloat)
 
-# Casting any type to string results in a string. 
-# You can even use casting in the print function! 
+
+'''
+    Casting to string you will always be safe. Everything in Python has a string
+    representation.  
+'''
 print("String = ", str(myInt))
 print("String = ", str(myFloat))
 
