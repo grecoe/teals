@@ -1,4 +1,6 @@
 # Practice
 <sub>Dan Grecoe - A Microsoft Employee </sub>
 
-This covers some topics more in depth to let you check your understanding. 
+The files in this folder align (mostly) with the introduction topics in 0_python. 
+
+Here you will test your knowledge on whether you understood the topics. 
