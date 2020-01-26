@@ -1,9 +1,11 @@
 '''
-    The for loop allows you to continue to execute statements while iterating over some sort of 
+    The for loop allows you to execute statements while iterating over some sort of 
     sequence of items.
 
     Now, coming soon we will talk about the list object, but a string is also a sequence of items. 
     Those items are characters.  
+
+    The syntax of a for loop:
 
     for <item> in <sequence> :
         <statements>
@@ -11,6 +13,14 @@
     Now, in this case <item> is just a variable name. You can give it any name you want, it's 
     not special assuming you don't choose a reserved Python keyword (in which you'll get an 
     error anyway). Just put any name here that, for you, makes sense. 
+
+    Going back to the string example, we can name the <item> as character, which would make 
+    sense in this case, so it would look like this:
+
+    my_string_variable = "This is a sequence of characters"
+    
+    for character in my_string_variable:
+        print(character)
 
     As mentioned in while loops, the 'break' statement is also valid here. You can 'break' out of 
     a for loop any time you want. 

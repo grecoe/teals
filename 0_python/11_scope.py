@@ -8,55 +8,72 @@
 
     Globally available variables are visible throughout your program, even inside of 
     functions. 
-
-    Keywords:
-        locals(), globals()
 '''
 
-my_first_variable = 1
-my_second_variable = "hello"
+'''
+    These variables declared outside of any function are considered 'global' to the file. 
+'''
+first_global_variable = 1
+second_global_variable = "hello"
 
 def functionA():
-    print("Function A : Locals to Function")
+    '''
+        functionA() :
+            Creates a local variable called function_variable and then we print out
+            the variables visible at the local level. 
+    '''
+    print("2. Function A : Locals to Function")
     function_variable = "world"
     local_variables = locals().copy()
     for item in local_variables:
         print(item)    
 
 def functionB():
-    print("Function B : Globals to Function (which are also local when calling in global scope)")
+    '''
+        functionB() :
+            Prints out all the varaibles that are visible globally. You will notice that
+            even the functions functionA and functionB are visible. 
+    '''
+    print("3. Function B : Globals to function")
     global_variables = globals().copy()
     for item in local_variables:
         print(item)    
 
-# Get the local variables...they will change here when we create the for loop. 
-# You will see, aside from the built in python types, we will see our two variables. 
-print("Local variables to the file...")
+'''
+    Get the local variables...they will change here when we create the for loop. 
+     You will see, aside from the built in python types, we will see our two variables. 
+'''
+print("1. Local variables to the file...")
 local_variables = locals().copy()
 for item in local_variables:
     print(item)
 
-# When you get local variables in a function, you get only the variables that the function
-# can see. 
+'''
+    Have a look at the local variables in functionA()
+'''
 print("")
 functionA()
 
-# When you get global variables in a function, you get the globals to the whole
-# script, which include the names of the functions we've defined. 
+'''
+    Have a look at the global variables in functionB()
+'''
 print("")
 functionB()
 
-# Finally you can access global variables in your functions as long as
-# you declare it in the function. 
+'''
+    We can see the global variables in a function, but to be sure you are accessing 
+    the right variable you can use the keyword global in a function to ensure that
+    we really are accessing the global variables. 
+'''
 print("")
-print("Change global variable in a function")
-print(my_first_variable)
+print("4. Change global variable first_global_variable in a function : ", first_global_variable)
 
 def changeFirstVariable():
-    # To have a global variable accessible within a function
-    # you declare it with the global keyword in your function.
-    global my_first_variable
-    my_first_variable += 1
+    '''
+        Declare first_global_variable as a global variable and alter it.
+    '''
+    global first_global_variable
+    first_global_variable += 1
 
 changeFirstVariable()
-print(my_first_variable)
+print("4.1 Modified  global variable first_global_variable in a function : ", first_global_variable)
