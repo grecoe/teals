@@ -10,7 +10,7 @@ This repository is meant to help beginner Computer Science students with Python.
 |Name|Type|Content|
 |----------|-------------|-------------|
 |0_python|Directory|Introduction to basic Python programming structures and general programming.|
-|1_practice|Directory|Some practice scripts for more complex Python concepts.|
+|1_practice|Directory|Some practice scripts for topics covered in 0_python.|
 |2_student_programs|Directory|Programs to help the student hone their knowledge of concepts learned in the classroom.|
 |3_example_programs|Directory|Contains example programs using concepts covered in class. Other programs are added for the student to learn if they choose to.|
 |4_advanced|Directory|Advanced Python toopics that are not covered in the intro class, but can be useful for more advanced students (or for when I forget how to do something!).|
