@@ -15,7 +15,7 @@ This repository is meant to help beginner Computer Science students with Python.
 |3_example_programs|Directory|Contains example programs using concepts covered in class. Other programs are added for the student to learn if they choose to.|
 |4_advanced|Directory|Advanced Python toopics that are not covered in the intro class, but can be useful for more advanced students (or for when I forget how to do something!).|
 |README.md|file|This file you are reading right now.|
-|X_quiz|Directory|DEPRECATED SOON - Python scripts that test the student on their knowledge on particular topics covered in class. <br><br>This is a work in progress and the code inside will likely not make sense to the beginner student.|
+|XXX_Deprecated|Directory|Initial content no longer relevant (or useful)|
 
 ## Getting code locally
 
