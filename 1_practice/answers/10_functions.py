@@ -18,6 +18,10 @@ import random
 
         Call the function. 
 '''
+def myprint():
+    print("First function")
+
+myprint()
 
 '''
     2.  Write a function called sum that takes two parameters and returns the 
@@ -25,6 +29,11 @@ import random
 
         Call the function. 
 '''
+def sum(arg1, arg2):
+    return arg1 + arg2
+
+result = sum(5,10)
+print("Second Function : ", result)
 
 '''
     3.  Write a function called random_selection that takes a single parameter that
@@ -34,6 +43,16 @@ import random
         Call the function. 
 '''
 test_list = ["red", "white", "blue"]
+def random_selection(input_list):
+    '''
+        We can use the funciton random.randint() to get possible indexs into the list. 
+        We have to seed it with the outside edges of the possible list indexes.
+    '''
+    selection = random.randint(0, len(input_list)-1)
+    return input_list[selection]
+
+randomly_selected = random_selection(test_list)
+print("Third function: ", randomly_selected)
 
 '''
     4.  Write a function called random_shuffle that takes a single parameter that
@@ -46,6 +65,24 @@ test_list = ["red", "white", "blue"]
 
         Call the function. 
 '''
+def random_shuffle(list_count):
+    '''
+        We create a list to hold the values, then using the range() function 
+        to provide the list of numbers to add into our return list.
+
+        We use a for loop to add the numbers to the return list, use the random 
+        library to shuffle the list, and finally return it. 
+    '''
+    generated_list = []
+    for idx in range(list_count):
+        generated_list.append(idx)
+    
+    random.shuffle(generated_list)
+    return generated_list
+
+shuffled_list = random_shuffle(10)
+print("Fourth Function : ", shuffled_list)
+
 
 '''
     5.  Write a function called multiple_return that takes no parameters.
@@ -57,3 +94,13 @@ test_list = ["red", "white", "blue"]
             1. Having multiple catch variables from the function
             2. Catching the return tuple and iterating those. 
 '''
+def multiple_return():
+    return "cat", 100.45
+
+
+animal, number = multiple_return()
+print("Fifth Function - ", animal, number)
+
+return_tuple = multiple_return()
+for item in return_tuple:
+    print("Fifth Function (tuple) - ", item)
