@@ -39,13 +39,31 @@ We will be recreating Oregon Trail! The goal is to travel from NYC to Oregon (20
 - Use global list to keep track of which months have 31 days and use this in the add_day function (i.e.: MONTHS_WITH_31_DAYS = [1, 3, 5, 7, 8, 10, 12])
 - Here is one function that might be useful to you. You do not need to use it if you can figure out a workaround for it, but this will allow you to execute your add_day function a random number of times. Note that you need to have the add_day function created in order for this function to work, as it uses it.
 ```python
-    # name: update_days
-    # purpose: adds a random number of days to your game. The number of days will be between the two values specified in the arguments.
-    # input: the range that you want the random number of days to fall between
-    # output: days, the number of days that passed, as an int
     def update_days(low_range, high_range):
+        '''
+            Adds a random number of days to your game.
+            The number of days will be between the 
+            two values specificed in the arguments.
+
+            Inputs are the range you wan the random number of days to fall between.
+
+            Output is the number of days that passed as an int.
+        '''
         days = random.randint(low_range, high_range)
         for i in range(0, days):
             add_day()
         return days
+```
+- You will also need to calculate a 5% chance that the health drops on a daily basis. You can accomplish this by creating another funciton that just takes a random number between 0-100 (for all percentage opportunities) and see if it's less than or equal to 5. 
+```python
+    def isHealthDecreased():
+    '''
+        The game rules state that:
+
+        Every day that passes, there should be a 5% chance that the player loses 1 health, so get a random number between 1-100 and see if it's
+        less than or equal to 5.
+
+        Return true if health should decrease.
+    '''
+    return random.randint(1,100) <= 5
 ```
