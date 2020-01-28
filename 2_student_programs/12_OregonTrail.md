@@ -11,6 +11,7 @@
 ||0_python\06_while.py|
 ||0_python\07_for.py|
 ||0_python\08_list.py|
+||0_python\09_dictionary.py|
 ||0_python\10_functions.py|
 
 ## Details
@@ -54,7 +55,7 @@ We will be recreating Oregon Trail! The goal is to travel from NYC to Oregon (20
             add_day()
         return days
 ```
-- You will also need to calculate a 5% chance that the health drops on a daily basis. You can accomplish this by creating another funciton that just takes a random number between 0-100 (for all percentage opportunities) and see if it's less than or equal to 5. 
+- You will need to calculate a 5% chance that the health drops on a daily basis. You can accomplish this by creating another funciton that just takes a random number between 0-100 (for all percentage opportunities) and see if it's less than or equal to 5. 
 ```python
     def isHealthDecreased():
     '''
@@ -66,4 +67,35 @@ We will be recreating Oregon Trail! The goal is to travel from NYC to Oregon (20
         Return true if health should decrease.
     '''
     return random.randint(1,100) <= 5
+```
+- While all of the data you store could be in either lists or individual variables, the dictionary object could be very useful here. It would allow you to group together all of the information specific to a user. Consider the scope of a global variable and that it needs to be declared in a funciton with the globa keyword. If we used a dictionary to hold all of the user information, this could make it simpler to access that information. For example, instead of using individual variables for each field you could use a dictionary:
+```python
+total_trip_mileage = 2000
+player_info = {
+    "name" : "",
+    "food" : 500,
+    "health" : 5,
+    "distance" : 0
+}
+```
+- You will need to print out the help menu for your users. This also lends itself nicely to using a dictionary.
+```python
+valid_commands = {
+    "travel": "Moves you randomly between 30-60 miles and takes 3-7 days (random).",
+    "rest": "Increases health 1 level (up to 5 maximum) and takes 2-5 days (random).",
+    "hunt": "Adds 100 lbs of food and takes 2-5 days (random).",
+    "status": "Lists food, health, distance traveled, and day.",
+    "help": "List all commands.",
+    "quit": "Exit the game"
+}
+
+'''
+    Then your help function is pretty easy and if you ever want to change something, you do it in the global valid_commands variable. 
+'''
+def help():
+    global valid_commands
+    print("Oregon Trail Help Menu")
+    for command in valid_commands.keys():
+        print("    ", command, ":", valid_commands[command])
+
 ```
