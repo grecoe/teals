@@ -70,7 +70,8 @@ The files are numbered to keep them in some sort of order in which you can learn
 |09_dictionary.py|Introduction to Python dictionaries, sometimes known as hash tables. |
 |10_functions.py|Introduction to Python functions. |
 |11_scope.py|Understanding the scope of a variable whether you are in a function or on the global scale, is important. This introduction to scope will give the reader a decent background. |
-|12_file.py|Introduction to files.|
+|12_modules.py|Introduction to python modules and import.|
+|13_file.py|Introduction to files.|
 
 ## Introduction To Python Structures
 Use these files, in numeric order, to walk new Python students through the basic building blocks of the language. 

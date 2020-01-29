@@ -11,6 +11,7 @@
 ||0_python\06_while.py|
 ||0_python\08_list.py|
 ||0_python\10_functions.py|
+||0_python\12_modules.py|
 
 ## Details
 In 10_WarIntro.md you started creating the card game War. In that program you had to:

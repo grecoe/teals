@@ -13,6 +13,7 @@
 ||0_python\08_list.py|
 ||0_python\09_dictionary.py|
 ||0_python\10_functions.py|
+||0_python\12_modules.py|
 
 ## Details
 We will be recreating Oregon Trail! The goal is to travel from NYC to Oregon (2000 miles) by Dec 31st. However, the trail is arduous. Each day costs you food and health. You can hunt and rest, but you have to get there before winter!
