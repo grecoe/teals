@@ -11,9 +11,10 @@
 ||0_python\06_while.py|
 ||0_python\07_for.py|
 ||0_python\08_list.py|
-||0_python\09_dictionary.py|
+||0_python\09_dictionary.py*|
 ||0_python\10_functions.py|
 ||0_python\12_modules.py|
+<sub>* = optional</sub>
 
 ## Details
 We will be recreating Oregon Trail! The goal is to travel from NYC to Oregon (2000 miles) by Dec 31st. However, the trail is arduous. Each day costs you food and health. You can hunt and rest, but you have to get there before winter!
@@ -69,7 +70,27 @@ We will be recreating Oregon Trail! The goal is to travel from NYC to Oregon (20
     '''
     return random.randint(1,100) <= 5
 ```
-- While all of the data you store could be in either lists or individual variables, the dictionary object could be very useful here. It would allow you to group together all of the information specific to a user. Consider the scope of a global variable and that it needs to be declared in a funciton with the globa keyword. If we used a dictionary to hold all of the user information, this could make it simpler to access that information. For example, instead of using individual variables for each field you could use a dictionary:
+- The data you need to store for your application can be done in many ways. You could use individial variables.<br><br> Consider the scope of a global variable and that it needs to be declared in a funciton with the global keyword. <br><br>Using individual variables means you need to declare anything you would change.  <br>For example:
+```python
+total_trip_mileage = 2000
+player_name =""
+player_food = 500
+player_health = 5
+player_distance = 0
+
+'''
+    Using it in a function
+'''
+def travel():
+    global total_trip_mileage
+    global player_name
+    global player_food
+    global player_health
+    global player_distance
+    global player_info
+```
+
+- Using a dictionary, your code becmoes more compact and easier to use.<br><br>The dictionary structure allows you to contain all of the user information into one variable making it easier to gain access to it in a function. <br>For example:
 ```python
 total_trip_mileage = 2000
 player_info = {
@@ -78,25 +99,12 @@ player_info = {
     "health" : 5,
     "distance" : 0
 }
-```
-- You will need to print out the help menu for your users. This also lends itself nicely to using a dictionary.
-```python
-valid_commands = {
-    "travel": "Moves you randomly between 30-60 miles and takes 3-7 days (random).",
-    "rest": "Increases health 1 level (up to 5 maximum) and takes 2-5 days (random).",
-    "hunt": "Adds 100 lbs of food and takes 2-5 days (random).",
-    "status": "Lists food, health, distance traveled, and day.",
-    "help": "List all commands.",
-    "quit": "Exit the game"
-}
 
 '''
-    Then your help function is pretty easy and if you ever want to change something, you do it in the global valid_commands variable. 
+    Using it in a function
 '''
-def help():
-    global valid_commands
-    print("Oregon Trail Help Menu")
-    for command in valid_commands.keys():
-        print("    ", command, ":", valid_commands[command])
-
+def travel():
+    global player_info
 ```
+
+- In the end, the choice is yours on how you want to proceed. If dictionary is just one more thing that confuses you, use individual variables. 
