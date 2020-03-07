@@ -176,10 +176,33 @@ def hunt():
     dailyUpdate(days)
 
 def status():
-    pass
+    global player_name
+    global player_distance
+    global player_food
+    global player_health
+    global total_trip_distance
+    global current_month
+    global current_day
+    
+    print('''
+    Oregon Trail Status
+      Date     : {} / {}
+      Player   : {}
+      Distance : {} miles of {} miles
+      Health   : {}
+      Food     : {} lbs
+    '''.format(current_month, current_day, player_name,player_distance, total_trip_distance, player_health, player_food))
 
 def help():
-    pass
+    print('''
+    Oregon Trail Help
+      travel  : moves you randomly between 30-60 miles and takes 3-7 days.
+      hunt    : Adds 100 lbs of food and takes 2-5 days
+      rest    : Increases health 1 level (up to 5 maximum) and takes 2-5 days.    
+      status  : Show game status
+      help    : Show this menu
+      quit    : Exit the game
+    ''')
 
 
 
@@ -189,8 +212,44 @@ def help():
     Now write the program here.....
 '''
 
-# Get user name
-# Loop until quit
-#   Get User Option
-#   Perform action
-#   Test over
+player_name = input("Enter your name > ")
+player_action = input("{}, what do you do next? > ".format(player_name))
+
+# Play until a quit signal is detected
+while player_action not in ["Quit", "quit", "q"]:
+
+    '''
+        Look for the command that the user input. We know it's not quit. 
+        If we don't understand it, default is to show help
+    '''
+    if player_action == "travel":
+        travel()
+    elif player_action == "hunt":
+        hunt()
+    elif player_action == "rest":
+        rest()
+    elif player_action == "status":
+        status()
+    else:
+         help()
+
+    '''
+        See if the game ended by
+            1. Player health == 0
+            2. Player food == 0
+            3. Player distance is enough
+    '''
+    if player_health <= 0:
+        print("{} has died on the Oregon Trail".format(player_name))
+        break
+    elif player_food <= 0:
+        print("{} has starved on the Oregon Trail".format(player_name))
+        break
+    elif player_distance >= total_trip_distance:
+        print("{} has made it to Oregon, you win!".format(player_name))
+        break
+    
+    player_action = input("{}, what do you do next? > ".format(player_name))
+
+print("Oregon Trail is over")
+status()
