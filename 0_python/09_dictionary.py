@@ -19,29 +19,53 @@
 
 
 '''
-    Section 1 - Creating a list
+    Section 1 - Creating a dictionary
 
-    You create a dictionary simply by creating a variable and assinging  curly brackets {} to it.
+    You create a dictionary simply by creating a variable and assinging  
+    curly brackets {} to it.
 
-    In Python the curly brackets indicate a dictionary object is being created. You can also optionally
-    seed the list with values.
+    In Python the curly brackets indicate a dictionary object is being 
+    created.
+'''
+
+'''
+    You can initialize a dictionary with values by simply referencing 
+    a key and giving it a value.
 
     Values are added as:
         key : value
 
     You can enter multiple of them separating the entries with a comma. 
 '''
-print("1. - Creating a dictionary")
-schools = { 'Massachusetts' : "Boston University", 'California' : 'UCLA', "Florida" : "Florida State"}
+print("1. - Creating a dictionary - Initialization")
+schools = { 
+    'Massachusetts' : "Boston University", 
+    'California' : 'UCLA', 
+    "Florida" : "Florida State"
+    }
 print(schools)
+
+
+'''
+    Or, if you don't know everything you're going to add at initialization,
+    you simply add by referencing a key name as an index and assign a value
+    to it. 
+'''
+print("1.1 - Creating a dictionary - By key")
+schools2 = {}
+schools2['Massachusetts'] = "MIT"
+schools2['California'] = "Berkley"
+schools2['Florida'] = "University of Miami"
+print(schools2)
 
 '''
     Section 2 - Accessing content in a dictionary
 
     So now that we have a dictionary, how do you access the items in it? 
 
-    Well, if you want to iterate over ALL of the items in a list you could just use a for loop 
-    that iterates over the dictionary keys and then access the values that way. 
+    If you want to iterate over ALL of the items in a dictionary you could 
+    just use a for loop that iterates over the dictionary keys and then 
+    access the values that way. 
 
     Remember, we access items in the dictionary indexing with a key value.  
 '''
@@ -56,47 +80,41 @@ print("key = 'Florida' = ", schools['Florida'])
 '''
     Section 3 - Changing an item in a dictionary
 
-    Similary to lists, we change the value of an item in a dictionary with an index.
+    Similary to lists, we change the value of an item in a dictionary 
+    with an index.
 
-    Again, the index here must be a valid key. 
+    The index here MUST be a valid key. 
 '''
 print("3. Changing content - Index with key")
 schools['Massachusetts'] = "MIT"
 print(schools)
 
+'''
+    Remember the 'in' operator in Python, you can also determine if your 
+    dictionary has a value before you access to ensure you have a valid 
+    key.
+'''
+if 'Florida' in schools.keys():
+    print("3.1 Dictionary has Florida")
 
 '''
-    Section 4 - Adding items to a list
-
-    Unlike lists there is one way to add an item to a dictionary. 
-
-    Simplly access the dictionary with a key value and assign a value. If the key
-    exists, the existing item is changed. If the key does not exist it is added 
-    as a new key value pair.
-'''
-print("4. Adding content - Index with key")
-schools['Georgia'] = 'Georgia Tech' 
-print(schools)
-
-'''
-    Section 5 - Removing items from a dictionary
+    Section 4 - Removing items from a dictionary
 
     When you program starts processing a dictionary we may also want 
     to remove items from a dictionary. 
 
     Deletions can happen with two types of operations. 
-        pop(key) - remove a specific item from the list
-        del my_dict[key] - Remove a subset of the list
-
-    Note here that pop requires a valid key in the dictionary and del will remove 
-    an item and also requires a valid key. The difference here is that pop will 
-    return the value of the key removed where del does not. 
+        pop(key) - remove a specific item from the dictionary and
+                   return the value at that key.
+        del my_dict[key] - Remove an item from the dictionary and 
+                           you will NOT get the value back.
+ 
 '''
-print("5 Deleting - pop an item from the dictionary")
+print("4 Deleting - pop an item from the dictionary")
 popValue = schools.pop('Florida') 
 print("Key Popped : 'Florida' Popped : ", popValue, "dictionary : ", schools)
 
-print("5.1 Deleting - use del to remove an item")
+print("4.1 Deleting - use del to remove an item")
 del schools['Georgia'] 
 print(schools)
 
