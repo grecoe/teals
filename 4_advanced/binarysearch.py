@@ -89,15 +89,13 @@ def binary_search(ordered_list,left, right, target):
     else:
         return -1
     
-
-def get_sorted_list():
+def get_sorted_list(max_size = -1):
     '''
         Create a sufficiently large ordered list of entries, they 
         can be anything, but I chose to use characters and arrange
         them in increasing order. 
     '''
-    #alphabet = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o']
-    #alphabet = ['0','1','2','3','4','5','6','7','8','9']
+    alphabet = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p']
     sorted_list = []
     for c1 in alphabet:
         for c2 in alphabet:
@@ -105,32 +103,63 @@ def get_sorted_list():
                 for c4 in alphabet:
                     for c5 in alphabet:
                         sorted_list.append(c1 + c2 + c3 + c4 + c5)
+                        if max_size != -1 and len(sorted_list) >= max_size:
+                            return sorted_list
 
+    # IN case they don't identify a max size                            
     return sorted_list
 
+def perform_binary_search(ordered_list):
+    '''
+        Choose choose a random index. 
+        Get the item at that random index and perform the binary
+        search. You will get the same index returned from that function
+        as well.  
+    '''
+    global global_binary_search_count
+    global global_binary_search_location
+    global_binary_search_count = 0
+    global_binary_search_location = ''
+
+    random_selection_index = random.randint(0, len(ordered_list) - 1)
+    random_selection = ordered_list[random_selection_index]
+
+    found_index = binary_search(ordered_list, 0, len(ordered_list) -1, random_selection)
+    '''
+       
+        Now print out what it is we had, how many searches it took, etc.
+    '''
+    print("Ordered Set Size = ", len(ordered_list))
+    print("Searching for:", random_selection)
+    print("Random Index =", random_selection_index)
+    print("Found Index =", found_index)
+    print("Search Location = ", global_binary_search_location)
+
+    '''
+        Now compare the searches to the expected Log2(N)
+    '''
+    print("Search Time =", global_binary_search_count)
+    print("Log2(N) = ", math.log(len(ordered_list),2))
+
+
+
 '''
-    Create an ordered list, then choose a random index. 
-    Get the item at that random index and perform the binary
-    search. You will get the same index returned from that function
-    as well.  
+    Use random string of characters (sorted)
 '''
+print("\n***********************")
+print("Random Strings - All")
+print("***********************\n")
 ordered_list = get_sorted_list()
-random_selection_index = random.randint(0, len(ordered_list) - 1)
-random_selection = ordered_list[random_selection_index]
+perform_binary_search(ordered_list)
 
-found_index = binary_search(ordered_list, 0, len(ordered_list) -1, random_selection)
+print("\n***********************")
+print("Random Strings - 10000")
+print("***********************\n")
+ordered_list = get_sorted_list(10000)
+perform_binary_search(ordered_list)
 
-'''
-    Now print out what it is we had, how many searches it took, etc.
-'''
-print("Ordered Set Size = ", len(ordered_list))
-print("Searching for:", random_selection)
-print("Random Index =", random_selection_index)
-print("Found Index =", found_index)
-print("Search Location = ", global_binary_search_location)
-
-'''
-    Now compare the searches to the expected Log2(N)
-'''
-print("Search Time =", global_binary_search_count)
-print("Log2(N) = ", math.log(len(ordered_list),2))
+print("\n***********************")
+print("Random Strings - 100")
+print("***********************\n")
+ordered_list = get_sorted_list(100)
+perform_binary_search(ordered_list)
