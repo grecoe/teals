@@ -12,18 +12,24 @@ In the example provided:
 - Print an overview of their Formula 1 history
 
 Alberto Ascari Results:
-   Years In F1 : 6
-   Grands Prix : 36
-   Front Rows  : 21 of which 14 are pole position
-   Podiums     : 17
-   DNF Total   : 14
 
-   RESULTS:
-     |YEAR|ROUND|GRID|FINISH|STATUS|NAME|
-     |--|--|--|--|--|--|
-     |1950|2|7|2|+1 Lap|Monaco Grand Prix|
-     |1950|4|5|DNF|Oil pump|Swiss Grand Prix|
-     |1950|5|7|5|+1 Lap|Belgian Grand Prix|
+Years In F1 : 6
+
+Grands Prix : 36
+
+Front Rows  : 21 of which 14 are pole position
+
+Podiums     : 17
+
+DNF Total   : 14
+
+RESULTS:
+
+|YEAR|ROUND|GRID|FINISH|STATUS|NAME|
+|--|--|--|--|--|--|
+|1950|2|7|2|+1 Lap|Monaco Grand Prix|
+|1950|4|5|DNF|Oil pump|Swiss Grand Prix|
+|1950|5|7|5|+1 Lap|Belgian Grand Prix|
 
 ### Example Output from starter.py
 Calling the code as provided will give your information about Alberto Ascari, his history and his race results as:
