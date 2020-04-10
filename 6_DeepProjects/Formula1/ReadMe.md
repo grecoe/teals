@@ -11,6 +11,9 @@ In the example provided:
 - Retrieve all of their race history
 - Print an overview of their Formula 1 history
 
+### Example Output from starter.py
+Calling the code as provided will give your information about Alberto Ascari, his history and his race results as:
+
 Alberto Ascari Results:
 
 Years In F1 : 6
@@ -30,10 +33,6 @@ RESULTS:
 |1950|2|7|2|+1 Lap|Monaco Grand Prix|
 |1950|4|5|DNF|Oil pump|Swiss Grand Prix|
 |1950|5|7|5|+1 Lap|Belgian Grand Prix|
-
-### Example Output from starter.py
-Calling the code as provided will give your information about Alberto Ascari, his history and his race results as:
-
 
 
 ## What you can do
