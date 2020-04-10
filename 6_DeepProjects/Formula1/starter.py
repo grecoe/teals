@@ -86,22 +86,12 @@ def get_driver_results(first_name, last_name):
     # Status Indexes
     status_idx = status_file.get_field_index("status")
 
-    '''
-        Find Ayrton Senna. Find returns a list of lists, but in this case 
-        there is only one Ayrton Senna so we have to adjust the result
-        for this.
-    '''
+    # Find the driver
     driver = driver_file.find([column_data('surname',last_name), column_data('forename', first_name)])
     assert(len(driver) == 1)
     driver = driver[0]
-    
-    '''
-        Find driver results. First we need to collect data from a few places
-            1. Get  driver ID
-            2. Search results for Senna's ID. 
-            3. Loop through each result and print out 
-               information on that result. 
-    '''
+
+    # Get driver race results    
     driver_id = driver[driver_id_index]
     driver_results = result_file.find([column_data('driverId',driver_id)])
 
@@ -166,7 +156,6 @@ def get_driver_results(first_name, last_name):
     for year in years:
         for race_round in race_results_by_year[year]:
             print("     %s %5s %s" % (year, race_round, race_results_by_year[year][race_round]))
-    #print(json.dumps(race_results_by_year, indent=4))
 
 '''
     Test out functionality
