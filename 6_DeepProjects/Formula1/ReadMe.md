@@ -38,15 +38,15 @@ RESULTS:
 
 
 ## What you can do
-### starter.py
+### starter.py or abstract.py
 Use the templates and some creativity and add more funcitonality
-- How long was the longest pitstop a driver ever had?
-- Collect lap times for a specific driver for a given race and determine their average lap time.
-- Collect lap times for an entire race and determine which driver was the fastest!
-- Extend the starter function to give more information, like total number of laps in the race that the driver finished.
-- Use your imagination and come up with some useful insights!
-### abstract.py
-- Extend custom/* classes to include more tables. With those new files, attempt the same type of functionality mentioned above.
+- What constructor did the driver drive for each race? (constructors.csv)
+- What was the drivers standing in the drivers championship for each race? (driverStandings.csv)
+- What was the constructors standing in the constructors championship for each race? (constructorStandings.csv)
+- If the driver qualified for pole position, what was the fastest lap in q3?) (qualifying.csv)?
+- Use your imagination and come up with something interesting.  
+#### abstract.py
+- If extending the abstract.py you will need to add classes to custom/* for any new files you include. Follow the templates laid out in the custom/ directory. See if you can figure it out!
 
 <B>NOTE<B> These are simply suggestions, get creative and explore the data. 
 
