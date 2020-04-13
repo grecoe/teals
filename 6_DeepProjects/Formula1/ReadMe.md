@@ -50,6 +50,9 @@ Use the templates and some creativity and add more funcitonality
 
 <B>NOTE<B> These are simply suggestions, get creative and explore the data. 
 
+## Complex multi argument implementation
+A much more complex and complete solution for an application can be found in the app/ directory. That folder contains it's own readme file to walk you through it and get you started with it. 
+
 ## Getting Started
 1. Clone this repository to you laptop
 2. Unzip the formula-1-race-data-19502017.zip file to a directory called /data

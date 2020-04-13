@@ -10,17 +10,20 @@ from custom.Driver import *
 from custom.Races import *
 from custom.Results import *
 from custom.Status import *
+from custom.Constructor import *
 
 driver_file = DriverDataFile() 
 races_file = RacesDataFile()
 results_file = ResultsDataFile()
 status_file = StatusDataFile()
+constructor_file = ConstructorsDataFile()
 
 def get_driver_results(first_name, last_name):
     global driver_file
     global races_file
     global results_file
     global status_file
+    global constructor_file
 
     # Find the driver
     driver = driver_file.get_by_name(first_name, last_name)
@@ -45,6 +48,10 @@ def get_driver_results(first_name, last_name):
         front_row_starts += 1 if result.is_front_row_start() else 0
         pole_positions += 1 if result.is_pole_position() else 0
 
+        # Get constructor
+        constructor = constructor_file.get_by_id(result.constructorId)
+        assert(len(constructor) == 1)
+        constructor = constructor[0]
 
         # Find the status
         current_status = status_file.get_by_status_id(result.statusId)
@@ -60,7 +67,8 @@ def get_driver_results(first_name, last_name):
         if current_race.year not in race_results_by_year.keys():
             race_results_by_year[current_race.year] = {}
 
-        race_results_by_year[current_race.year][current_race.round] = "%4s %6s %20s %s" % (
+        race_results_by_year[current_race.year][current_race.round] = "%10s %4s %6s %20s %s" % (
+            constructor.name,
             result.grid,
             result.position if not result.is_dnf() else "DNF",
             current_status.status,
@@ -82,9 +90,32 @@ def get_driver_results(first_name, last_name):
         for race_round in race_results_by_year[year]:
             print("     %s %5s %s" % (year, race_round, race_results_by_year[year][race_round]))
 
+def get_most_popular_last_name():
+    global driver_file
+    
+    drivers = driver_file.get_by_name(None,None)
+    names = {}
+    for d in drivers:
+        if d.surname not in names:
+            names[d.surname] = 0
+        names[d.surname] += 1
+
+    names = sorted((value, key) for (key,value) in names.items())
+    most_popular = names[-1]
+    print("{} is most popular with {} occurances".format(most_popular[1], most_popular[0]))
+    # Now get them and print the names
+    drivers = driver_file.get_by_name(None,most_popular[1])
+    for d in drivers:
+        print("  {} {}".format(d.forename, d.surname))
+
+
+#get_most_popular_last_name()
+#quit()
+
 '''
     Test out functionality
 '''
-get_driver_results('Alberto','Ascari')
+get_driver_results('Pastor', None)
+#get_driver_results('Alberto','Ascari')
 #get_driver_results("Max", "Verstappen")    
 #get_driver_results("Ayrton", "Senna")    

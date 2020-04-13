@@ -40,7 +40,13 @@ board = ['1','2','3','4','5','6','7','8','9']
 '''
 def printBoard():
     global board
-    print("", " | ".join(board[0:3]), "\n ---------\n", " | ".join(board[3:6]), "\n ---------\n", " | ".join(board[6:9]))
+    print(  "", 
+            " | ".join(board[0:3]), 
+            "\n ---------\n", 
+            " | ".join(board[3:6]), 
+            "\n ---------\n", 
+            " | ".join(board[6:9]))
+
 
 '''
     Checking the winner requires checking 

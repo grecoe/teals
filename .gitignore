@@ -6,3 +6,6 @@
 6_DeepProjects/Formula1/data/*
 6_DeepProjects/Formula1/readers/__pycache__/*
 6_DeepProjects/Formula1/custom/__pycache__/*
+6_DeepProjects/Formula1/app/__pycache__/*
+6_DeepProjects/Formula1/app/functions/__pycache__/*
+6_DeepProjects/Formula1/app/utils/__pycache__/*
