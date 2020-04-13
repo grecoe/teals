@@ -18,9 +18,10 @@ from custom.Races import *
 from custom.Results import *
 from custom.Status import *
 from custom.Constructor import *
+from app.utils.menuutils import MenuUtils
 from app.functions.interface import IFunction
 from app.functions.dummy import DummyFunction
-from app.utils.menuutils import MenuUtils
+from app.functions.driver_stats import DriverStats
 
 f1_datasets = {
     IFunction.DRIVER_DATA : DriverDataFile() ,
@@ -31,20 +32,28 @@ f1_datasets = {
 }
 
 def help():
+    '''
+        Top level help function
+    '''
     MenuUtils.display_menu_help(app_functions)
 
+'''
+    Menu selections with functionality
+'''
 app_functions = {
     "get" : {
         "stats" : {
             "constructor" : DummyFunction(f1_datasets),
-            "driver" : DummyFunction(f1_datasets)
+            "driver" : DriverStats(f1_datasets)
         }
     },
     "help" : help,
     "quit" : quit
 }
 
-
+'''
+    Application loop
+'''
 while True:   
     user_input = input("F1 : > ")
     inputs = user_input.split(' ')
@@ -52,16 +61,23 @@ while True:
     if len(inputs) > 0 and inputs[0] in app_functions.keys():
         current_action = app_functions
         last_command_index = 0
+
         for next_input in inputs:
+        
             next_input = next_input.strip()
             if len(next_input) == 0 :
                 continue
 
             last_command_index += 1
+            '''
+                Note that on an invalid command, a high level function, or 
+                an instance of IFunction, we want to break the loop once
+                we execute that if/elif segment as there are no more items 
+                to parse. 
+            '''
             if next_input not in current_action.keys():
                 print("Invalid Command : ", " ".join(inputs))
                 MenuUtils.display_menu_help(app_functions)
-                # Hit something we don't recognize, get out of this loop
                 break
             elif callable(current_action[next_input]):
                 # Top level functions, typically quit and help

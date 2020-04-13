@@ -36,6 +36,8 @@ It is important to understand how these are structured and you should become ver
 |Formula1/app/functions|dummy.py|A clean example on how to derive from IFunction.|
 |Formula1/app/functions|*.py|Any other specific examples, if provided.|
 
+<b>NOTE:</b> Formula1/app/functions/driver_stats.py implements the same functionality as the abstract.py and starter.py but wrapped in an IFunction. It's still as messy as ever :) So feel free to clean it!
+
 ### Program Flow - Menus
 The program requires that a dictionary for commands be used to drive the flow of the program. 
 
