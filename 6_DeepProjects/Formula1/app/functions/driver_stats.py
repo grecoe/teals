@@ -91,11 +91,11 @@ class DriverStats(IFunction):
             if current_race.year not in race_results_by_year.keys():
                 race_results_by_year[current_race.year] = {}
 
-            race_results_by_year[current_race.year][current_race.round] = "%10s %4s %6s %20s %s" % (
+            race_results_by_year[current_race.year][current_race.round] = "%15s %4s %6s %s %s" % (
                 constructor.name,
                 result.grid,
                 result.position if not result.is_dnf() else "DNF",
-                current_status.status,
+                current_status.status.center(20),
                 current_race.name
             )
 
@@ -109,7 +109,7 @@ class DriverStats(IFunction):
         print("   DNF Total   :", dnf_total)
         input("\nPress enter to see race results\n")
         print("\n   RESULTS:")
-        print("     YEAR ROUND GRID FINISH %20s NAME" %('STATUS'))
+        print("     YEAR ROUND %15s GRID FINISH %s NAME" %('CONSTRUCTOR', 'STATUS'.center(20)))
         years = list(race_results_by_year.keys())
         years.sort()
         for year in years:
