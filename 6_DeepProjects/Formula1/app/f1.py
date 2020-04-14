@@ -38,20 +38,31 @@ def help():
     '''
     MenuUtils.display_menu_help(app_functions)
 
+def my_name():
+    print("Walter White")
+
 '''
     Menu selections with functionality
 '''
 app_functions = {
     "get" : {
-        "stats" : {
-            "constructor" : DummyFunction(f1_datasets),
-            "driver" : DriverStats(f1_datasets)
+        "driver" : {
+            "stats" : DriverStats(f1_datasets)
+        },
+        "constructor" : {
+            "stats" : DummyFunction(f1_datasets)
         }
     },
     "list" : {
         "drivers" : DriverSearch(f1_datasets),
         "constructors" : DummyFunction(f1_datasets),
         "races" : DummyFunction(f1_datasets)
+    },
+    "say" : {
+        "my" : {
+            # Hahahahahahaha
+            "name" : my_name
+        }
     },
     "help" : help,
     "quit" : quit

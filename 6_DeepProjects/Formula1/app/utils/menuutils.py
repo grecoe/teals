@@ -23,16 +23,21 @@ class MenuUtils:
                     sub command to commands_list to print, then remove it
                     as it was an end node (cannot be further iterated.)
             '''
+            action_taken = False
             if isinstance(dictionary[sub_command], dict):
                 command_list.append(sub_command)
                 MenuUtils._menu_recurse(dictionary[sub_command], command_list)
+                action_taken = True
             elif isinstance(dictionary[sub_command], IFunction):
                 command_list.append(sub_command)
                 print("%s : %s" % (" ".join(command_list).ljust(21), dictionary[sub_command].get_arguments()) )
-                command_list = command_list[:command_list.index(sub_command)]
+                action_taken = True
             elif callable(dictionary[sub_command]):
                 command_list.append(sub_command)
                 print("%s :" % (" ".join(command_list).ljust(21)) )
+                action_taken = True
+
+            if action_taken:
                 command_list = command_list[:command_list.index(sub_command)]
     
     @staticmethod
