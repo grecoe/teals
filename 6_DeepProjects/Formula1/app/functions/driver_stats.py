@@ -20,27 +20,30 @@ class DriverStats(IFunction):
             # or an additional, unexpected, arg is present it will except.
             execute_args = super()._parse_execute_arguments(args)
 
-            driver_data = self.datasets[IFunction.DRIVER_DATA]
-            driver_info = None
-
-            if '-i' in execute_args.keys():
-                driver_info = driver_data.get_by_driver_id(execute_args['-i'])
+            if IFunction.GLOBAL_HELP in execute_args.keys():
+                self.get_help(1)
             else:
-                first = execute_args['-f'] if '-f' in execute_args.keys() else None    
-                last = execute_args['-l'] if '-l' in execute_args.keys() else None    
-                driver_info = driver_data.get_by_name(first,last)
+                driver_data = self.datasets[IFunction.DRIVER_DATA]
+                driver_info = None
 
-            if len(driver_info):
-                driver_info = driver_info[0]
-                self._get_stats(driver_info)
-            else:
-                print("No driver info could be found for supplied information.")
+                if '-i' in execute_args.keys():
+                    driver_info = driver_data.get_by_driver_id(execute_args['-i'])
+                else:
+                    first = execute_args['-f'] if '-f' in execute_args.keys() else None    
+                    last = execute_args['-l'] if '-l' in execute_args.keys() else None    
+                    driver_info = driver_data.get_by_name(first,last)
+
+                if len(driver_info):
+                    driver_info = driver_info[0]
+                    self._get_stats(driver_info)
+                else:
+                    print("No driver info could be found for supplied information.")
 
         except Exception as ex:
             print(str(ex))
 
     def _get_stats(self, driver):
-        print(driver.forename, driver.surname, driver.driverId)
+        print("{} : {}, {}".format(driver.driverId, driver.surname, driver.forename))
 
         results_file = self.datasets[IFunction.RESULTS_DATA]
         constructor_file = self.datasets[IFunction.CONSTRUCTOR_DATA]
@@ -98,13 +101,13 @@ class DriverStats(IFunction):
 
         # Now dump out all the information we have collected
         years_keys = list(race_results_by_year.keys())
-        print("{} {} Results:".format(driver.forename, driver.surname))
         print("   Years In F1 :", len(race_results_by_year.keys()),"({} - {})".format(years_keys[-1], years_keys[0]))
         print("   Teams       :", len(teams),"-", ','.join(teams))
         print("   Grands Prix :", total_grands_prixs)
         print("   Front Rows  : {} of which {} are pole position".format(front_row_starts,pole_positions))    
         print("   Podiums     :", podium_finishes)
         print("   DNF Total   :", dnf_total)
+        input("\nPress enter to see race results\n")
         print("\n   RESULTS:")
         print("     YEAR ROUND GRID FINISH %20s NAME" %('STATUS'))
         years = list(race_results_by_year.keys())

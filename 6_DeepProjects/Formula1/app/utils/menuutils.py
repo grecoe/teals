@@ -6,22 +6,33 @@ class MenuUtils:
         pass
 
     @staticmethod
-    def _menu_recurse(dictionary, indent, command_list):
+    def _menu_recurse(dictionary, command_list):
         '''
             This function is a recursive funciton if a dictionary
             contains a dictionary called by display_menu_help
         '''
-        indent_spaces = '   ' * indent
         for sub_command in dictionary:
-            print(indent_spaces + sub_command)
+            '''
+                If the next item is a 
+                    dictionary - recurse
+                    IFunction - print with acceptable arguments list
+                    callable() - Standard function, print path to it 
+                                 but no arg are not supported
+
+                    Both IFunction and callable() require us to add the 
+                    sub command to commands_list to print, then remove it
+                    as it was an end node (cannot be further iterated.)
+            '''
             if isinstance(dictionary[sub_command], dict):
                 command_list.append(sub_command)
-                MenuUtils._menu_recurse(dictionary[sub_command], indent + 1, command_list)
+                MenuUtils._menu_recurse(dictionary[sub_command], command_list)
             elif isinstance(dictionary[sub_command], IFunction):
                 command_list.append(sub_command)
-                dictionary[sub_command].get_help(indent + 1, command_list)
-                # End of the line, so take the last command off or we end
-                # up with invalid commands being printed in help.
+                print("%s : %s" % (" ".join(command_list).ljust(21), dictionary[sub_command].get_arguments()) )
+                command_list = command_list[:command_list.index(sub_command)]
+            elif callable(dictionary[sub_command]):
+                command_list.append(sub_command)
+                print("%s :" % (" ".join(command_list).ljust(21)) )
                 command_list = command_list[:command_list.index(sub_command)]
     
     @staticmethod
@@ -33,10 +44,23 @@ class MenuUtils:
                 2. Keys that identify actual functions.
         '''
         print("{}:".format(MenuUtils.MENU_TITLE))
+        print("%s" % ("-".ljust(35,'-') ))
+        print("%s | %s" % ("Command".ljust(21), "Arguments") )
+        print("%s" % ("-".ljust(35,'-') ))
+
         for command in menu_dictionary.keys():
-            print(command)
+            '''
+                If the next item is a 
+                    dictionary - recurse
+                    IFunction - print with acceptable arguments list
+                    callable() - Standard function, print path to it 
+                                 but no arg are not supported
+
+            '''
             if isinstance(menu_dictionary[command], dict):
-                MenuUtils._menu_recurse(menu_dictionary[command], 1, [command])
+                MenuUtils._menu_recurse(menu_dictionary[command], [command])
             elif isinstance(menu_dictionary[command], IFunction):
-                menu_dictionary[command].get_help(1 [command])
+                print("%s : %s" % (command.ljust(21), menu_dictionary[command].get_arguments()) )
+            elif callable(menu_dictionary[command]):
+                print("%s :" % (command.ljust(21)) )
         print('')

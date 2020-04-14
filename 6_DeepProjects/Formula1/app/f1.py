@@ -47,6 +47,11 @@ app_functions = {
             "driver" : DriverStats(f1_datasets)
         }
     },
+    "list" : {
+        "drivers" : DummyFunction(f1_datasets),
+        "constructors" : DummyFunction(f1_datasets),
+        "races" : DummyFunction(f1_datasets)
+    },
     "help" : help,
     "quit" : quit
 }

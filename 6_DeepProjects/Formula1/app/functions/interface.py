@@ -19,6 +19,7 @@ import collections
 argument_definition = collections.namedtuple("arg", 'arg required definition')
 
 class IFunction:
+    GLOBAL_HELP = '-h'
     DRIVER_DATA = 'driver'
     RACE_DATA = 'races'
     RESULTS_DATA = 'results'
@@ -27,6 +28,18 @@ class IFunction:
 
     def __init__(self,datasets, acceptable_arguments):
         self.arguments = acceptable_arguments
+        self.arguments.append(
+            argument_definition(IFunction.GLOBAL_HELP, False, "help")
+        )
+        '''
+            Allow each function to support a query parameter. 
+            This will need to be implemented differently in each, but
+            the more interesting one will be to apply it by date or 
+            partial entry.
+        self.arguments.append(
+            argument_definition('-q', False, "Query (find example)")
+        )
+        '''
         self.datasets = datasets
 
     def execute(args):
@@ -35,6 +48,10 @@ class IFunction:
             the actual work for the function resides. 
         """
         raise Exception("execute not implemented")
+
+    def get_arguments(self):
+        args = [arg.arg for arg in self.arguments]
+        return ",".join(args)
 
     def get_help(self, indent, command_list = None):
         """
@@ -52,7 +69,7 @@ class IFunction:
         indent_spaces = '   ' * indent
         parameters = self._format_help()
 
-        if len(command_list):
+        if command_list and len(command_list):
             command_line = "Command : '{}'".format(' '.join(command_list))
             print(indent_spaces, command_line)
         print(indent_spaces, "Parameters:")
@@ -112,16 +129,18 @@ class IFunction:
         if len(argument_list) and current_argument:
             arguments[current_argument] = " ".join(argument_list)
 
-        # Validate the arguments, if any requireds are not present
-        # throw an exception
-        # Make sure any required arg is there
-        for arg in self.arguments:
-            if arg.required and arg.arg not in arguments.keys():
-                raise Exception("Required arg {} not present, try help".format(arg.arg))
+        if IFunction.GLOBAL_HELP not in arguments.keys():
+            # Validate the arguments, if any requireds are not present
+            # throw an exception
+            # Make sure any required arg is there
+            for arg in self.arguments:
+                if arg.required and arg.arg not in arguments.keys():
+                    raise Exception("Required arg {} not present, try help".format(arg.arg))
         
-        # Now make sure there isn't anything we didn't expect
-        allowed_args = [arg.arg for arg in self.arguments]
-        for provided_arg in arguments.keys():
-            if provided_arg not in allowed_args:
-                raise Exception("Invalid argument present : {} , try help".format(provided_arg))
+            # Now make sure there isn't anything we didn't expect
+            allowed_args = [arg.arg for arg in self.arguments]
+            for provided_arg in arguments.keys():
+                if provided_arg not in allowed_args:
+                    raise Exception("Invalid argument present : {} , try help".format(provided_arg))
+
         return arguments
