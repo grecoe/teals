@@ -39,7 +39,7 @@ def help():
     MenuUtils.display_menu_help(app_functions)
 
 def my_name():
-    print("Walter White")
+    print("Heisenberg")
 
 '''
     Menu selections with functionality
