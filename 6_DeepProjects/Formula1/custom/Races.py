@@ -46,6 +46,13 @@ class RacesDataFile(DataFile):
 
         return self.find(columns)
 
+    def get_by_race_year(self,year):
+        columns = []
+        if year:
+            columns.append(column_data('year',year))
+
+        return self.find(columns)
+
     def find(self, column_data_list):
         return_results = []
 

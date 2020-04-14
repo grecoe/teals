@@ -22,6 +22,7 @@ from app.utils.menuutils import MenuUtils
 from app.functions.interface import IFunction
 from app.functions.dummy import DummyFunction
 from app.functions.driver_stats import DriverStats
+from app.functions.driver_search import DriverSearch
 
 f1_datasets = {
     IFunction.DRIVER_DATA : DriverDataFile() ,
@@ -48,7 +49,7 @@ app_functions = {
         }
     },
     "list" : {
-        "drivers" : DummyFunction(f1_datasets),
+        "drivers" : DriverSearch(f1_datasets),
         "constructors" : DummyFunction(f1_datasets),
         "races" : DummyFunction(f1_datasets)
     },

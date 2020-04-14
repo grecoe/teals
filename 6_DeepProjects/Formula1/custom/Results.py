@@ -74,6 +74,13 @@ class ResultsDataFile(DataFile):
 
         return self.find(columns)
 
+    def get_by_race_id(self,race_id):
+        columns = []
+        if race_id:
+            columns.append(column_data('raceId',race_id))
+
+        return self.find(columns)
+
     def find(self, column_data_list):
         return_results = []
 
