@@ -1,6 +1,8 @@
 '''
     Simple implementation of the IFunction as an example.
 '''
+import json
+from readers.base import column_data
 from app.functions.interface import IFunction, argument_definition
 
 class DriverSearch(IFunction):
@@ -31,10 +33,22 @@ class DriverSearch(IFunction):
                 driver_info = None
 
                 search_header = "Search All Drivers:"
-                if '-l' in execute_args.keys():
+                if IFunction.GLOBAL_QUERY in execute_args.keys():
+                    # Search by query
+                    # EX: list drivers -q surname=Senna;forename=Bruno
+                    #     list drivers -q nationality=Brazilian
+                    search_header = "Search Drivers By Query {}:".format(json.dumps(execute_args[IFunction.GLOBAL_QUERY]))
+                    search_fields = []
+                    for query_field in execute_args[IFunction.GLOBAL_QUERY].keys():
+                        search_fields.append(column_data(query_field,execute_args[IFunction.GLOBAL_QUERY][query_field]))
+                    driver_info = driver_data.find(search_fields)
+
+                elif '-l' in execute_args.keys():
+                    # Search by last name
                     search_header = "Search Drivers By Last Name {}:".format(execute_args['-l'])
                     driver_info = driver_data.get_by_name(None,execute_args['-l'])
                 elif '-y' in execute_args.keys():
+                    # Search by year
                     search_header = "Search Drivers By Year {}:".format(execute_args['-y'])
                     races = race_data.get_by_race_year(execute_args['-y'])
                     driver_id_list = []
@@ -48,10 +62,12 @@ class DriverSearch(IFunction):
                                 current_driver = driver_data.get_by_driver_id(race_result.driverId)
                                 driver_info.extend(current_driver)
                 else:
+                    # Get all
                     driver_info = driver_data.get_by_name(None,None)
 
                 # Now dump out what we found
-                print("{}: {} drivers".format(search_header, len(driver_info)))
+                count = len(driver_info) if driver_info else 0
+                print("{}: {} drivers".format(search_header, count))
                 print("%s" % ("-".ljust(85,'-') ))
                 print("%s | %s | %s | %s | %s" % (
                     "Driver ID".center(10), 
@@ -61,7 +77,8 @@ class DriverSearch(IFunction):
                     "Nationality".center(17)) )
                 print("%s" % ("-".ljust(85,'-') ))
 
-                for driver in driver_info:
+                driver_iterations = driver_info if driver_info else []
+                for driver in driver_iterations:
                     print("%s | %s | %s | %s | %s" % (
                         driver.driverId.center(10), 
                         driver.forename.center(18), 

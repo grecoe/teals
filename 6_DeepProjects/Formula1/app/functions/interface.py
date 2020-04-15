@@ -20,6 +20,7 @@ argument_definition = collections.namedtuple("arg", 'arg required definition')
 
 class IFunction:
     GLOBAL_HELP = '-h'
+    GLOBAL_QUERY = '-q'
     DRIVER_DATA = 'driver'
     RACE_DATA = 'races'
     RESULTS_DATA = 'results'
@@ -29,17 +30,12 @@ class IFunction:
     def __init__(self,datasets, acceptable_arguments):
         self.arguments = acceptable_arguments
         self.arguments.append(
-            argument_definition(IFunction.GLOBAL_HELP, False, "help")
+            argument_definition(IFunction.GLOBAL_HELP, False, "display help information")
         )
-        '''
-            Allow each function to support a query parameter. 
-            This will need to be implemented differently in each, but
-            the more interesting one will be to apply it by date or 
-            partial entry.
         self.arguments.append(
-            argument_definition('-q', False, "Query (find example)")
+            argument_definition(IFunction.GLOBAL_QUERY, False, "Query String i.e. -q fieldName=value[;...] (semi-colon separated name/values)")
         )
-        '''
+
         self.datasets = datasets
 
     def execute(args):
@@ -129,6 +125,9 @@ class IFunction:
         if len(argument_list) and current_argument:
             arguments[current_argument] = " ".join(argument_list)
 
+        if IFunction.GLOBAL_QUERY in arguments.keys():
+            arguments[IFunction.GLOBAL_QUERY] = self._parse_query(arguments[IFunction.GLOBAL_QUERY])
+
         if IFunction.GLOBAL_HELP not in arguments.keys():
             # Validate the arguments, if any requireds are not present
             # throw an exception
@@ -144,3 +143,12 @@ class IFunction:
                     raise Exception("Invalid argument present : {} , try help".format(provided_arg))
 
         return arguments
+
+    def _parse_query(self, query_string):
+        query_result = {}
+        query_components = query_string.split(';')
+        for query_component in query_components:
+            split_results = query_component.split('=')
+            if len(split_results) == 2:
+                query_result[split_results[0].strip()] = split_results[1].strip()
+        return query_result

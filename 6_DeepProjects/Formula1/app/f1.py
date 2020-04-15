@@ -38,8 +38,18 @@ def help():
     '''
     MenuUtils.display_menu_help(app_functions)
 
+def clear():
+    '''
+        Clear the screen
+    '''
+    os.system('cls')
+
 def my_name():
+    '''
+        Who knows the reference?
+    '''
     print("Heisenberg")
+
 
 '''
     Menu selections with functionality
@@ -64,6 +74,7 @@ app_functions = {
             "name" : my_name
         }
     },
+    "clear" : clear,
     "help" : help,
     "quit" : quit
 }
