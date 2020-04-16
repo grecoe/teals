@@ -3,7 +3,8 @@
 '''
 import json
 from readers.base import column_data
-from app.functions.interface import IFunction, argument_definition
+from app.utils.interface import IFunction, argument_definition
+from app.f1functions.constants import F1DataConstants
 
 class DriverSearch(IFunction):
     def __init__(self, datasets):
@@ -27,9 +28,9 @@ class DriverSearch(IFunction):
             else:
                 # At this point, you're clear and ready to go. 
                 # This is where all your logic goes. 
-                driver_data = self.datasets[IFunction.DRIVER_DATA]
-                race_data = self.datasets[IFunction.RACE_DATA]
-                results_data = self.datasets[IFunction.RESULTS_DATA]
+                driver_data = self.datasets[F1DataConstants.DRIVER_DATA]
+                race_data = self.datasets[F1DataConstants.RACE_DATA]
+                results_data = self.datasets[F1DataConstants.RESULTS_DATA]
                 driver_info = None
 
                 search_header = "Search All Drivers:"

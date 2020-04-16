@@ -1,4 +1,4 @@
-from app.functions.interface import IFunction
+from app.utils.interface import IFunction
 
 class MenuUtils:
     MENU_TITLE = "F1 App"

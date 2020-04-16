@@ -2,7 +2,8 @@
     Simple implementation of the IFunction as an example.
 '''
 
-from app.functions.interface import IFunction, argument_definition
+from app.utils.interface import IFunction, argument_definition
+from app.f1functions.constants import F1DataConstants
 
 class DriverStats(IFunction):
     def __init__(self, datasets):
@@ -23,7 +24,7 @@ class DriverStats(IFunction):
             if IFunction.GLOBAL_HELP in execute_args.keys():
                 self.get_help(1)
             else:
-                driver_data = self.datasets[IFunction.DRIVER_DATA]
+                driver_data = self.datasets[F1DataConstants.DRIVER_DATA]
                 driver_info = None
 
                 if '-i' in execute_args.keys():
@@ -45,10 +46,10 @@ class DriverStats(IFunction):
     def _get_stats(self, driver):
         print("{} : {}, {}".format(driver.driverId, driver.surname, driver.forename))
 
-        results_file = self.datasets[IFunction.RESULTS_DATA]
-        constructor_file = self.datasets[IFunction.CONSTRUCTOR_DATA]
-        status_file = self.datasets[IFunction.STATUS_DATA]
-        races_file = self.datasets[IFunction.RACE_DATA]
+        results_file = self.datasets[F1DataConstants.RESULTS_DATA]
+        constructor_file = self.datasets[F1DataConstants.CONSTRUCTOR_DATA]
+        status_file = self.datasets[F1DataConstants.STATUS_DATA]
+        races_file = self.datasets[F1DataConstants.RACE_DATA]
 
         # Get driver race results    
         driver_results = results_file.get_by_driver_id(driver.driverId)

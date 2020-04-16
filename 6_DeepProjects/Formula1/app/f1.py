@@ -13,23 +13,26 @@ if __name__ == '__main__':
     os.chdir(base_directory)
     sys.path.insert(0,base_directory)
 
-from custom.Driver import *
-from custom.Races import *
-from custom.Results import *
-from custom.Status import *
-from custom.Constructor import *
+from f1readers.Driver import *
+from f1readers.Races import *
+from f1readers.Results import *
+from f1readers.Status import *
+from f1readers.Constructor import *
 from app.utils.menuutils import MenuUtils
-from app.functions.interface import IFunction
-from app.functions.dummy import DummyFunction
-from app.functions.driver_stats import DriverStats
-from app.functions.driver_search import DriverSearch
+from app.utils.interface import IFunction
+from app.f1functions.constants import F1DataConstants
+from app.f1functions.driver_stats import DriverStats
+from app.f1functions.driver_search import DriverSearch
+
+# Example of how to implement the IFunction
+from app.f1functions.dummy import DummyFunction
 
 f1_datasets = {
-    IFunction.DRIVER_DATA : DriverDataFile() ,
-    IFunction.RACE_DATA : RacesDataFile(),
-    IFunction.RESULTS_DATA : ResultsDataFile(),
-    IFunction.STATUS_DATA : StatusDataFile(),
-    IFunction.CONSTRUCTOR_DATA : ConstructorsDataFile()
+    F1DataConstants.DRIVER_DATA : DriverDataFile() ,
+    F1DataConstants.RACE_DATA : RacesDataFile(),
+    F1DataConstants.RESULTS_DATA : ResultsDataFile(),
+    F1DataConstants.STATUS_DATA : StatusDataFile(),
+    F1DataConstants.CONSTRUCTOR_DATA : ConstructorsDataFile()
 }
 
 def help():

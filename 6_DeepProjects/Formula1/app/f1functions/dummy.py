@@ -2,7 +2,7 @@
     Simple implementation of the IFunction as an example.
 '''
 
-from app.functions.interface import IFunction, argument_definition
+from app.utils.interface import IFunction, argument_definition
 
 class DummyFunction(IFunction):
     def __init__(self, datasets):

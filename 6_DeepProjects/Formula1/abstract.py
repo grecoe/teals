@@ -6,11 +6,11 @@
     and the objects are easier to use.  
 '''
 
-from custom.Driver import *
-from custom.Races import *
-from custom.Results import *
-from custom.Status import *
-from custom.Constructor import *
+from f1readers.Driver import *
+from f1readers.Races import *
+from f1readers.Results import *
+from f1readers.Status import *
+from f1readers.Constructor import *
 
 driver_file = DriverDataFile() 
 races_file = RacesDataFile()

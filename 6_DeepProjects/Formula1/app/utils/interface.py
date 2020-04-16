@@ -21,11 +21,6 @@ argument_definition = collections.namedtuple("arg", 'arg required definition')
 class IFunction:
     GLOBAL_HELP = '-h'
     GLOBAL_QUERY = '-q'
-    DRIVER_DATA = 'driver'
-    RACE_DATA = 'races'
-    RESULTS_DATA = 'results'
-    STATUS_DATA = 'status'
-    CONSTRUCTOR_DATA = 'constructor'
 
     def __init__(self,datasets, acceptable_arguments):
         self.arguments = acceptable_arguments
