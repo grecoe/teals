@@ -16,7 +16,7 @@ It is broken down into several CSV files. To make sense of that data, you need t
 
 The files described in this section provide the ability to load and make available data from specific files (read below) to enable functionality in the application.  
 
-<b>NOTE</b>As with the other examples in this repository, the Kaggle dataset is extracted into a directory called data/ as a peer directory to this app/ directory.
+<b>NOTE</b> As with the other examples in this repository, the Kaggle dataset is extracted into a directory called data/ as a peer directory to this app/ directory.
 
 |Directory|File|Purpose|
 |---------|----|-------|
@@ -35,10 +35,10 @@ Essentially, this functionilty consists helper classes that allow you to create 
 ### 2.1 Menus
 
 The application menu is comprised of a dictionary that
-    1. Has strings as keys and is organized to define the commands that a user will enter to perform actions in your program. 
-    2. Has node values that are either:
-        - An IFunction implementation. These can and do accept additional arguments to define the function execution. 
-        - A standard python function. These cannot accept any additional arguments. 
+1. Has strings as keys and is organized to define the commands that a user will enter to perform actions in your program. 
+2. Has node values that are either:
+    - An IFunction implementation. These can and do accept additional arguments to define the function execution. 
+    - A standard python function. These cannot accept any additional arguments. 
 
 This menu structure can be re-used in any application you wish as the implementation of it is separated, through code, from any specific Forumula One activity. 
 
@@ -75,7 +75,7 @@ The interface, or base class, supplies significant functionality on your behalf.
 
 |Function|Parameters|Description|
 |--------|---------------------|-------|
-|__init__()|datasets<br>acceptable_arguments|Initializes the base class with the datasets that should be available and the arguments that are acceptable for this instances.<br><br><b>datasets:</b>This is a dictionary with keys (of whatever you want them to be) and values that are instances of DataFile. Of course, you can do what you want, but this is how the data files are then exposed to the deriving classes.<br><br><b>acceptable_arguments:</b>This is a list of the named tuple argument_definition that is defined in the interface.py file. This tells the class what parameters it will accept as well as those that would be required.<br><br><b>NOTE</b>Every instance of IFunction will, by default, get two additional acceptable parameters:<br>-h : Help<br>-q : query| 
+|__init__()|datasets<br>acceptable_arguments|Initializes the base class with the datasets that should be available and the arguments that are acceptable for this instances.<br><br><b>datasets:</b>This is a dictionary with keys (of whatever you want them to be) and values that are instances of DataFile. Of course, you can do what you want, but this is how the data files are then exposed to the deriving classes.<br><br><b>acceptable_arguments:</b>This is a list of the named tuple argument_definition that is defined in the interface.py file. This tells the class what parameters it will accept as well as those that would be required.<br><br><b>NOTE</b> Every instance of IFunction will, by default, get two additional acceptable parameters:<br>-h : Help<br>-q : query| 
 |execute()|args|<b>This function must be defined in the deriving class. This is the function that will be called when the action is requested by the user</b><br><br><b>args:</b>A list of additional arguments that were passed to the command. Keep reading this class description as there are more functions that help you manage arguments.|
 |get_arguments()|None|Returns all of the arguments this function will accept in a comma separated list which is used at the program level help command.|
 |get_help()|indent<br>command_list = None|Prints out the help for this function.<br><br><b>indent:</b>Indentation for the output of the menu.<br><br><b>command_list:</b>If provided, the string list items are joined by a space and used in the menu output.|
@@ -88,7 +88,7 @@ The above sections desribed the DataFile reader class for CSV files as well as t
 
 Those classes can be used for, really, any type of program you want to write. For this example, using the Forumula One data, specific implementations of DataFile and IFunction were required. 
 
-## DataFile Implementations
+## 1. DataFile Implementations
 Specific readers for each of the data files are required to access and merge data to make the applicaiton useful in any way. 
 
 |Directory|File|Purpose|
@@ -97,7 +97,7 @@ Specific readers for each of the data files are required to access and merge dat
 
 <b>NOTE</b> If there is a dataset that does not currently have an implementation in f1readers/ you will need to create it. 
 
-## IFunction Implementations
+## 2. IFunction Implementations
 Specific functions are also required to perform actions on the datasets.
 
 Looking through these files you'll get a better understanding on how to define arguments, process arguments in execute(), and generally how it all comes together.
@@ -106,11 +106,11 @@ Looking through these files you'll get a better understanding on how to define a
 |---------|----|-------|
 |Formula1/app/f1functions|constants.py|Contains a class called F1DataConstants which contains only static fields for the dataset names we want to load.<br><br>These constants are used when setting up the dataset dictionary to pass to the base class IFunction so that our Formula One functions will understand the dataset dictionary to access relevant data.| 
 |Formula1/app/f1functions|dummy.py|A clean example on how to derive from IFunction and implement the execute() function.|
-|Formula1/app/functions|*.py|Any other specific examples, if provided.|
+|Formula1/app/f1functions|*.py|Any other specific examples, if provided.|
 
 <b>NOTE:</b> Formula1/app/functions/driver_stats.py implements the same functionality as the abstract.py and starter.py but wrapped in an IFunction. It's still as messy as ever :) So feel free to clean it!
 
-# Application Implementation
+## 3. Application Implementation
 By now (because you hopefully read the above information), you have an understanding of the base helper classes and the locations of the specific implementations for this program. 
 
 With that, we can now delve into our application specific implementation for the Formula One appliation. 
