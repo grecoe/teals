@@ -3,8 +3,16 @@ This application combines several ideas and strategies to create an application 
 
 It is a command line application that takes multiple level commmands, such as 
 
-show driver stats -f Ayrton -l Senna
-show constructor stats -n McLaren -y 1986
+<br>
+<br>
+get driver stats -f Ayrton -l Senna
+<br>
+get driver stats -i 102
+<br>
+list drivers -y 2015
+<br>
+list drivers -l Andretti
+<br>
 
 # Structuring of the program
 These sections are organized in a way to help you understand how the program functions and the important topics.
