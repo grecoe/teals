@@ -23,6 +23,7 @@ from app.utils.interface import IFunction
 from app.f1functions.constants import F1DataConstants
 from app.f1functions.driver_stats import DriverStats
 from app.f1functions.driver_search import DriverSearch
+from app.f1functions.list_races import ListRaces
 
 # Example of how to implement the IFunction
 from app.f1functions.dummy import DummyFunction
@@ -78,8 +79,8 @@ app_functions = {
     },
     "list" : {
         "drivers" : DriverSearch(f1_datasets),
-        "constructors" : DummyFunction(f1_datasets),
-        "races" : DummyFunction(f1_datasets)
+        "races" : ListRaces(f1_datasets),
+        "constructors" : DummyFunction(f1_datasets)
     },
     "say" : {
         "my" : {

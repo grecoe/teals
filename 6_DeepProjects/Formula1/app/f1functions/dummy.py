@@ -11,7 +11,11 @@ class DummyFunction(IFunction):
             # Define the arguments you will accept, -h is a default for all.
             [
             argument_definition('-n',True, 'Name of driver'),
-            argument_definition('-x',False, 'Something Else')
+            argument_definition('-o',False, 'Something Else'),
+            argument_definition('-t',False, 'Something Else'),
+            argument_definition('-i',False, 'Something Else'),
+            argument_definition('-m',False, 'Something Else'),
+            argument_definition('-p',False, 'Something Else'),
             ])
 
     def execute(self, args):
