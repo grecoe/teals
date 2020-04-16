@@ -1,5 +1,20 @@
 '''
-    Simple implementation of the IFunction as an example.
+    Driver Search:
+
+    This function supports searching for drivers by:
+
+    1. -l : Last name of a driver
+            Lists all drivers with the same last name
+    2. -y : A year of F1. Lists all the drivers that were involved
+            in the championship that year. 
+    3. -q : A query. Valid query fields are those found in the drivers.csv
+            data file headers.
+    4.    : No arguments returns all drivers who ever drove. 
+
+    Order of precedence, when one is hit that is the result
+        -q
+        -l
+        -y
 '''
 import json
 from readers.base import column_data

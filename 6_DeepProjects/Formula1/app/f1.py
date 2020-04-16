@@ -27,6 +27,14 @@ from app.f1functions.driver_search import DriverSearch
 # Example of how to implement the IFunction
 from app.f1functions.dummy import DummyFunction
 
+'''
+    The IFunction base class expects a data set dictionary. Each
+    class that derives from it will have access to the dataset
+    dictionary internally. 
+
+    Dictionary is built using F1DataConstants as keys so that 
+    the keys remain constant across the F1Functions.
+'''
 f1_datasets = {
     F1DataConstants.DRIVER_DATA : DriverDataFile() ,
     F1DataConstants.RACE_DATA : RacesDataFile(),
@@ -55,7 +63,9 @@ def my_name():
 
 
 '''
-    Menu selections with functionality
+    The applicaiton menu is built using a dictionary with string keys
+    and end nodes are comprised of IFunction instances or actual functions
+    in wich callable(fn) == True
 '''
 app_functions = {
     "get" : {
@@ -84,6 +94,15 @@ app_functions = {
 
 '''
     Application loop
+
+    Accept input from the user. Parse that input and try and find 
+    an end node function or IFunction instance. Any additional parameters
+    are then passed along as a list to IFunction instances only. 
+
+    You will not have to change this code below, the only requirement to
+    extend the functionality comes in the app_functions dictionary and 
+    possibly the f1_datasets dictionary (assuming you extend the F1 Readers
+    to a new CSV file that has not yet been implemented).
 '''
 while True:   
     user_input = input("F1 : > ")

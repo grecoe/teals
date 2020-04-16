@@ -1,5 +1,21 @@
 '''
-    Simple implementation of the IFunction as an example.
+    Driver Stats:
+
+    This function supports printing out a drivers history (without
+    titles won). 
+
+    1. -f : First name of a driver
+    2. -l : Last name of a driver
+    3. -i : Driver ID
+
+    QUERY IS NOT SUPPORTED
+
+    Order of precedence, when one is hit that is the result
+        -i      Driver ID
+        -f/-l   Any valid information
+
+    NOTE: If nore than one driver is returned, the first in the list
+    is the one presented. 
 '''
 
 from app.utils.interface import IFunction, argument_definition

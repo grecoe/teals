@@ -1,3 +1,15 @@
+'''
+    Class that provides the ability to show a menu. A menu is comprised
+    of a dictionary with string keys (used to make up a command) with end
+    nodes either being an IFunction instance or an actual function 
+    (callable(fn) == True)
+
+    Commands are printed out, in order found in the application dictionary
+    in first found order. 
+
+    Additionally, IFunction instances will also have the accepted argument
+    list printed out with it. 
+'''
 from app.utils.interface import IFunction
 
 class MenuUtils:
