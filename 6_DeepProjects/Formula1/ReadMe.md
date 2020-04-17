@@ -1,60 +1,66 @@
-# Formula 1
+# Formula 1 Application
 
 Explore Formula 1 Data from 1950 - 2017
 
 Data Provided by kaggle.com : https://www.kaggle.com/cjgdev/formula-1-race-data-19502017
 
-This project allows you to program interesting information about Formula 1 over many years. The starter program shows how to pull together the differnt files to get interesting information.
+This project allows you to program interesting information about Formula 1 over many years. 
 
-There are two examples in this repo. One that uses the data files that are read in using readers/base.py (starter.py) and another that wraps DataReader from readers/base.py in specific classes (custom/*). 
+This application combines several ideas and strategies to create an application to review the Formula One data from Kaggle utilizing the tools in the mutli_command_utils directory. You should start with that readme.md file to really understand what is going on.  
 
-Both solutions follow a similar path  :
-- Look up a driver by first and last name
-- Retrieve all of their race history
-- Print an overview of their Formula 1 history
+It is a command line application that takes multiple level commmands, such as 
 
-### Example Output from either solution
-Calling the code as provided will give your information about Alberto Ascari, his history and his race results as:
+<br>
+get driver stats -f Ayrton -l Senna
+<br>
+get driver stats -i 102
+<br>
+list drivers -y 2015
+<br>
+list drivers -l Andretti
+<br>
+list drivers -q nationality=Brazilian
 
-Alberto Ascari Results:
+# Structuring of the program
+These sections are organized in a way to help you understand how the program functions and the important topics.
 
-Years In F1 : 6
+## 1. Obtaining Data
+The data set that is used for this example is a Kaggle dataset that covers the Formula One World Championship statistics from 1950-2017. 
 
-Grands Prix : 36
+It is broken down into several CSV files. To make sense of that data, you need to read in the CSV data and be able to interact and search it. 
 
-Front Rows  : 21 of which 14 are pole position
+Specific readers for each of the data files are required to access and merge data to make the applicaiton useful in any way. 
 
-Podiums     : 17
+|Directory|File|Purpose|
+|---------|----|-------|
+|Formula1/f1_data_readers|*.py|Specific implementations of the DataFile class wrapping individual CSV files from the Kaggle dataset.<br><br>> These will work assuming you have created a directory called data/ and placed the Kaggle data set into that directory. |
 
-DNF Total   : 14
+<b>NOTE</b> If there is a dataset that does not currently have an implementation in f1readers/ you will need to create it. 
 
-RESULTS:
+## 2. Application Functions and Helpers
+To abstract away the reading and processing of the Formula One data from the core application functionality, the readers are wrapped in IFunction instances which will do all of the actual heavy lifting during execution. 
 
-|YEAR|ROUND|GRID|FINISH|STATUS|NAME|
-|--|--|--|--|--|--|
-|1950|2|7|2|+1 Lap|Monaco Grand Prix|
-|1950|4|5|DNF|Oil pump|Swiss Grand Prix|
-|1950|5|7|5|+1 Lap|Belgian Grand Prix|
+IFunction defines a contract that must be adhered to for proper program functionality. 
+
+The files which implement the IFunctions for the Formula One Data are:
+
+|Directory|File|Purpose|
+|---------|----|-------|
+|Formula1/f1_functions|constants.py|Contains a class called F1DataConstants which contains only static fields for the dataset names we want to load.<br><br>These constants are used when setting up the dataset dictionary to pass to the base class IFunction so that our Formula One functions will understand the dataset dictionary to access relevant data.| 
+|Formula1/f1_functions|*.py|Any other specific examples, if provided.|
+
+## 3. Application Implementation
+The application is implemented using the MultiCommandApp class. The essential steps that are performed are:
+
+1. Run python f1app.py
+2. First sets the path to the 06_DeepProjects directory so that Python will know how to load up the utilities from multi_command_utils library. 
+2. Build up the data files dictionary that will be passed to each IFunction implementation. 
+3. Define the program menu (app_functions)
+4. Create an instance of MultiCommandApp using the dictionary from 3. above and call run(). 
 
 
-## What you can do
-### starter.py or abstract.py
-Use the templates and some creativity and add more funcitonality
-- What constructor did the driver drive for each race? (constructors.csv)
-- What was the drivers standing in the drivers championship for each race? (driverStandings.csv)
-- What was the constructors standing in the constructors championship for each race? (constructorStandings.csv)
-- If the driver qualified for pole position, what was the fastest lap in q3?) (qualifying.csv)?
-- Use your imagination and come up with something interesting.  
-#### abstract.py
-- If extending the abstract.py you will need to add classes to custom/* for any new files you include. Follow the templates laid out in the custom/ directory. See if you can figure it out!
+### Things you could try....
+- New DataFile implementations, if you wish. If you do not use data files, that parameter to the base IFunction can be None....the base class never actually accesses the data files. 
+- A new app_functions dictionary defining the functionlity and flow you desire for your application. 
 
-<B>NOTE<B> These are simply suggestions, get creative and explore the data. 
-
-## Complex multi argument implementation
-A much more complex and complete solution for an application can be found in the app/ directory. That folder contains it's own readme file to walk you through it and get you started with it. 
-
-## Getting Started
-1. Clone this repository to you laptop
-2. Unzip the formula-1-race-data-19502017.zip file to a directory called /data
-3. Run the starter.py file to see some results. 
-4. Run the abstract.py file to see some results. 
+HAVE FUN!

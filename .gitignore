@@ -3,9 +3,9 @@
 4_advanced/modules/__pycache__/*
 00_Playground/*
 00_Loops/*
-6_DeepProjects/Formula1/data/*
-6_DeepProjects/Formula1/readers/__pycache__/*
-6_DeepProjects/Formula1/custom/__pycache__/*
-6_DeepProjects/Formula1/app/__pycache__/*
-6_DeepProjects/Formula1/app/f1functions/__pycache__/*
-6_DeepProjects/Formula1/app/utils/__pycache__/*
+6_DeepProjects/03_Formula1/DUMPSTER/*
+6_DeepProjects/03_Formula1/data/*
+6_DeepProjects/03_Formula1/f1_data_readers/__pycache__/*
+6_DeepProjects/03_Formula1/f1_functions/__pycache__/*
+
+6_DeepProjects/multi_command_utils/__pycache__/*
