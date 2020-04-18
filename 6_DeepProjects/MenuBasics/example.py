@@ -8,8 +8,9 @@
 
     Then, we create an application to run it for us an interact with the user.
 
-    However, we first must set the path to the root (6_DeepProjects) so that 
-    it will be able to find and load our utilities.
+    Given the folder structure, we first must set the path to the root path
+    (6_DeepProjects) so that the script will be able to find and load our 
+    utilities.
 '''
 
 import os
@@ -31,9 +32,9 @@ sys.path.insert(0,currentdir)
     Now we can import the application and it will load ok. 
 '''
 from multi_command_utils.multi_command_application import MultiCommandApp
-from BUsingFunctions.example_function import ExampleFunction
+
 '''
-    Define the functions cdto be hit from the program
+    Define the functions to be targeted from the program
 '''
 def example_one():
     print("You hit the first example")
@@ -42,13 +43,13 @@ def example_two():
     print("You hit the second example")    
 
 '''
-    Program Menu
+    Program Menu - Declare a dictionary with functions
 '''
 app_menu = {
     "hit" : {
         "me" : {
             "first" : example_one,
-            "second" : ExampleFunction()
+            "second" : example_two
         }
     }
 }

@@ -8,8 +8,9 @@
 
     Then, we create an application to run it for us an interact with the user.
 
-    However, we first must set the path to the root (6_DeepProjects) so that 
-    it will be able to find and load our utilities.
+    Given the folder structure, we first must set the path to the root path
+    (6_DeepProjects) so that the script will be able to find and load our 
+    utilities.
 '''
 
 import os
@@ -33,23 +34,44 @@ sys.path.insert(0,currentdir)
 from multi_command_utils.multi_command_application import MultiCommandApp
 
 '''
+    Import the IFunction instance (in this directory) that we want to use
+    from the application.
+'''
+from MenuIFunction.example_function import ExampleFunction
+
+'''
     Define the functions to be hit from the program
 '''
 def example_one():
     print("You hit the first example")
 
-def example_two():
-    print("You hit the second example")    
-
 '''
     Program Menu
+
+    In this example we use a mix of standard Python functions (1) and IFunction
+    instances (1).
+
+    The MultiCommandApp knows how to initiate either type of functionality
+    internally. 
+
+    The bonus with using the IFunction instance is that:
+        1. We are given basic functionality for free (help/argument parsing)
+        2. The function instance can take somethign called a data_set. This
+           can be any type of data you want to whare across IFunction instances.
+        3. The IFunction instance can take additional parameters making your
+           functionality much more robust.
 '''
+
+data_set = ["This", "is", "example", "data!"]
+
 app_menu = {
     "hit" : {
         "me" : {
-            "first" : example_one,
-            "second" : example_two
+            "first" : example_one
         }
+    },
+    "try" : {
+        "function" : ExampleFunction(data_set)
     }
 }
 

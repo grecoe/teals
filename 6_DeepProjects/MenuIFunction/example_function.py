@@ -1,11 +1,11 @@
 from multi_command_utils.interface import IFunction, argument_definition
 
 class ExampleFunction(IFunction):
-    def __init__(self):
+    def __init__(self, data_set = None):
         super().__init__(
             # We are NOT going to pass additional information to the IFunction
             # base class for this example. 
-            None,
+            data_set,
             # Define the arguments you will accept, -h is a default for all.
             [
                 argument_definition('-o',False, 'Option 1'),
@@ -25,8 +25,10 @@ class ExampleFunction(IFunction):
             else:
 
                 # At this point, you're clear and ready to go. 
-                # This is where all your logic goes. 
-                print(execute_args, "ExampleFunction.execute()")
+                # This is where all your logic goes.
+                print("ExampleFunction.execute()") 
+                print("Arguments:", execute_args)
+                print("DataSet", self.datasets )
 
         except Exception as ex:
             print(str(ex))
