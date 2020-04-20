@@ -87,5 +87,5 @@ app_menu = {
     -   clear
     -   quit 
 '''
-app = MultiCommandApp("TEST", app_menu)
+app = MultiCommandApp("IFNTEST", app_menu)
 app.run()
