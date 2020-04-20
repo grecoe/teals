@@ -2,6 +2,8 @@
     This file identifies constants should be used in your IFunction 
     instances. 
 '''
+import os
+import json
 
 class Categories:
     DAIRY = "dairy"
@@ -11,7 +13,11 @@ class Categories:
     GENERAL = "general" 
 
 class ShoppingCart:
-    def __init__(self):
+    LIST_PATH = "lists"
+
+    def __init__(self, working_directory):
+        self.working_directory = working_directory
+        self.current_list = "UNDEFINED"
         self.shopping_cart = {}
         self.categories = [
             Categories.DAIRY,
@@ -42,6 +48,9 @@ class ShoppingCart:
 
             Returns : Nothing
         """
+        if not category:
+            category = Categories.GENERAL
+
         if category not in self.categories:
             if fail_on_invalid_category:
                 raise Exception("Category {} not in valid category list.".format(category))
@@ -90,4 +99,32 @@ class ShoppingCart:
         
         return removed_count
 
+    def get_list_files(self):
+        path = self._get_cart_path()
+        return [f for f in os.listdir(path) if os.path.isfile(os.path.join(path, f))]
+
+    def load(self, list_name):
+        path = self._get_cart_path()
+        path = os.path.join(path,list_name)
+        if not os.path.isfile(path):
+            print("List {} does not exist".format(list_name))
+
+        with open(path,'r') as input_file:
+            lines = input_file.readlines()
+            self.shopping_cart = json.loads("\n".join(lines))
+        
+        self.current_list = list_name
+    
+    def save(self, list_name):
+        path = self._get_cart_path()
+        path = os.path.join(path,list_name)
+        with open(path,'+w') as output_file:
+            output_file.write(json.dumps(self.shopping_cart, indent=4))
+        self.current_list = list_name
+
+    def _get_cart_path(self):
+        path = os.path.join(self.working_directory, ShoppingCart.LIST_PATH)
+        if not os.path.isdir(path):
+            os.makedirs(path)
+        return path
 
