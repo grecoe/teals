@@ -46,6 +46,8 @@ class DriverSearch(IFunction):
                 driver_data = self.datasets[F1DataConstants.DRIVER_DATA]
                 race_data = self.datasets[F1DataConstants.RACE_DATA]
                 results_data = self.datasets[F1DataConstants.RESULTS_DATA]
+                driver_standing_data = self.datasets[F1DataConstants.DRIVER_STANDING_DATA]
+
                 driver_info = None
 
                 search_header = "Search All Drivers:"
@@ -85,19 +87,24 @@ class DriverSearch(IFunction):
                 count = len(driver_info) if driver_info else 0
                 print("{}: {} drivers".format(search_header, count))
                 print("%s" % ("-".ljust(85,'-') ))
-                print("%s | %s | %s | %s " % (
-                    "Driver ID".center(10), 
-                    "DOB".center(15),
-                    "Nationality".center(17),
+                print("%s | %s | %s | %s | %s" % (
+                    "Driver ID".center(9), 
+                    "DOB".center(11),
+                    "Nationality".center(13),
+                    "Races/Podiums".center(15),
                     "Name") )
                 print("%s" % ("-".ljust(85,'-') ))
 
                 driver_iterations = driver_info if driver_info else []
                 for driver in driver_iterations:
-                    print("%s | %s | %s | %s %s" % (
-                        driver.driverId.center(10), 
-                        driver.dob.center(15),
-                        driver.nationality.center(17), 
+                    races, podiums = self._get_driver_standings(driver.driverId, results_data, race_data)
+                    stats = "{}/{}".format(races, podiums)
+
+                    print("%s | %s | %s | %s | %s %s" % (
+                        driver.driverId.center(9), 
+                        driver.dob.center(11),
+                        driver.nationality.center(13),
+                        stats.center(15), 
                         driver.forename, 
                         driver.surname) 
                     )
@@ -105,3 +112,17 @@ class DriverSearch(IFunction):
         except Exception as ex:
             print(str(ex))
             raise ex
+
+    def _get_driver_standings(self, driver_id, results_data, race_data):
+        career_podiums = 0
+        career_races = 0
+        # Get podiums
+        podium_positions = ['1','2','3']
+        all_results = results_data.find([column_data('driverId', driver_id)])
+        final_positions = [result.position for result in all_results]
+
+        for position in podium_positions:
+            career_podiums += final_positions.count(position)
+
+        career_races = len(all_results)
+        return career_races, career_podiums
