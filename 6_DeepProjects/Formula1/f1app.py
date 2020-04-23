@@ -44,41 +44,6 @@ from Formula1.f1_functions.driver_search import DriverSearch
 from Formula1.f1_functions.list_races import ListRaces
 
 '''
-from multi_command_utils.data_file import column_data
-
-race_file = RacesDataFile()
-driver_standing = DriverStandingFile()
-senna_standings = []
-races = race_file.get_by_race_year('2015')
-
-race = races[-1]
-standings = driver_standing.find([column_data('raceId', race.raceId)])
-for standing in standings:
-    standing.points = int(standing.points)
-
-print(len(standings))
-standings = sorted(standings, reverse=True, key=lambda standing : standing.points)
-for standing in standings:
-    print(standing.driverId, standing.points)
-
-quit()
-print(standings[0].driverId, standings[0].points)
-standings = driver_standing.find([column_data('position', '2'), column_data('raceId', race.raceId)])
-print(standings[0].driverId, standings[0].points)
-standings = driver_standing.find([column_data('position', '3'), column_data('raceId', race.raceId)])
-print(standings[0].driverId, standings[0].points)
-quit()
-
-for race in races:
-    standings = driver_standing.find([column_data('driverId', '102'), column_data('raceId', race.raceId)])
-    senna_standings.append(standings[0])
-print(len(races))
-for ss in senna_standings:
-    print(ss.raceId, ss.points, ss.position)
-quit()
-'''
-
-'''
     The IFunction base class expects a data set dictionary. Each
     class that derives from it will have access to the dataset
     dictionary internally. 
