@@ -30,6 +30,7 @@ from multi_command_utils.interface_dummy import DummyFunction
 
 # Formula 1 Data Readers
 from Formula1.f1_data_readers.Driver import *
+from Formula1.f1_data_readers.DriverStanding import *
 from Formula1.f1_data_readers.Races import *
 from Formula1.f1_data_readers.Results import *
 from Formula1.f1_data_readers.Status import *
@@ -38,8 +39,44 @@ from Formula1.f1_data_readers.Constructor import *
 # Formula One Functions
 from Formula1.f1_functions.constants import F1DataConstants
 from Formula1.f1_functions.driver_stats import DriverStats
+from Formula1.f1_functions.driver_standings import DriverStandings
 from Formula1.f1_functions.driver_search import DriverSearch
 from Formula1.f1_functions.list_races import ListRaces
+
+'''
+from multi_command_utils.data_file import column_data
+
+race_file = RacesDataFile()
+driver_standing = DriverStandingFile()
+senna_standings = []
+races = race_file.get_by_race_year('2015')
+
+race = races[-1]
+standings = driver_standing.find([column_data('raceId', race.raceId)])
+for standing in standings:
+    standing.points = int(standing.points)
+
+print(len(standings))
+standings = sorted(standings, reverse=True, key=lambda standing : standing.points)
+for standing in standings:
+    print(standing.driverId, standing.points)
+
+quit()
+print(standings[0].driverId, standings[0].points)
+standings = driver_standing.find([column_data('position', '2'), column_data('raceId', race.raceId)])
+print(standings[0].driverId, standings[0].points)
+standings = driver_standing.find([column_data('position', '3'), column_data('raceId', race.raceId)])
+print(standings[0].driverId, standings[0].points)
+quit()
+
+for race in races:
+    standings = driver_standing.find([column_data('driverId', '102'), column_data('raceId', race.raceId)])
+    senna_standings.append(standings[0])
+print(len(races))
+for ss in senna_standings:
+    print(ss.raceId, ss.points, ss.position)
+quit()
+'''
 
 '''
     The IFunction base class expects a data set dictionary. Each
@@ -51,6 +88,7 @@ from Formula1.f1_functions.list_races import ListRaces
 '''
 f1_datasets = {
     F1DataConstants.DRIVER_DATA : DriverDataFile() ,
+    F1DataConstants.DRIVER_STANDING_DATA : DriverStandingFile(),
     F1DataConstants.RACE_DATA : RacesDataFile(),
     F1DataConstants.RESULTS_DATA : ResultsDataFile(),
     F1DataConstants.STATUS_DATA : StatusDataFile(),
@@ -65,7 +103,9 @@ f1_datasets = {
 app_functions = {
     "get" : {
         "driver" : {
-            "stats" : DriverStats(f1_datasets)
+            "stats" : DriverStats(f1_datasets),
+            "standings" : DriverStandings(f1_datasets)
+
         },
         "constructor" : {
             "stats" : DummyFunction(f1_datasets)

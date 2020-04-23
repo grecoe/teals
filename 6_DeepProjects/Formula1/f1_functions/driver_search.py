@@ -85,22 +85,22 @@ class DriverSearch(IFunction):
                 count = len(driver_info) if driver_info else 0
                 print("{}: {} drivers".format(search_header, count))
                 print("%s" % ("-".ljust(85,'-') ))
-                print("%s | %s | %s | %s | %s" % (
+                print("%s | %s | %s | %s " % (
                     "Driver ID".center(10), 
-                    "First Name".center(18), 
-                    "Last Name".center(18), 
                     "DOB".center(15),
-                    "Nationality".center(17)) )
+                    "Nationality".center(17),
+                    "Name") )
                 print("%s" % ("-".ljust(85,'-') ))
 
                 driver_iterations = driver_info if driver_info else []
                 for driver in driver_iterations:
-                    print("%s | %s | %s | %s | %s" % (
+                    print("%s | %s | %s | %s %s" % (
                         driver.driverId.center(10), 
-                        driver.forename.center(18), 
-                        driver.surname.center(18), 
                         driver.dob.center(15),
-                        driver.nationality.center(17)) )
+                        driver.nationality.center(17), 
+                        driver.forename, 
+                        driver.surname) 
+                    )
 
         except Exception as ex:
             print(str(ex))
