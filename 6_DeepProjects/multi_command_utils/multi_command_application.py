@@ -25,6 +25,7 @@ class MultiCommandApp:
                 current_action = self.app_menu
                 last_command_index = 0
 
+                triggered = False
                 for next_input in inputs:
         
                     next_input = next_input.strip()
@@ -41,20 +42,29 @@ class MultiCommandApp:
                     if next_input not in current_action.keys():
                         print("Invalid Command : ", " ".join(inputs))
                         MenuUtils.display_menu_help(self.app_menu)
+                        triggered = True
                         break
                     elif callable(current_action[next_input]):
                         # Top level functions, typically quit and help
                         current_action[next_input]()
+                        triggered = True
                         break
                     elif isinstance(current_action[next_input], IFunction):
                         # IFunction instance
                         current_action[next_input].execute(inputs[last_command_index:])
+                        triggered = True
                         break
                     else:
                         current_action = current_action[next_input]
+
+                if not triggered:
+                    MenuUtils.display_menu_help(current_action, next_input)
+
             else:
                 print("Invalid Command : ", " ".join(inputs))
                 MenuUtils.display_menu_help(self.app_menu)
+
+            
 
     def _help(self):
         '''

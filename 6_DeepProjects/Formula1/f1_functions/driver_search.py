@@ -96,15 +96,20 @@ class DriverSearch(IFunction):
                 print("%s" % ("-".ljust(85,'-') ))
 
                 driver_iterations = driver_info if driver_info else []
+                driver_iterations = self._prep_driver_list(driver_iterations, results_data, race_data)
                 for driver in driver_iterations:
-                    races, podiums = self._get_driver_standings(driver.driverId, results_data, race_data)
-                    stats = "{}/{}".format(races, podiums)
+                    #races, podiums = self._get_driver_standings(driver.driverId, results_data, race_data)
+                    stats = "%d/%d (%.2f" % (
+                        driver.races, 
+                        driver.podiums,
+                        (driver.podiums / driver.races) * 100)
+                    stats += '%)'
 
-                    print("%s | %s | %s | %s | %s %s" % (
+                    print("%s | %s | %s | %s  | %s %s" % (
                         driver.driverId.center(9), 
                         driver.dob.center(11),
                         driver.nationality.center(13),
-                        stats.center(15), 
+                        stats.center(16), 
                         driver.forename, 
                         driver.surname) 
                     )
@@ -112,6 +117,25 @@ class DriverSearch(IFunction):
         except Exception as ex:
             print(str(ex))
             raise ex
+
+    def _prep_driver_list(self, driver_list, results_data, race_data):
+
+        if len(driver_list):
+            for driver in driver_list:
+                races, podiums = self._get_driver_standings(driver.driverId, results_data, race_data)
+                setattr(driver,'races', int(races))
+                setattr(driver,'podiums', int(podiums))
+       
+            # Get everyone that has a podium
+            podium_drivers = [driver for driver in driver_list if driver.podiums > 0]
+            non_podium_drivers = [driver for driver in driver_list if driver.podiums == 0]
+
+            podium_drivers = sorted(podium_drivers, reverse=True, key=lambda driver : driver.podiums)
+            non_podium_drivers = sorted(non_podium_drivers, reverse=True, key=lambda driver : driver.races)
+            podium_drivers.extend(non_podium_drivers)
+            return  podium_drivers
+
+        return driver_list
 
     def _get_driver_standings(self, driver_id, results_data, race_data):
         career_podiums = 0

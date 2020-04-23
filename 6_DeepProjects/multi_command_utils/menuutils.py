@@ -85,6 +85,10 @@ class MenuUtils:
         print("%s | %s" % ("Command".ljust(21), "Arguments") )
         print("%s" % ("-".ljust(35,'-') ))
 
+        # If args is a string, this was an incomplete call
+        if isinstance(args, str):
+            print("*** Incomplete Command - ", args, "*** type help")
+
         for command in menu_dictionary.keys():
             '''
                 If the next item is a 

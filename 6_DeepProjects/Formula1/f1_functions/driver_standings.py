@@ -59,7 +59,7 @@ class DriverStandings(IFunction):
                     race = races[-1]
                     standings = driver_standing_data.find([column_data('raceId', race.raceId)])
                     for standing in standings:
-                        standing.points = int(standing.points)
+                        standing.points = int(float(standing.points))
 
                     # Sort on points
                     position = 1

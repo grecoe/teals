@@ -9,9 +9,10 @@
 6_DeepProjects/Formula1/f1_functions/__pycache__/*
 6_DeepProjects/MenuIFunction/__pycache__/*
 6_DeepProjects/multi_command_utils/__pycache__/*
-6_DeepProjects/PipInstsallable
 6_DeepProjects/MenuShoppingCart/__pycache__/*
 6_DeepProjects/MenuShoppingCart/example.py
 6_DeepProjects/MenuShoppingCart/show.py
 6_DeepProjects/MenuShoppingCart/add.py
 6_DeepProjects/MenuShoppingCart/remove.py
+6_DeepProjects/MenuShoppingCart/cartlist.py
+6_DeepProjects/MenuShoppingCart/lists/*
