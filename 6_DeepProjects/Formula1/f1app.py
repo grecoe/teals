@@ -81,8 +81,7 @@ app_functions = {
     },
     "list" : {
         "drivers" : DriverSearch(f1_datasets),
-        "races" : ListRaces(f1_datasets),
-        "constructors" : DummyFunction(f1_datasets)
+        "races" : ListRaces(f1_datasets)
     }
 }
 

@@ -38,8 +38,8 @@ class ConstructorStandings(IFunction):
                     for standing in standings:
                         standing.points = int(float(standing.points))
 
-                    headers = ["Position", "Points", "Name","Nationality"]
-                    columns = [10,8,20,13]
+                    headers = ["Position", "Wins", "Points", "Name","Nationality"]
+                    columns = [10,6,8,20,13]
                     print_banner(columns, headers)
 
                     standings = sorted(standings, reverse=True, key=lambda standing : standing.points)
@@ -50,6 +50,7 @@ class ConstructorStandings(IFunction):
                             columns,
                             [
                                 standing.position,
+                                standing.wins,
                                 standing.points,
                                 name,
                                 nationality
