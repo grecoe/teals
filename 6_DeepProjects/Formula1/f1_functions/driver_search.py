@@ -20,6 +20,7 @@ import json
 from multi_command_utils.data_file import column_data
 from multi_command_utils.interface import IFunction, argument_definition
 from Formula1.f1_functions.constants import F1DataConstants
+from Formula1.f1_functions.banner import print_banner, print_row
 
 class DriverSearch(IFunction):
     def __init__(self, datasets):
@@ -86,33 +87,34 @@ class DriverSearch(IFunction):
                 # Now dump out what we found
                 count = len(driver_info) if driver_info else 0
                 print("{}: {} drivers".format(search_header, count))
-                print("%s" % ("-".ljust(85,'-') ))
-                print("%s | %s | %s | %s | %s" % (
-                    "Driver ID".center(9), 
-                    "DOB".center(11),
-                    "Nationality".center(13),
-                    "Races/Podiums".center(15),
-                    "Name") )
-                print("%s" % ("-".ljust(85,'-') ))
+                headers = [
+                    ["Driver ID", "DOB", "Nationality", "Races/Podiums", "Name"],
+                    ["", "", "", "Career", ""],
+                ]
+                columns = [9,11,13,18,30]
+                print_banner(columns, headers)
 
                 driver_iterations = driver_info if driver_info else []
                 driver_iterations = self._prep_driver_list(driver_iterations, results_data, race_data)
                 for driver in driver_iterations:
-                    #races, podiums = self._get_driver_standings(driver.driverId, results_data, race_data)
                     stats = "%d/%d (%.2f" % (
                         driver.races, 
                         driver.podiums,
                         (driver.podiums / driver.races) * 100)
                     stats += '%)'
 
-                    print("%s | %s | %s | %s  | %s %s" % (
-                        driver.driverId.center(9), 
-                        driver.dob.center(11),
-                        driver.nationality.center(13),
-                        stats.center(16), 
-                        driver.forename, 
-                        driver.surname) 
+                    print_row(
+                        columns,
+                        [
+                            driver.driverId,
+                            driver.dob,
+                            driver.nationality,
+                            stats,
+                            "{} {}".format(driver.forename, driver.surname)
+                        ],
+                        False
                     )
+
 
         except Exception as ex:
             print(str(ex))

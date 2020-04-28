@@ -35,6 +35,7 @@ from Formula1.f1_data_readers.Races import *
 from Formula1.f1_data_readers.Results import *
 from Formula1.f1_data_readers.Status import *
 from Formula1.f1_data_readers.Constructor import *
+from Formula1.f1_data_readers.ConstructorStandings import *
 
 # Formula One Functions
 from Formula1.f1_functions.constants import F1DataConstants
@@ -42,6 +43,7 @@ from Formula1.f1_functions.driver_stats import DriverStats
 from Formula1.f1_functions.driver_standings import DriverStandings
 from Formula1.f1_functions.driver_search import DriverSearch
 from Formula1.f1_functions.list_races import ListRaces
+from Formula1.f1_functions.constructor_standings import ConstructorStandings
 
 '''
     The IFunction base class expects a data set dictionary. Each
@@ -57,7 +59,8 @@ f1_datasets = {
     F1DataConstants.RACE_DATA : RacesDataFile(),
     F1DataConstants.RESULTS_DATA : ResultsDataFile(),
     F1DataConstants.STATUS_DATA : StatusDataFile(),
-    F1DataConstants.CONSTRUCTOR_DATA : ConstructorsDataFile()
+    F1DataConstants.CONSTRUCTOR_DATA : ConstructorsDataFile(),
+    F1DataConstants.CONSTRUCTOR_STANDINGS_DATA : ConstructorStandingsDataFile()
 }
 
 '''
@@ -73,7 +76,7 @@ app_functions = {
 
         },
         "constructor" : {
-            "stats" : DummyFunction(f1_datasets)
+            "standings" : ConstructorStandings(f1_datasets)
         }
     },
     "list" : {

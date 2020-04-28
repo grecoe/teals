@@ -124,7 +124,7 @@ class DriverStats(IFunction):
         print("   Front Rows  : {} of which {} are pole position".format(front_row_starts,pole_positions))    
         print("   Podiums     :", podium_finishes)
         print("   DNF Total   :", dnf_total)
-        input("\nPress enter to see race results\n")
+        input("\nPress enter to see race results")
         print("\n   RESULTS:")
         print("     YEAR ROUND %15s GRID FINISH %s NAME" %('CONSTRUCTOR', 'STATUS'.center(20)))
         years = list(race_results_by_year.keys())

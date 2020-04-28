@@ -10,7 +10,7 @@ class F1DataConstants:
     RESULTS_DATA = 'results'
     STATUS_DATA = 'status'
     CONSTRUCTOR_DATA = 'constructor'
-    CONSTRUCTOR_RESULTS_DATA = 'constructorResults'
+    CONSTRUCTOR_STANDINGS_DATA = 'constructorStandings'
     LAP_TIMES_DATA = 'laptimes'
     PIT_STOP_DATA = 'pitstops'
     QUALIFYING_DATA = 'qualifying'

@@ -20,6 +20,7 @@ import json
 from multi_command_utils.data_file import column_data
 from multi_command_utils.interface import IFunction, argument_definition
 from Formula1.f1_functions.constants import F1DataConstants
+from Formula1.f1_functions.banner import print_banner, print_row
 
 class DriverStandings(IFunction):
     def __init__(self, datasets):
@@ -50,7 +51,9 @@ class DriverStandings(IFunction):
                 if '-y' in execute_args.keys():
                     search_header = "Search Standings By Year {}:".format(execute_args['-y'])
                     print(search_header)
-                    print("Position | Points | Driver")
+                    headers = ["Position" ,"Points", "Driver"] 
+                    columns = [10,8,20]
+                    print_banner(columns,headers)
 
                     # Get all races for the year
                     races = race_data.get_by_race_year(execute_args['-y'])
@@ -67,14 +70,25 @@ class DriverStandings(IFunction):
 
                     # Now print them out.
                     for standing in standings:
-                        print("%s | %s | %s" % (str(position).center(8), str(standing.points).center(6),self._get_driver_info(driver_data,standing.driverId)))
+                        print_row(
+                            columns,
+                            [
+                                position, 
+                                standing.points,
+                                self._get_driver_info(driver_data,standing.driverId)
+                            ],
+                            False
+                        )
                         position += 1
 
                 else:
                     # Slightly different, we want to get the winner by each year
                     print(search_header)
-                    print("Year | Driver Name")
 
+                    headers = ["Year" ,"Driver Name"] 
+                    columns = [8,30]
+                    print_banner(columns,headers)
+                    
                     # Get all the years 
                     years = race_data.get_column_by_name('year')
                     years = list(set(years))
@@ -91,7 +105,14 @@ class DriverStandings(IFunction):
                         # Seems to have some, but not all, 2018 data so we will get no standings 
                         # for that year, so ignore it. 
                         if len(standings):
-                            print(year,'|', self._get_driver_info(driver_data, standings[0].driverId))
+                            print_row(
+                                columns,
+                                [
+                                    year,
+                                    self._get_driver_info(driver_data, standings[0].driverId)
+                                ],
+                                False
+                            )
 
 
         except Exception as ex:

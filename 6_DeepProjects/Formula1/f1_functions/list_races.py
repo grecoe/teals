@@ -19,6 +19,7 @@
 from multi_command_utils.data_file import column_data
 from multi_command_utils.interface import IFunction, argument_definition
 from Formula1.f1_functions.constants import F1DataConstants
+from Formula1.f1_functions.banner import print_banner, print_row
 
 class ListRaces(IFunction):
     def __init__(self, datasets):
@@ -63,15 +64,9 @@ class ListRaces(IFunction):
                     full_results[race.raceId]['result'] = results_file.get_by_race_id(race.raceId)
 
                 # Regardless of result, we are going to have the same header
-                print("%s" % ("-".ljust(85,'-') ))
-                print("%s | %s | %s | %s | %s" % (
-                        "Race ID".center(8), 
-                        "Round".center(6), 
-                        "Date".center(12), 
-                        "Name".center(28), 
-                        "Winner".center(25)) 
-                        )
-                print("%s" % ("-".ljust(85,'-') ))
+                header = ["Race ID","Round","Date","Race","Winner"]
+                columns = [9,7,12,28,30]
+                print_banner(columns,header)
 
                 # Now what specifics do we want?
                 if len(full_results) == 1:
@@ -84,14 +79,17 @@ class ListRaces(IFunction):
                         winner = [x for x in results if x.position == '1']
                         winner_name = self._get_driver_name(driver_data,winner[0].driverId)
                         
-                        self._output_race(race, winner_name)
+                        self._output_race(columns, race, winner_name)
 
                         # Now we dump all of them.
-                        print("\n%s %s" % ("Position".center(10), "Driver"))
+                        print("")
+                        header = ["Position", "Driver Name"]
+                        columns = [10,30]
+                        print_banner(columns,header)
                         for result in results:
                             position = result.position if len(result.position.strip()) > 0 else "DNF"
                             driver_name = self._get_driver_name(driver_data,result.driverId)
-                            print("%s %s" % (position.center(10), driver_name))
+                            print_row(columns,[position,driver_name],False)
 
                 else:
                     # Sort the races by race ids as they are in order
@@ -105,7 +103,7 @@ class ListRaces(IFunction):
                         winner = [x for x in results if x.position == '1']
                         winner_name = self._get_driver_name(driver_data,winner[0].driverId)
                         
-                        self._output_race(race, winner_name)
+                        self._output_race(columns, race, winner_name)
 
         except Exception as ex:
             print(str(ex))
@@ -115,11 +113,15 @@ class ListRaces(IFunction):
         driver = driver_data.get_by_driver_id(driver_id)
         return "{} {}".format(driver[0].forename, driver[0].surname )
 
-    def _output_race(self, race, winners_name):
-        print("%s | %s | %s | %s | %s" % (
-            race.raceId.center(8), 
-            race.round.center(6), 
-            race.date.center(12), 
-            race.name.center(28), 
-            winners_name.center(25)) 
+    def _output_race(self,columns, race, winners_name):
+        print_row(
+            columns,
+            [
+                race.raceId, 
+                race.round, 
+                race.date, 
+                race.name, 
+                winners_name 
+            ],
+            False
         )
