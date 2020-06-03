@@ -14,8 +14,10 @@ This repository is meant to help beginner Computer Science students with Python.
 |2_student_programs|Directory|Programs to help the student hone their knowledge of concepts learned in the classroom.|
 |3_example_programs|Directory|Contains example programs using concepts covered in class. Other programs are added for the student to learn if they choose to.|
 |4_advanced|Directory|Advanced Python toopics that are not covered in the intro class, but can be useful for more advanced students (or for when I forget how to do something!).|
+|5_presentations|Directory|Presentations prepared for classes.|
+|6_deep_projects|Directory|Advanced command line program applications and the supporting files to implement them.|
+|7_testing|Directory|Automated testing application for Python files as a teaching aide for automated testing.|
 |README.md|file|This file you are reading right now.|
-|XXX_Deprecated|Directory|Initial content no longer relevant (or useful)|
 
 ## Getting code locally
 

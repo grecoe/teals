@@ -1,0 +1,20 @@
+{
+    "Name" : "First Homework",
+    "Functions" : [
+        {
+            "name" : "multiply",
+            "params" : {
+                "x" : 20,
+                "y" : 10
+            },
+            "expected_output" : 200
+        },
+        {
+            "name" : "noop",
+            "params" : {
+            },
+            "expected_output" : null
+        }
+
+    ]
+}
