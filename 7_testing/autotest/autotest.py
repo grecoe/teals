@@ -2,6 +2,18 @@ import importlib
 import json
 import sys
 import argparse
+from io import StringIO 
+import sys
+
+class CaptureProgramOutput(list):
+    def __enter__(self):
+        self._stdout = sys.stdout
+        sys.stdout = self._stringio = StringIO()
+        return self
+    def __exit__(self, *args):
+        self.extend(self._stringio.getvalue().splitlines())
+        del self._stringio    # free up some memory
+        sys.stdout = self._stdout
 
 def get_test_definition(definition_file):
     '''
@@ -55,10 +67,13 @@ def parse_program_args(prog_args):
     '''
         Parse out optional parameters -mod and -config from any command line
         input. If none is provided, the user will be promtped for an answer. 
+
+        Test app:
+        python autotest.py -mod student -config hw1.json
     '''
     parser = argparse.ArgumentParser(description='Automated Python Tester')
     parser.add_argument("-mod", required=False, type=str, default=None,  help="Student module (without .py extension)")
-    parser.add_argument("-config", required=True, type=str, default=None,   help="JSON configuration file")
+    parser.add_argument("-config", required=False, type=str, default=None,   help="JSON configuration file")
 
     return parser.parse_args(prog_args)
 
@@ -100,13 +115,15 @@ for function in test_definition["Functions"]:
 
     print("\nFunction Under Test : ".ljust(25) , function['name'])
     print("Test Input : ".ljust(25) , function['params'])
-    print("Expected Output : ".ljust(25) , function['expected_output'])
+    print("Expected Return : ".ljust(25) , function['expected_outputs']['function_return'])
+    print("Expected Output : ".ljust(25) , function['expected_outputs']['stdout_content'])
 
     
     '''
         Now call it whether it takes input or not.
     '''
-    student_return = None
+    student_function_return = None
+    student_function_output = []
 
     try:
         '''
@@ -119,19 +136,42 @@ for function in test_definition["Functions"]:
         student_function = getattr(student_lib, function['name'])
         function_input = function['params']
         
-        if len(function_input):
-            student_return = student_function(** function_input)
-        else:
-            student_return = student_function()
+        with CaptureProgramOutput() as student_function_output:
+            if len(function_input):
+                student_function_return = student_function(** function_input)
+            else:
+                student_function_return = student_function()
+        
+
     except Exception as ex:
-        student_return = "Exception: " + str(ex)
+        student_function_return = "Exception: " + str(ex)
 
     '''
         Print out the results
     '''
-    function_tests.append(function['expected_output'] == student_return)
-    print("    Student Results:" , student_return)
+    reason_text = None
+    function_result = function['expected_outputs']['function_return'] == student_function_return
+    if function_result :
+        if len(student_function_output) == len(function['expected_outputs']['stdout_content']):
+            for idx in range(len(student_function_output)):
+                if str(student_function_output[idx]).lower() !=  str(function['expected_outputs']['stdout_content'][idx]).lower():
+                    function_result = False
+                    break                    
+        else:
+            function_result = False
+
+        if not function_result:
+            reason_text = "Function stdout (print) does not match expected."
+    else:
+        reason_text = "Function return does not match expected result"
+
+    function_tests.append(function_result)
+    print("    Student Return:" , student_function_return)
+    print("    Student Output:" , student_function_output)
     print("    Pass: ", function_tests[-1])
+    if reason_text:
+        print("  Reason: ", reason_text)
+
 
 
 ##

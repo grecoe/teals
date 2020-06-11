@@ -7,13 +7,21 @@
                 "x" : 20,
                 "y" : 10
             },
-            "expected_output" : 200
+            "expected_outputs" : {
+                "function_return" : 200,
+                "stdout_content" : []
+            }
         },
         {
             "name" : "noop",
             "params" : {
             },
-            "expected_output" : null
+            "expected_outputs" : {
+                "function_return" : null,
+                "stdout_content" : [
+                    "In student program"
+                ]
+            }
         }
 
     ]

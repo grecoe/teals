@@ -16,4 +16,5 @@ def multiply(x, y):
 
 def noop():
     #raise Exception("Bad things happened")
+    print("Dumb student program")
     return None
