@@ -1,17 +1,17 @@
 '''
     Practice with lists!
 
-    Because iterating lists lends itself to the for loop, that is covered here as well. 
+    Because iterating lists lends itself to the for loop, that is covered here as well.
 '''
 
 '''
-    Create a list that will be used for the rest of this section. If you don't 
+    Create a list that will be used for the rest of this section. If you don't
     remember, go back to 0_python\08_list.py.
 '''
-test_list = 
+test_list =
 
 '''
-    Write the code to use a for loop to print out each item in the list. 
+    Write the code to use a for loop to print out each item in the list.
 '''
 
 
@@ -21,7 +21,7 @@ test_list =
 print("1. test_list is ", ?? , "in size")
 
 '''
-    What are the valid indexes into test_list to access, or change 
+    What are the valid indexes into test_list to access, or change
     a value in the list?
 '''
 
@@ -42,7 +42,7 @@ print("4. Change a value - ", test_list)
 
 '''
     Write the code to remove the last item from the list.
-    Write the code to remove the first item from the list. 
+    Write the code to remove the first item from the list.
     Print out the list.
 '''
 
