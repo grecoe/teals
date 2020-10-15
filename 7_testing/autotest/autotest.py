@@ -2,7 +2,7 @@ import importlib
 import json
 import sys
 import argparse
-from io import StringIO 
+from io import StringIO
 import sys
 
 class CaptureProgramOutput(list):
@@ -30,7 +30,7 @@ def get_test_definition(definition_file):
             Function:
                 {
                     "name" : actual name of function to call
-                    "params" : Dictionary of params based on 
+                    "params" : Dictionary of params based on
                                function parameter name and value
                     "expected_output" : Value function returns.
                 }
@@ -45,7 +45,7 @@ def get_test_definition(definition_file):
 def load_student_module(module_name):
     '''
         Module name is a pythong file without the .py extension
-        that holds the functions to be tested as defined by the 
+        that holds the functions to be tested as defined by the
         definition file.
     '''
     return importlib.import_module(module_name)
@@ -66,7 +66,7 @@ def parse_doc_string(assingment_doc_string):
 def parse_program_args(prog_args):
     '''
         Parse out optional parameters -mod and -config from any command line
-        input. If none is provided, the user will be promtped for an answer. 
+        input. If none is provided, the user will be promtped for an answer.
 
         Test app:
         python autotest.py -mod student -config hw1.json
@@ -77,13 +77,17 @@ def parse_program_args(prog_args):
 
     return parser.parse_args(prog_args)
 
+
+
+
+
 '''
-    Get the student module name (python file without .py) and 
+    Get the student module name (python file without .py) and
     the definition file to test.
 '''
 program_arguments = parse_program_args(sys.argv[1:])
 module_name = program_arguments.mod
-test_def_file = program_arguments.config 
+test_def_file = program_arguments.config
 if not module_name:
     module_name = input('Student Module: ')
 if not test_def_file:
@@ -107,7 +111,7 @@ print("Current Test : ".ljust(25) , test_definition['Name'])
 student_info = parse_doc_string(student_lib.__doc__)
 
 '''
-    Create an array to store results in and then iterate over each 
+    Create an array to store results in and then iterate over each
     function definition and attempt to call it in the student module.
 '''
 function_tests = []
@@ -118,7 +122,7 @@ for function in test_definition["Functions"]:
     print("Expected Return : ".ljust(25) , function['expected_outputs']['function_return'])
     print("Expected Output : ".ljust(25) , function['expected_outputs']['stdout_content'])
 
-    
+
     '''
         Now call it whether it takes input or not.
     '''
@@ -135,13 +139,13 @@ for function in test_definition["Functions"]:
         '''
         student_function = getattr(student_lib, function['name'])
         function_input = function['params']
-        
+
         with CaptureProgramOutput() as student_function_output:
             if len(function_input):
                 student_function_return = student_function(** function_input)
             else:
                 student_function_return = student_function()
-        
+
 
     except Exception as ex:
         student_function_return = "Exception: " + str(ex)
@@ -156,7 +160,7 @@ for function in test_definition["Functions"]:
             for idx in range(len(student_function_output)):
                 if str(student_function_output[idx]).lower() !=  str(function['expected_outputs']['stdout_content'][idx]).lower():
                     function_result = False
-                    break                    
+                    break
         else:
             function_result = False
 
@@ -174,6 +178,8 @@ for function in test_definition["Functions"]:
 
 
 
+#hw_directory = input("Enter path to student modules > ")
+#config =
 ##
 ## TODO : Automate grading somewhere?
 ##
@@ -182,7 +188,7 @@ print(" Official Test: ", test_definition['Name'])
 print(" Student Name: ", student_info['Student'])
 print(" Student Assignment: ", student_info['Assignment'])
 correct_answers = function_tests.count(True)
-print(" Questions: {} Correct : {} Percentage: {} %".format( 
+print(" Questions: {} Correct : {} Percentage: {} %".format(
     len(function_tests),
     correct_answers,
     (correct_answers / len(function_tests) ) *100 )
