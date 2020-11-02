@@ -32,6 +32,49 @@ This program builds on the 05_TicTacToeIntroduction.md program you created.
 ```
 
 # Advanced (and soon to come)
+
+## Taking turns
+Tracking who takes turns can be done with mathmatical operators.
+
+```python
+# Finding the quotient
+quotient = 5//4
+# Produces a 1 because 4 goes into 5 1 time
+```
+
+```python
+# Finding the remainder with modulo
+modulo = 5%4
+# Produces a 1 because 4 goes into 5 with 1 left over
+```
+
+We can use this knowledge to figure out who goes next in a game. Particularly by using modulo.
+
+It is common in in computer science to find out if a number is even or odd by using NUM % 2. Why?
+
+Because if the number is even the modulo result is 0. If the number is odd the modulo result is 1. So, for a two player game with 9 turns, we can toggle between 0 and 1 for each turn, and in effect, determine if it's player 1's turn or player 2's turn.
+
+```python
+turn = 0
+while turn < 9:
+    print(turn % 2)
+    turn += 1
+
+"""
+Result:
+0
+1
+0
+1
+0
+1
+0
+1
+0
+"""
+```
+
+## Printing the board
 At some point you need to print out your board for a user. There are several ways to do that. Some are longer, some are shorter. Here are some examples from easiest to most efficient.
 
 ```python
