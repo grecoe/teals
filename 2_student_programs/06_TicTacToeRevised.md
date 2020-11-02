@@ -31,7 +31,7 @@ This program builds on the 05_TicTacToeIntroduction.md program you created.
     ....Continue through 9 turns....
 ```
 
-# Advanced (and soon to come)
+# Advanced Topics
 
 ## Taking turns
 Tracking who takes turns can be done with mathmatical operators.
@@ -103,3 +103,6 @@ def print_board(str_board, width):
         span += width
 
 ```
+
+## Calculate the winner
+TBD
