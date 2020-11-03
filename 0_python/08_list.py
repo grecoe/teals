@@ -24,6 +24,7 @@
         append()        - Add a single item to the list
         insert(idx,item)- Inserts 'item' at the specified index (idx)
         extend()        - Add another list to the end of this list.
+        remove(N)       - Remove the first instance of N in a list.py
         pop([N])        - Removes an item from the list. pop() removes the last element or
                           pop(N), where N is a valid index in the list removes the item at
                           the specified index.
@@ -41,7 +42,7 @@
 '''
 names = ['Fred', 'Susan', 'Sally']
 print("1. - Creating a list")
-print( names)
+print(names)
 
 '''
     Section 2 - Accessing content in a list
@@ -75,7 +76,7 @@ print("2.1 Indexes - the first item in the list")
 print(names[0])
 
 print("2.2 Indexes - the last item in the list")
-print(names[len(names)-1])
+print(names[len(names) - 1])
 
 '''
     Python also allows negative indexing. The negative numbers start at the first valid

@@ -105,4 +105,68 @@ def print_board(str_board, width):
 ```
 
 ## Calculate the winner
-TBD
+To calculate a winner you have to figure out three sets of data:
+1. Rows
+2. Columns
+3. Diagonals
+
+Using a list can help you with this.
+
+Consider this algorithm
+### Rows
+```python
+# Rows - Calcuated already above in the print_board function
+```
+
+### Columns
+```python
+# Rows - Calcuated already above in the print_board function
+# Columns - we can use a simple formula: row*width + col, this
+# will give you the index into your array.
+row0_col0 = 0*3 + 0 # = 0
+row1_col0 = 1*3 + 0 # = 3
+row2_col0 = 2*3 + 0 # = 6
+# The above would produce a[0] = 1, a[3] = 4, a[6] = 7
+# Consider using two for loops to do the work of moving columns and rows
+```
+
+### Diagonals
+This is considerably more complex, or is it? We can still use the formula we used for getting column data, i.e. <b>row*width + col</b>.
+
+Given a grid (represented by a list with indexes conveniently at each position)
+```
+0|1|2
+3|4|5
+6|7|8
+```
+We need data at [0,4,8] and [2,4,6]
+
+Now, if we use the formula but the same value for row and column:
+
+```python
+# Forward diagonal
+# Row 0
+diag1 = 0*3 + 0 # = 0
+# Row 1
+diag2 = 1*3 + 1 # = 4
+# Row 2
+diag3 = 2*3 + 2 # = 8
+```
+
+The backwards diagonal is a little more interesting at <b> row*width + (width - row - 1)</b>. Just like getting the forward diagonal, we are just going to reuse the row value. Does that work? Lets try it:
+```python
+# Backwards diagonal
+# Row 0
+diag1 = 0*3 + (3-0-1) # = 2
+# Row 1
+diag2 = 1*3 + (3-1-1) # = 4
+# Row 2
+diag3 = 2*3 + (3-2-1) # = 6
+```
+
+And that works! Now you know how to collect all of the lists that represent:
+1. Rows
+2. Columns
+3. Diagonals
+
+For each turn, simply collect this information and see if a player has gotten all 3 of them. If so, game over, if not, keep going!
