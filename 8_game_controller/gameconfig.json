@@ -1,0 +1,13 @@
+[
+    {
+        "name" : "TicTacToe",
+        "module" : "games.tictac",
+        "entry_point": "play"
+    },
+    {
+        "name" : "Make a game",
+        "module" : "games.blank",
+        "entry_point": "play"
+    }
+
+]

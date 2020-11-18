@@ -3,17 +3,19 @@ import json
 import sys
 import argparse
 from io import StringIO
-import sys
+
 
 class CaptureProgramOutput(list):
     def __enter__(self):
         self._stdout = sys.stdout
         sys.stdout = self._stringio = StringIO()
         return self
+
     def __exit__(self, *args):
         self.extend(self._stringio.getvalue().splitlines())
         del self._stringio    # free up some memory
         sys.stdout = self._stdout
+
 
 def get_test_definition(definition_file):
     '''
@@ -42,6 +44,7 @@ def get_test_definition(definition_file):
         test_definition = json.loads(def_data)
     return test_definition
 
+
 def load_student_module(module_name):
     '''
         Module name is a pythong file without the .py extension
@@ -49,6 +52,7 @@ def load_student_module(module_name):
         definition file.
     '''
     return importlib.import_module(module_name)
+
 
 def parse_doc_string(assingment_doc_string):
     return_data = {"Student" : None, "Assignment" : None}
@@ -62,6 +66,7 @@ def parse_doc_string(assingment_doc_string):
                     return_data[key] = line[1].strip()
 
     return return_data
+
 
 def parse_program_args(prog_args):
     '''
@@ -101,7 +106,7 @@ student_lib = load_student_module(module_name)
 '''
 print("Test Definition : ".ljust(25), test_def_file)
 print("Student Module File: ".ljust(25), module_name)
-print("Current Test : ".ljust(25) , test_definition['Name'])
+print("Current Test : ".ljust(25), test_definition['Name'])
 
 
 '''

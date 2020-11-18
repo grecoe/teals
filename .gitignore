@@ -17,5 +17,7 @@
 6_deep_projects/MenuShoppingCart/cartlist.py
 6_deep_projects/MenuShoppingCart/lists/*
 7_testing/autotest/__pycache__
+8_game_controller/games/__pycache__
+8_game_controller/utils/__pycache__
 .vscode/
 X_Storage/

@@ -1,0 +1,34 @@
+
+2020-11-18 15:33:38.098166	Controller starting
+2020-11-18 15:33:38.098166	ENTER Function: load_configuration, Module: utils.configuration 
+2020-11-18 15:33:38.098166	Loading configuration from: gameconfig.json
+2020-11-18 15:33:38.114823	EXIT Function: load_configuration, Module: utils.configuration  - returns [<utils.configuration.GameEntry object at 0x0000023BA19E6EC8>, <utils.configuration.GameEntry object at 0x0000023BA19E6E08>] 
+2020-11-18 15:33:38.114823	Adding game : TicTacToe
+2020-11-18 15:33:38.114823	Adding game : Make a game
+2020-11-18 15:33:38.114823	Enter game loop
+2020-11-18 15:33:40.079701	User chose 2 game option, load entry point
+2020-11-18 15:33:40.086250	ENTER Function: load_module, Module: utils.loader 
+2020-11-18 15:33:40.087252	Load module games.blank for entry point play
+2020-11-18 15:33:40.092252	EXIT Function: load_module, Module: utils.loader  - returns <utils.tracer.TraceDecorator object at 0x0000023BA19ED908> 
+2020-11-18 15:33:40.119099	ENTER Function: play, Module: games.blank 
+2020-11-18 15:33:40.120136	EXIT Function: play, Module: games.blank  - returns None 
+2020-11-18 15:33:46.870992	Enter game loop
+2020-11-18 15:34:28.086304	User chose 'q' option
+2020-11-18 15:34:28.088303	Leaving game loop
+2020-11-18 15:34:29.326543	Controller starting
+2020-11-18 15:34:29.327597	ENTER Function: load_configuration, Module: utils.configuration 
+2020-11-18 15:34:29.328546	Loading configuration from: gameconfig.json
+2020-11-18 15:34:29.329545	EXIT Function: load_configuration, Module: utils.configuration  - returns [<utils.configuration.GameEntry object at 0x0000025C153FEE48>, <utils.configuration.GameEntry object at 0x0000025C153FEF08>] 
+2020-11-18 15:34:29.330553	Adding game : TicTacToe
+2020-11-18 15:34:29.330553	Adding game : Make a game
+2020-11-18 15:34:29.331586	Enter game loop
+2020-11-18 15:34:30.698055	User chose 2 game option, load entry point
+2020-11-18 15:34:30.699058	ENTER Function: load_module, Module: utils.loader 
+2020-11-18 15:34:30.700056	Load module games.blank for entry point play
+2020-11-18 15:34:30.714655	EXIT Function: load_module, Module: utils.loader  - returns <utils.tracer.TraceDecorator object at 0x0000025C1540DF88> 
+2020-11-18 15:34:30.739654	ENTER Function: play, Module: games.blank 
+2020-11-18 15:34:30.740658	Just a dummy entry
+2020-11-18 15:34:30.740658	EXIT Function: play, Module: games.blank  - returns None 
+2020-11-18 15:34:32.706904	Enter game loop
+2020-11-18 15:34:47.305185	User chose 'q' option
+2020-11-18 15:34:47.305185	Leaving game loop
