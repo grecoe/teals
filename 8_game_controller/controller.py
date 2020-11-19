@@ -13,9 +13,14 @@ def run_controller():
     game_configurations = {}
     game_count = 1
     for game in config:
-        Logger.add_log("Adding game : {}".format(game.name))
-        game_configurations[game_count] = game
-        game_count += 1
+        Logger.add_log("Loading game : {}".format(game.name))
+        game.play_function = load_module(
+            game.module,
+            game.entry_point)
+
+        if game.play_function:
+            game_configurations[game_count] = game
+            game_count += 1
 
     # Now show them as options to the user
     while True:
@@ -36,31 +41,21 @@ def run_controller():
             break
         else:
             try:
-                Logger.add_log("User chose {} game option, load entry point".format(selection))
+                Logger.add_log("User chose {} game option".format(selection))
 
                 # Get the game of choice (exception if bad, but caught and dealt with)
                 game_entry = int(selection)
-                entry_point = load_module(
-                    game_configurations[game_entry].module,
-                    game_configurations[game_entry].entry_point
-                )
 
-                if entry_point:
-                    # We loaded a function from teh module, go for it!
-                    os.system('cls')
+                # We loaded a function from teh module, go for it!
+                os.system('cls')
 
-                    # Execute the game (after clearing the screen for it)
-                    entry_point()
+                # Execute the game (after clearing the screen for it)
+                game_configurations[game_entry].play_function()
 
-                    # Let user know game is over
-                    print("The game {} has ended, press any key to continue".format(game_configurations[game_entry].name))
-                    input("")
-                    os.system('cls')
-                else:
-                    # Let user know there was an error getting the game loaded
-                    print("The game {} could not be loaded, try another game.".format(game_configurations[game_entry].name))
-                    input("")
-                    os.system('cls')
+                # Let user know game is over
+                print("The game {} has ended, press any key to continue".format(game_configurations[game_entry].name))
+                input("")
+                os.system('cls')
 
             except Exception as ex:
                 # Let user know there was an error executing the game

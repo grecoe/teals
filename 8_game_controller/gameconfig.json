@@ -8,6 +8,10 @@
         "name" : "Make a game",
         "module" : "games.blank",
         "entry_point": "play"
+    },
+    {
+        "name" : "I don't exist",
+        "module" : "games.nowhere",
+        "entry_point": "play"
     }
-
 ]

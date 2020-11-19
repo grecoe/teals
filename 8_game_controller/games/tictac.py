@@ -166,6 +166,7 @@ def play():
     if over:
         player_name = players[marks.index(winner)]
         print("Player {} won by securing a {}".format(player_name, option))
+        print_board(board, 3)
     else:
         # If you get here, 9 turns were taken so there must be no winner?
         print("\nGame was a tie, thanks for playing\n")

@@ -4,6 +4,10 @@ from utils.tracer import TraceDecorator, Logger
 
 @TraceDecorator
 def load_module(module_name, entry_point):
+    """
+        Load a module then try and get a functon from it. Module name is simply
+        the location plus python file name without the .py extension.
+    """
     Logger.add_log("Load module {} for entry point {}".format(module_name, entry_point))
 
     game_entry = None
