@@ -1,0 +1,33 @@
+[
+    {
+        "name" : "Computer Basics", 
+        "id" : "Topic0",
+        "parent" : null,
+        "content" : "./configuration/descriptions/overview.txt"
+    },
+    {
+        "name" : "Turning it on", 
+        "id" : "Topic0_1",
+        "parent" : "Topic0",
+        "content" : "./configuration/descriptions/topic1.txt"
+    },
+    {
+        "name" : "Copy and Paste", 
+        "id" : "Topic_CP",
+        "parent" : null,
+        "content" : "./configuration/descriptions/overview.txt"
+    },
+    {
+        "name" : "Copy", 
+        "id" : "Topic_CP1",
+        "parent" : "Topic_CP",
+        "content" : "./configuration/descriptions/topic1.txt"
+    },
+    {
+        "name" : "Paste", 
+        "id" : "Topic_CP2",
+        "parent" : "Topic_CP",
+        "content" : "./configuration/descriptions/topic1.txt"
+    }
+
+]
