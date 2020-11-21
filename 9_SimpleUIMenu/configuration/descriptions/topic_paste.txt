@@ -1,0 +1,6 @@
+This is the paste content.
+
+Describe different ways?
+
+- <CTRL><V>
+- Highlight right click?
