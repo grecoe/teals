@@ -40,3 +40,18 @@ class HelpConfig:
                 topic_config.children.append(GenericObject(child))
 
             self.configurations.append(topic_config)
+
+    def find_topic(self, topic_name):
+
+        return_result = None
+        for topic in self.configurations:
+            if topic.parent.name == topic_name:
+                return_result = topic.parent
+                break
+
+            found = [x for x in topic.children if x.name == topic_name]
+            if len(found):
+                return_result = found[0]
+                break
+
+        return return_result

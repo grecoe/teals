@@ -1,6 +1,8 @@
 from os import path
 import tkinter as tk
 import tkinter.ttk as ttk
+import tkinter.scrolledtext as st
+import webbrowser
 
 
 class InstructionalUi(tk.Frame):
@@ -28,6 +30,7 @@ class InstructionalUi(tk.Frame):
         self.tree_frame = tk.Frame(self.master_win)
         self.text_frame = tk.Frame(self.master_win)
         self.config = help_config
+        self.current_online_content = None
 
         # Set up some window options
         self.master_win.title("Computer Help")
@@ -52,10 +55,12 @@ class InstructionalUi(tk.Frame):
         self.tree = ttk.Treeview(self.tree_frame)
         self.tree.pack(expand=True, fill='y')
         self.tree.bind("<Button-1>", self.selection_changed)
+        self.treestyle = ttk.Style()
+        self.treestyle.configure("Treeview.Heading", background="blue", font=("Helvetica", 16))
 
         # Run through the configurations in the
 
-        for config in self.config:
+        for config in self.config.configurations:
             parent_id = self.tree.insert(parent='', index='end', iid=config.parent.id, text=config.parent.name, tags=config.parent.content)
 
             for child in config.children:
@@ -89,6 +94,12 @@ class InstructionalUi(tk.Frame):
             LBL -> LBL (Topic name)
             LBL -> Text (description from text file)
         """
+        self.current_online_content = None
+        found_topic = self.config.find_topic(tree_item['text'])
+        if found_topic:
+            if hasattr(found_topic, 'online_resource'):
+                self.current_online_content = found_topic.online_resource
+
         # Clear the frame
         for widget in parent_frame.winfo_children():
             widget.destroy()
@@ -98,16 +109,27 @@ class InstructionalUi(tk.Frame):
         parent_frame.pack_forget()
 
         # First row is topic name
-        lbl = tk.Label(parent_frame, text="Topic:")
+        lbl = tk.Label(parent_frame, text="Topic:", font=("Helvetica", 16))
         lbl.grid(row=0, column=0, columnspan=1, sticky='w')
-        lbl = tk.Label(parent_frame, text=tree_item['text'])
+        lbl = tk.Label(parent_frame, text=tree_item['text'], font=("Helvetica", 16))
         lbl.grid(row=0, column=2, columnspan=1, sticky='w', padx=15)
+
+        # Optional second row ONLY if there is any online content
+        if self.current_online_content:
+            lbl = tk.Label(parent_frame, text="Online Resource:", font=("Helvetica", 16))
+            lbl.grid(row=1, column=0, columnspan=1, sticky='w')
+            link_text = self.current_online_content
+            if len(link_text) > 30:
+                link_text = "Online Help : {}".format(tree_item['text'])
+            lbl = tk.Label(parent_frame, text=link_text, foreground="blue", font=("Helvetica", 16))
+            lbl.grid(row=1, column=2, columnspan=1, sticky='w', padx=15)
+            lbl.bind('<Button-1>', self._callback)
 
         # Second row is the content, we need to grab the tag which has the file
         # containing the content to display.
-        lbl = tk.Label(parent_frame, text="Description")
+        lbl = tk.Label(parent_frame, text="Description: ", font=("Helvetica", 16))
         lbl.grid(row=2, column=0, columnspan=1, sticky='nw', )
-        txt = tk.Text(parent_frame, wrap="word", height=400)
+        txt = st.ScrolledText(parent_frame, wrap="word", height=40, width=100, font=("Helvetica", 13))
         txt.grid(row=2, column=2, columnspan=2, sticky='nwse', pady=15, padx=15)
 
         # Now get the data to put it in if found
@@ -118,4 +140,8 @@ class InstructionalUi(tk.Frame):
                 with open(content_path, 'r') as content:
                     content_data = content.readlines()
                     output = "\n".join(content_data)
+
         txt.insert(tk.END, output)
+
+    def _callback(self, *args):
+        webbrowser.open_new(self.current_online_content)
