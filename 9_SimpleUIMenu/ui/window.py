@@ -3,12 +3,6 @@ import tkinter as tk
 import tkinter.ttk as ttk
 
 
-# https://www.askpython.com/python-modules/tkinter/tkinter-treeview-widget#:~:text=So%2C%20what%20TreeView%20allows%20us,lot%20of%20your%20GUI%20applications.
-
-# HTML
-# https://stackoverflow.com/questions/37084313/how-to-display-rendered-html-content-in-text-widget-of-tkinter-in-python-3-4-x
-# pip3 install tkinterhtml
-
 class InstructionalUi(tk.Frame):
     '''
         UI Wrapper for project configuration settings.
@@ -37,9 +31,10 @@ class InstructionalUi(tk.Frame):
 
         # Set up some window options
         self.master_win.title("Computer Help")
-        self.master_win.geometry('900x675')
+        self.master_win.geometry('1100x675')
         self.master_win.resizable(width=tk.TRUE, height=tk.TRUE)
         self.master_win.configure(padx=10, pady=10)
+        self.master_win.iconbitmap('./assets/settings.ico')
 
         # Set up the frames
         self.tree_frame.grid(column=0, row=0, sticky="ns")
@@ -72,6 +67,8 @@ class InstructionalUi(tk.Frame):
         # Specify attributes of the columns (We want to stretch it!)
         self.tree.column('#0', stretch=tk.YES)
 
+        self.master_win.pack_propagate()
+
     def selection_changed(self, event):
         """
         An item has been selected in the tree.
@@ -90,7 +87,7 @@ class InstructionalUi(tk.Frame):
             The right frame is broken down to
 
             LBL -> LBL (Topic name)
-            LBL -> Text (description)
+            LBL -> Text (description from text file)
         """
         # Clear the frame
         for widget in parent_frame.winfo_children():
