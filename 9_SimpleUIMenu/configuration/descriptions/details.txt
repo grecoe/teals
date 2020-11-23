@@ -1,0 +1,6 @@
+Student Name: Connor Bell
+Grade: 12
+Class: ?
+
+
+This project helps people learn how to use their computers.

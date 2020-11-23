@@ -26,5 +26,12 @@
                 "online_resource" : null
             }
         ]
+    },
+    {
+        "name" : "Project Details",
+        "content" : "./configuration/descriptions/details.txt",
+        "online_resource" : "https://grecoe.z13.web.core.windows.net/",
+        "children" : [
+        ]
     }
 ]
