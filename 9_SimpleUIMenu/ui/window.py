@@ -30,7 +30,7 @@ class InstructionalUi(tk.Frame):
         self.tree_frame = tk.Frame(self.master_win)
         self.text_frame = tk.Frame(self.master_win)
         self.config = help_config
-        self.current_online_content = None
+        self.current_online_content = {}
 
         # Set up some window options
         self.master_win.title("Computer Help")
@@ -94,11 +94,12 @@ class InstructionalUi(tk.Frame):
             LBL -> LBL (Topic name)
             LBL -> Text (description from text file)
         """
-        self.current_online_content = None
+        online_content = False
+        self.current_online_content = {}
         found_topic = self.config.find_topic(tree_item['text'])
         if found_topic:
             if hasattr(found_topic, 'online_resource'):
-                self.current_online_content = found_topic.online_resource
+                online_content = found_topic.online_resource
 
         # Clear the frame
         for widget in parent_frame.winfo_children():
@@ -108,29 +109,55 @@ class InstructionalUi(tk.Frame):
         # if you want to hide the empty panel then
         parent_frame.pack_forget()
 
+        # Keep track of the row identity
+        row_identity = 0
+
         # First row is topic name
         lbl = tk.Label(parent_frame, text="Topic:", font=("Helvetica", 16))
-        lbl.grid(row=0, column=0, columnspan=1, sticky='w')
+        lbl.grid(row=row_identity, column=0, columnspan=1, sticky='w')
         lbl = tk.Label(parent_frame, text=tree_item['text'], font=("Helvetica", 16))
-        lbl.grid(row=0, column=2, columnspan=1, sticky='w', padx=15)
+        lbl.grid(row=row_identity, column=2, columnspan=1, sticky='w', padx=15)
+
+        row_identity += 1
 
         # Optional second row ONLY if there is any online content
-        if self.current_online_content:
+        if online_content:
+            """
+                Content is either just a string of a URL OR
+                A list of objects:
+                {
+                    name = Name of the link
+                    resourdce = URL to go to
+                }
+            """
             lbl = tk.Label(parent_frame, text="Online Resource:", font=("Helvetica", 16))
-            lbl.grid(row=1, column=0, columnspan=1, sticky='w')
-            link_text = self.current_online_content
-            if len(link_text) > 30:
-                link_text = "Online Help : {}".format(tree_item['text'])
-            lbl = tk.Label(parent_frame, text=link_text, foreground="blue", font=("Helvetica", 16))
-            lbl.grid(row=1, column=2, columnspan=1, sticky='w', padx=15)
-            lbl.bind('<Button-1>', self._callback)
+            lbl.grid(row=row_identity, column=0, columnspan=1, sticky='w')
+
+            # First, we have to see if this is a list or not
+            if isinstance(online_content, list):
+                # We have to unpack each one
+                for item in online_content:
+                    self.current_online_content[item['name']] = item['resource']
+            else:
+                # Its a single string.
+                link_text = online_content
+                if len(link_text) > 30:
+                    link_text = "Online Help : {}".format(tree_item['text'])
+
+                self.current_online_content[link_text] = online_content
+
+            for link in self.current_online_content.keys():
+                lbl = tk.Label(parent_frame, text=link, foreground="blue", font=("Helvetica", 16))
+                lbl.grid(row=row_identity, column=2, columnspan=1, sticky='w', padx=15)
+                lbl.bind('<Button-1>', self._callback)
+                row_identity += 1
 
         # Second row is the content, we need to grab the tag which has the file
         # containing the content to display.
         lbl = tk.Label(parent_frame, text="Description: ", font=("Helvetica", 16))
-        lbl.grid(row=2, column=0, columnspan=1, sticky='nw', )
+        lbl.grid(row=row_identity, column=0, columnspan=1, sticky='nw', )
         txt = st.ScrolledText(parent_frame, wrap="word", height=40, width=100, font=("Helvetica", 13))
-        txt.grid(row=2, column=2, columnspan=2, sticky='nwse', pady=15, padx=15)
+        txt.grid(row=row_identity, column=2, columnspan=2, sticky='nwse', pady=15, padx=15)
 
         # Now get the data to put it in if found
         output = "Content file could not be found:\n\n{}".format(tree_item['tags'])
@@ -144,4 +171,9 @@ class InstructionalUi(tk.Frame):
         txt.insert(tk.END, output)
 
     def _callback(self, *args):
-        webbrowser.open_new(self.current_online_content)
+
+        if isinstance(args[0].widget, tk.Label):
+            label_text = args[0].widget.cget('text')
+
+            if label_text in self.current_online_content.keys():
+                webbrowser.open_new(self.current_online_content[label_text])

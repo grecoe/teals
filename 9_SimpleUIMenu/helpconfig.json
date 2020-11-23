@@ -18,7 +18,20 @@
             {
                 "name" : "Copy",
                 "content" : "./configuration/descriptions/topic_copy.txt",
-                "online_resource" : "http://www.google.com"
+                "online_resource" : [
+                        {
+                            "name" : "Windows",
+                            "resource" : "https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/copy"
+                        },
+                        {
+                            "name" : "Mac",
+                            "resource" : "https://support.apple.com/guide/pages/copy-and-paste-text-tan6f943622b/mac#:~:text=Select%20the%20text%20to%20copy,%2C%20choose%20Edit%20%3E%20Cut%20instead."
+                        },
+                        {
+                            "name" : "Linux",
+                            "resource" : "https://www.howtogeek.com/440558/how-to-copy-and-paste-text-at-linuxs-bash-shell/"
+                        }
+                    ]
             },
             {
                 "name" : "Paste",
