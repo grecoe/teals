@@ -1,6 +1,0 @@
-This is the copy content.
-
-Describe different ways?
-
-- <CTRL><C>
-- Highlight right click?
