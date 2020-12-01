@@ -39,15 +39,21 @@ def show_game_description(game):
         os.system('cls')
 
 
-
 @TraceDecorator
 def run_controller(game_configurations):
 
     # Now show them as options to the user
     loop_iteration = 0
     while True:
+
+        # Make sure log is not too big
+        Logger.clear_log()
+
         loop_iteration += 1
         Logger.add_log("Enter game loop - iter {}".format(loop_iteration))
+
+        # Clear whatever is there.
+        os.system('cls')
 
         # Let user know what games are available
         print("\nAvailable Games\n")
@@ -57,45 +63,35 @@ def run_controller(game_configurations):
         # Get the selection
         selection = input("\nEnter game selection (q) to quit > ")
 
-        # Validate the selection
         if selection.lower() == 'q':
+            # User chose to quit....
             Logger.add_log("User chose 'q' option")
             print("Later.....")
             break
         else:
+            # User made a selection, use it protected by exception.
             try:
                 Logger.add_log("User chose {} game option".format(selection))
 
                 # Get the game of choice (exception if bad, but caught and dealt with)
-                game_entry = int(selection)
+                current_game = game_configurations[int(selection)]
 
-                # We loaded a function from teh module, go for it!
-                os.system('cls')
+                # Optionally show description (if it has one)
+                show_game_description(current_game)
 
-                show_game_description(game_configurations[game_entry])
-                """
-                if game_configurations[game_entry].description_function:
-                    print("**** {} Description ****".format(game_configurations[game_entry].name))
-                    game_configurations[game_entry].description_function()
-                    input("\n\nPress any key to play....")
-                    os.system('cls')
-                """
-
-                # Execute the game (after clearing the screen for it)
-                game_configurations[game_entry].play_function()
+                # Execute the game, would not be in list if no play function
+                Logger.add_log(current_game.name, "gamehistory.log")
+                current_game.play_function()
 
                 # Let user know game is over
-                print("The game {} has ended, press any key to continue".format(game_configurations[game_entry].name))
-                input("")
-                os.system('cls')
+                input("The game {} has ended, press any key to continue\n".format(current_game.name))
 
             except Exception as ex:
                 # Let user know there was an error executing the game
                 Logger.add_log("Invalid selection : {}".format(str(ex)))
-                print("Invalid selection! Press any key to continue")
-                input("")
-                os.system('cls')
+                input("Invalid selection! Press any key to continue\n")
 
 
+# Execute the controller ./8_game_controller/
 game_configurations = load_game_configurations("gameconfig.json")
 run_controller(game_configurations)

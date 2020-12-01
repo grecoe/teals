@@ -5,7 +5,15 @@ from utils.tracer import TraceDecorator, Logger
 class GameEntry:
     """
         A class that holds all of the configuration information for a game
-        but also space for the actual game function
+        but also space for the actual game function. Settings for a game are
+
+        {
+            "name" : "Display name of game",
+            "module" : "Pythonic module path",
+            ["description" : "Function in module to show description of game",]
+            "entry_point": "Function in module to start the game"
+        }
+
     """
     def __init__(self, dict_object):
         self.play_function = None
