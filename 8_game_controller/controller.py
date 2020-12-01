@@ -3,11 +3,10 @@ from utils.configuration import load_configuration
 from utils.loader import load_module
 from utils.tracer import TraceDecorator, Logger
 
-
 @TraceDecorator
-def run_controller():
+def load_descriptions(configuration_file):
     # Load up configuration settings
-    config = load_configuration("gameconfig.json")
+    config = load_configuration(configuration_file)
 
     # Map all games to a number so we can print/select them
     game_configurations = {}
@@ -18,13 +17,25 @@ def run_controller():
             game.module,
             game.entry_point)
 
+        if game.has_description():
+            game.description_function = load_module(
+                game.module,
+                game.description)
+
         if game.play_function:
             game_configurations[game_count] = game
             game_count += 1
 
+    return game_configurations
+
+@TraceDecorator
+def run_controller(game_configurations):
+
     # Now show them as options to the user
+    loop_iteration = 0
     while True:
-        Logger.add_log("Enter game loop")
+        loop_iteration += 1
+        Logger.add_log("Enter game loop - iter {}".format(loop_iteration))
 
         # Let user know what games are available
         print("\nAvailable Games\n")
@@ -49,6 +60,12 @@ def run_controller():
                 # We loaded a function from teh module, go for it!
                 os.system('cls')
 
+                if game_configurations[game_entry].description_function:
+                    print("**** {} Description ****".format(game_configurations[game_entry].name))
+                    game_configurations[game_entry].description_function()
+                    input("\n\nPress any key to play....")
+                    os.system('cls')
+
                 # Execute the game (after clearing the screen for it)
                 game_configurations[game_entry].play_function()
 
@@ -65,5 +82,5 @@ def run_controller():
                 os.system('cls')
 
 
-# Now run i
-run_controller()
+game_configurations = load_descriptions("gameconfig.json")
+run_controller(game_configurations)

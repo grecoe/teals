@@ -19,6 +19,7 @@
 7_testing/autotest/__pycache__
 8_game_controller/games/__pycache__
 8_game_controller/utils/__pycache__
+8_game_controller/controller.log
 .vscode/
 X_Storage/
 9_SimpleUIMenu/__pycache__

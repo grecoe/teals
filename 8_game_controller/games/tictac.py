@@ -3,11 +3,27 @@ TicTacToe Outline
 """
 
 # Include the logger so we can output from here as well
+import os
 from utils.tracer import TraceDecorator, Logger
 
 
 def log(message):
     Logger.add_log("TICTACTOE : {}".format(message))
+
+
+@TraceDecorator
+def description():
+    print("""
+Tic Tac Toe is a two player game. The game board is a grid of 9
+slots and each player is assigned a mark of either X or O.
+
+Players take turns placing a mark on the grid and will win when
+they get 3 marks in:
+
+1. A row of the grid
+2. A column of the grid
+3. A diagonal from corner to corner on the grid
+""")
 
 
 @TraceDecorator
@@ -120,6 +136,8 @@ def play():
     print("Player {} using mark {}".format(players[0], marks[0]))
     print("Player {} using mark {}".format(players[1], marks[1]))
 
+    input("Press any key to start the game.")
+
     log("Players - {}".format(players))
 
     winner = None
@@ -127,6 +145,8 @@ def play():
     option = None
 
     for turn in board_range:
+        os.system('cls')
+
         # Each turn get current player
         current_player = turn % 2
         # The current selected position (None == not selected)
@@ -163,10 +183,12 @@ def play():
             log("Game ended : {} wins with {}".format(winner, option))
             break
 
+    os.system('cls')
+    print_board(board, 3)
+
     if over:
         player_name = players[marks.index(winner)]
         print("Player {} won by securing a {}".format(player_name, option))
-        print_board(board, 3)
     else:
         # If you get here, 9 turns were taken so there must be no winner?
         print("\nGame was a tie, thanks for playing\n")

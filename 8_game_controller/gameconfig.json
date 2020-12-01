@@ -2,16 +2,19 @@
     {
         "name" : "TicTacToe",
         "module" : "games.tictac",
+        "description" : "description",
+        "entry_point": "play"
+    },
+    {
+        "name" : "Magic 8 Ball",
+        "module" : "games.magic",
+        "description" : "description",
         "entry_point": "play"
     },
     {
         "name" : "Make a game",
         "module" : "games.blank",
-        "entry_point": "play"
-    },
-    {
-        "name" : "I don't exist",
-        "module" : "games.nowhere",
+        "description" : "show_description",
         "entry_point": "play"
     }
 ]

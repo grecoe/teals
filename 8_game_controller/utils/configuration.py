@@ -9,8 +9,12 @@ class GameEntry:
     """
     def __init__(self, dict_object):
         self.play_function = None
+        self.description_function = None
         for key in dict_object:
             setattr(self, key, dict_object[key])
+
+    def has_description(self):
+        return hasattr(self, "description")
 
 
 @TraceDecorator

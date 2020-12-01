@@ -8,6 +8,13 @@ from utils.tracer import TraceDecorator, Logger
 
 
 @TraceDecorator
+def show_description():
+    print("""
+You can optionally show this help text before your game.
+""")
+
+
+@TraceDecorator
 def play():
     print("This game does nothing!")
     Logger.add_log("Just a dummy entry")
