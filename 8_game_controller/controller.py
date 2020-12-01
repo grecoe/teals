@@ -3,8 +3,9 @@ from utils.configuration import load_configuration
 from utils.loader import load_module
 from utils.tracer import TraceDecorator, Logger
 
+
 @TraceDecorator
-def load_descriptions(configuration_file):
+def load_game_configurations(configuration_file):
     # Load up configuration settings
     config = load_configuration(configuration_file)
 
@@ -27,6 +28,17 @@ def load_descriptions(configuration_file):
             game_count += 1
 
     return game_configurations
+
+
+@TraceDecorator
+def show_game_description(game):
+    if game.description_function:
+        print("**** {} Description ****".format(game.name))
+        game.description_function()
+        input("\n\nPress any key to play....")
+        os.system('cls')
+
+
 
 @TraceDecorator
 def run_controller(game_configurations):
@@ -60,11 +72,14 @@ def run_controller(game_configurations):
                 # We loaded a function from teh module, go for it!
                 os.system('cls')
 
+                show_game_description(game_configurations[game_entry])
+                """
                 if game_configurations[game_entry].description_function:
                     print("**** {} Description ****".format(game_configurations[game_entry].name))
                     game_configurations[game_entry].description_function()
                     input("\n\nPress any key to play....")
                     os.system('cls')
+                """
 
                 # Execute the game (after clearing the screen for it)
                 game_configurations[game_entry].play_function()
@@ -82,5 +97,5 @@ def run_controller(game_configurations):
                 os.system('cls')
 
 
-game_configurations = load_descriptions("gameconfig.json")
+game_configurations = load_game_configurations("gameconfig.json")
 run_controller(game_configurations)
