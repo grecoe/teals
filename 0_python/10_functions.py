@@ -1,48 +1,48 @@
 '''
-    Functions are a way to consolidate repetative or complex code that can be called one or 
+    Functions are a way to consolidate repetative or complex code that can be called one or
     more times within your program.
 
     Functions should be:
         1. Well named to understand what they are doing.
         2. Documented for users of the function
-        3. Perform one set of actions  
+        3. Perform one set of actions
 
     In Python you create a function using this syntax:
 
     def <functionName>([parameters]):
         <statements>
         [return]
-    
+
     Lets break this down:
-        def             - Required in Python that tells the interpreter that the following 
+        def             - Required in Python that tells the interpreter that the following
                           text is a function.
-        <functionName>  - The name you give to your function. This is any name you want to give it, 
-                          however, it cannot be a reserved Python keyword. Function names should 
+        <functionName>  - The name you give to your function. This is any name you want to give it,
+                          however, it cannot be a reserved Python keyword. Function names should
                           give an indication about what the function is going to do.
         [parameters]    - Parameters are not required for a Python function. If you provde parameters
                           there can be 1 or many. If there are more than one they need to be separated
-                          by commas. 
+                          by commas.
         <statements>    - The Python code to execute when the funciton is called.
-        [return]        - You can return 0 - many values from the function. 
+        [return]        - You can return 0 - many values from the function.
 
     NEW KEYWORD: tuple
-        A tuple is another Python type that is used pretty frequently. You create a tuple by 
-        assigning a variable with parenthesis with a comma separated list of values. 
+        A tuple is another Python type that is used pretty frequently. You create a tuple by
+        assigning a variable with parenthesis with a comma separated list of values.
 
-        This sounds familiar to lists correct? You even access items in a tuple using indexes 
+        This sounds familiar to lists correct? You even access items in a tuple using indexes
         and a tuple IS a sequence that can be used in a for loop.
 
-        The difference here that a tuple is an immutable object. That is, once the tuple is 
-        created you cannot change it. 
+        The difference here that a tuple is an immutable object. That is, once the tuple is
+        created you cannot change it.
 
         This is mentioned here as functions returning multiple values will return a tuple unless
         otherwise denoted (like making a list to return)
 '''
 
 '''
-    Here we define a basic function that simply prints to the console. 
+    Here we define a basic function that simply prints to the console.
 
-    It takes no parameters and returns nothing. 
+    It takes no parameters and returns nothing.
 
     Then we call the function, which will make the code in the function execute.
 '''
@@ -53,12 +53,17 @@ print("1. Calling a basic function")
 printSomething()
 
 
+
+
+
 '''
-    Now we will create a more complex function in that it takes two parameters 
+    Now we will create a more complex function in that it takes two parameters
     and returns the sum of the two passed in values.
 '''
+
+
 def sum(parameter1, parameter2):
-    return parameter1, parameter2
+    return parameter1 + parameter2
 
 print("2. Calling the sum function and getting the return value")
 sum_result = sum(10,10)
@@ -66,13 +71,13 @@ print("Function result: ", sum_result)
 
 
 '''
-    At this point, we know the syntax of a function and that it can take 0-N 
-    parameters and return 0-N results. 
+    At this point, we know the syntax of a function and that it can take 0-N
+    parameters and return 0-N results.
 
     Passing in multiple parameters is straight forward, we provide a comma separated
     list of values. But how do we return multiple values?
 
-    This can be done in a number of ways, and that is really up to the creator 
+    This can be done in a number of ways, and that is really up to the creator
     of the function. However, here are some strategies.
 '''
 
@@ -108,9 +113,9 @@ print("multipleReturnValuesInADictionary returned", dict_return)
     Returning values as a tuple is simply returning multiple objects
     as a comma separated list.
 
-    You can call the function with a matching number of comma separated 
+    You can call the function with a matching number of comma separated
     variables and each will be assigned a value from the function return call
-    or you can simply get the tuple and iterate over the return values. 
+    or you can simply get the tuple and iterate over the return values.
 '''
 print("3.2 Multiple Return Values - tuple")
 def multipleReturnValuesInATuple():
