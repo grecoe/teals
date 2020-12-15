@@ -95,7 +95,3 @@ for card_idx in range(len(player_decks[PLAYER_1])):
         p2_card[CARD_FACE], p2_card[CARD_SUIT],
         winning_card[CARD_FACE], winning_card[CARD_SUIT],
     ))
-
-    #if card_idx >= 5:
-    #cls
-    #    break
