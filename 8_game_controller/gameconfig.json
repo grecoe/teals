@@ -12,6 +12,12 @@
         "entry_point": "play"
     },
     {
+        "name" : "WAR Card Game",
+        "module" : "games.war",
+        "description" : "show_description",
+        "entry_point": "play"
+    },
+    {
         "name" : "Make a game",
         "module" : "games.blank",
         "description" : "show_description",
