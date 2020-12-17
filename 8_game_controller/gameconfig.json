@@ -18,6 +18,12 @@
         "entry_point": "play"
     },
     {
+        "name" : "College Chooser",
+        "module" : "games.collegechooser",
+        "description" : "show_description",
+        "entry_point": "play"
+    },
+    {
         "name" : "Make a game",
         "module" : "games.blank",
         "description" : "show_description",
