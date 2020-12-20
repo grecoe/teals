@@ -1,30 +1,30 @@
 '''
     This is a take on the ZORK game that was done in intro to computer science but
-    using object oriented programming. 
-    
-    The game has a hero meandering through a building where he/she needs to pick up 
-    items and kill monsters and a boss. 
+    using object oriented programming.
+
+    The game has a hero meandering through a building where he/she needs to pick up
+    items and kill monsters and a boss.
 
     In general, it is a very simple game, but with object oriented programming breaking
-    down the funcitonlity it is a complex coding problem. 
+    down the funcitonlity it is a complex coding problem.
 
-    The user has to collect all items and kill all of the monsters and the boss to 
+    The user has to collect all items and kill all of the monsters and the boss to
     complete the game. When it comes time to fight, the rules are:
 
-        Fight rules, 
+        Fight rules,
             1. Win against monster ONLY if hero has sword.
             2. Win against Boss ONLY if hero has sword and jewels.
-    
+
     Functionality is broken down into three classes
         Hero
         Building
         Floor
 
-    The beginning of the file is all definitions, the actual program starts on 
-    line 221. 
+    The beginning of the file is all definitions, the actual program starts on
+    line 221.
 
     For testing purposes, we can feed in all of the user input through a file that
-    identifies the path to success. This file is the 500_zork_input.txt and you use it 
+    identifies the path to success. This file is the 500_zork_input.txt and you use it
     like this:
 
         cat 500_zork_input.txt | python 500_zork.py
@@ -36,6 +36,7 @@
 
 import os
 from enum import Enum
+
 
 class legal_commands(Enum):
     '''
@@ -50,6 +51,7 @@ class legal_commands(Enum):
     fight = 6
     quit = 7
 
+
 class room_content(Enum):
     '''
         Enumeration that describes what can appear in a room.
@@ -59,26 +61,28 @@ class room_content(Enum):
     jewels = 3
     monster = 4
     boss = 5
-    stairs_up = 6 
-    stairs_down = 7 
+    stairs_up = 6
+    stairs_down = 7
+
 
 '''
     Lookup table for getting room content descriptions
 '''
 room_content_description = {
-    room_content.empty.value : "is empty",
-    room_content.sword.value : "has a sword in the corner",
-    room_content.jewels.value : "has jewels on the floor",
-    room_content.monster.value : "has a monster!",
-    room_content.boss.value : "has The Boss!",
-    room_content.stairs_up.value : "has stairs going up",
-    room_content.stairs_down.value : "has stairs going down"
+    room_content.empty.value: "is empty",
+    room_content.sword.value: "has a sword in the corner",
+    room_content.jewels.value: "has jewels on the floor",
+    room_content.monster.value: "has a monster!",
+    room_content.boss.value: "has The Boss!",
+    room_content.stairs_up.value: "has stairs going up",
+    room_content.stairs_down.value: "has stairs going down"
 }
+
 
 class Hero:
     '''
         The Hero class contains everything (methods and properties) that the Hero
-        will need to complete this quest. 
+        will need to complete this quest.
     '''
     def __init__(self, name):
         self.name = name
@@ -88,7 +92,7 @@ class Hero:
 
     def getNextMove(self, building):
         '''
-            Gets a visible description of 
+            Gets a visible description of
                 - Where the hero is in the building.
                 - The Hero's inventory
                 - A list of possible actions
@@ -101,7 +105,7 @@ class Hero:
         movement_list = ""
         current_building_floor = building.getCurrentFloor()
         movements = current_building_floor.getPossibleDirections()
-        
+
         for inv in self.inventory:
             inventory_list += inv.name + " "
 
@@ -122,7 +126,7 @@ class Hero:
                 room_content_jewels
                 room_content_sword
 
-            NOTE: Currently picking up only one item is supported so only put one 
+            NOTE: Currently picking up only one item is supported so only put one
                   item in your room. This can easily be extended....try it!
         '''
         global room_content
@@ -137,7 +141,7 @@ class Hero:
 
     def doFight(self, room_contents):
         '''
-            Fights either a monster or a Boss. Rules at the top of this code file. 
+            Fights either a monster or a Boss. Rules at the top of this code file.
         '''
         global room_content
         is_monster = room_content.monster in room_contents
@@ -154,7 +158,7 @@ class Hero:
                 # Kill the hero
                 self.alive = False
                 print("Our hero was killed by the monster!")
-                
+
         if is_boss:
             if has_sword and has_jewels:
                 # Kill the boss and remove from room
@@ -166,10 +170,11 @@ class Hero:
                 self.alive = False
                 print("Our hero was killed by The Boss!")
 
+
 class Building:
     '''
         The Building class deals with the layout of the floors
-        contained within it. 
+        contained within it.
     '''
     def __init__(self):
         self.floors = {}
@@ -183,33 +188,34 @@ class Building:
 
     def setCurrentFloor(self, floor_number):
         '''
-            Sets the current floor that the hero is on in the building. 
+            Sets the current floor that the hero is on in the building.
         '''
         self.current_floor = self.floors[floor_number]
 
     def getCurrentFloor(self):
         '''
-            Returns the current floor that the hero is on in the building. 
+            Returns the current floor that the hero is on in the building.
         '''
         return self.current_floor
 
     def doAction(self, command):
         '''
             doAction is the entry point for all actions related to the building. These
-            include moving up and down within the floors. 
+            include moving up and down within the floors.
         '''
         current_room = self.current_floor.current_room
-        if command.value == 3: #up
+        if command.value == 3:  # up
             self.setCurrentFloor(self.current_floor.floor_number + 1)
             self.current_floor.current_room = current_room
-        elif command.value == 4: #down
+        elif command.value == 4:  # down
             self.setCurrentFloor(self.current_floor.floor_number - 1)
             self.current_floor.current_room = current_room
 
+
 class Floor:
     '''
-        The Floor class contains rooms and the contents of the rooms that the Hero 
-        will traverse. 
+        The Floor class contains rooms and the contents of the rooms that the Hero
+        will traverse.
     '''
     def __init__(self, floor_number, floor_plan):
         self.floor_plan = floor_plan
@@ -218,19 +224,18 @@ class Floor:
 
     def doAction(self, command, hero):
         '''
-            doAction is the entry point for all actions and movements related to a floor. 
-            These are the movement left and right, picking up items, and fighting. 
+            doAction is the entry point for all actions and movements related to a floor.
+            These are the movement left and right, picking up items, and fighting.
         '''
         global legal_commands
 
-        game_ended = False
-        if command.value == legal_commands.right.value: 
+        if command.value == legal_commands.right.value:
             self.current_room += 1
-        elif command.value == legal_commands.left.value: 
+        elif command.value == legal_commands.left.value:
             self.current_room -= 1
-        elif command.value == legal_commands.grab.value: 
+        elif command.value == legal_commands.grab.value:
             hero.grabItem(self.floor_plan[self.current_room])
-        elif command.value == legal_commands.fight.value: 
+        elif command.value == legal_commands.fight.value:
             hero.doFight(self.floor_plan[self.current_room])
             input("Press Enter to continue....")
 
@@ -241,7 +246,7 @@ class Floor:
     def getPossibleDirections(self):
         '''
             Determines what is available to our hero based on what is contained
-            within a single room. 
+            within a single room.
         '''
         returnDirections = []
         if self.current_room > 0:
@@ -249,7 +254,7 @@ class Floor:
         if self.current_room < (len(self.floor_plan) - 1):
             returnDirections.append(legal_commands.right.name)
 
-        for content in self.floor_plan[self.current_room]: 
+        for content in self.floor_plan[self.current_room]:
             if content == room_content.sword or content == room_content.jewels:
                 returnDirections.append(legal_commands.grab.name)
             if content == room_content.monster or content == room_content.boss:
@@ -258,7 +263,7 @@ class Floor:
                 returnDirections.append(legal_commands.up.name)
             if content == room_content.stairs_down:
                 returnDirections.append(legal_commands.down.name)
-        
+
         # Always allow quit
         returnDirections.append(legal_commands.quit.name)
 
@@ -266,28 +271,29 @@ class Floor:
 
     def getRoomContentString(self):
         '''
-            Get a visible description of what is in the room to show to the user. 
+            Get a visible description of what is in the room to show to the user.
         '''
         global room_content_description
         contents = self.floor_plan[self.current_room]
         returnContentValue = ""
         for content in contents:
-            if returnContentValue !=  "":
+            if returnContentValue != "":
                 returnContentValue += " and "
             returnContentValue += room_content_description[content.value]
         return returnContentValue
+
 
 '''
     Program starts here.....
 '''
 
 '''
-    Build floor plans. 
+    Build floor plans.
 
-    Legend: 
+    Legend:
         ^ Stairs Up
         ! Stairs Down
-        $ Jewels 
+        $ Jewels
         # Sword
         M Monster
         B Boss
@@ -302,23 +308,23 @@ class Floor:
         -----------------
 '''
 fp = [
-        [room_content.empty], 
-        [room_content.empty], 
-        [room_content.sword], 
-        [room_content.empty,room_content.stairs_up]
-    ]
+    [room_content.empty],
+    [room_content.empty],
+    [room_content.sword],
+    [room_content.empty, room_content.stairs_up]
+]
 fp2 = [
-        [room_content.empty,room_content.stairs_up], 
-        [room_content.empty], 
-        [room_content.monster], 
-        [room_content.empty,room_content.stairs_down,room_content.stairs_up]
-    ]
+    [room_content.empty, room_content.stairs_up],
+    [room_content.empty],
+    [room_content.monster],
+    [room_content.empty, room_content.stairs_down, room_content.stairs_up]
+]
 fp3 = [
-        [room_content.empty,room_content.stairs_down], 
-        [room_content.jewels], 
-        [room_content.boss], 
-        [room_content.empty,room_content.stairs_down]
-    ]
+    [room_content.empty, room_content.stairs_down],
+    [room_content.jewels],
+    [room_content.boss],
+    [room_content.empty, room_content.stairs_down]
+]
 f1 = Floor(1, fp)
 f2 = Floor(2, fp2)
 f3 = Floor(3, fp3)
@@ -349,8 +355,8 @@ while True:
         command = legal_commands[user_selection]
         if command in [legal_commands.up, legal_commands.down]:
             building.doAction(command)
-        else: 
-            building.getCurrentFloor().doAction(command,hero)
+        else:
+            building.getCurrentFloor().doAction(command, hero)
 
         if hero.victorious:
             input("Our hero has won!\nPress enter to exit....")
@@ -360,5 +366,4 @@ while True:
             break
     else:
         input("Invalid move...try again...press Enter to continue!")
-
 

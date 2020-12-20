@@ -23,6 +23,9 @@ they get 3 marks in:
 1. A row of the grid
 2. A column of the grid
 3. A diagonal from corner to corner on the grid
+
+Code is located at: /games/tictac.py
+
 """)
 
 

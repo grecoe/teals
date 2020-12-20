@@ -1,6 +1,6 @@
 '''
     Some applications you write may need multi level options
-    to perform the tasks you want your users to follow. 
+    to perform the tasks you want your users to follow.
 
     For instance, what if you want to list certain items:
 
@@ -9,11 +9,11 @@
         list locations
         etc....
 
-    These options may or may not take additional arguments. 
+    These options may or may not take additional arguments.
 
-    The solution in this file is only one way to resolve 
+    The solution in this file is only one way to resolve
     this type of problem and is not the most complex as all
-    code is contained in this single file. 
+    code is contained in this single file.
 
     It will support the following calls
 
@@ -27,12 +27,14 @@
 
 
 '''
-    Define functions that will be called when the user enters in 
+    Define functions that will be called when the user enters in
     the appropriate command.
 
     Note that each function takes in an args argument which will be
-    any flags that the function would support. 
+    any flags that the function would support.
 '''
+
+
 def parse_additional_arguments(args):
     '''
         Helper function for any exposed functions to parse additional
@@ -43,7 +45,7 @@ def parse_additional_arguments(args):
     argument_list = []
     for arg in args:
         arg = arg.strip()
-        if len(arg) == 0 :
+        if len(arg) == 0:
             continue
 
         if arg.startswith('-'):
@@ -66,21 +68,25 @@ def list_cart_contents(args):
     parsed_arguments = parse_additional_arguments(args)
     print("list_cart_contents args = ", parsed_arguments)
 
+
 def list_products(args):
     parsed_arguments = parse_additional_arguments(args)
     print("list_products args = ", parsed_arguments)
+
 
 def list_locations(args):
     parsed_arguments = parse_additional_arguments(args)
     print("list_locations args = ", parsed_arguments)
 
+
 def get_price(args):
     parsed_arguments = parse_additional_arguments(args)
     print("get_price args = ", parsed_arguments)
 
+
 '''
     The next two sections are
-        1. Functions to print out a menu which is declared as a 
+        1. Functions to print out a menu which is declared as a
            dictionary with leaf nodes being actual functions.
         2. The menu dictionary itself.
 '''
@@ -97,10 +103,11 @@ def display_menu_help_sub(dictionary, indent):
         if isinstance(dictionary[sub_command], dict):
             display_menu_help_sub(dictionary[sub_command], indent + 1)
 
+
 def display_menu_help(menu_dictionary, args):
     '''
-        This function starts the process of iterating over the 
-        dictionary menu. A dictionary can only contain 
+        This function starts the process of iterating over the
+        dictionary menu. A dictionary can only contain
             1. Keys that identify another dictionary
             2. Keys that identify actual functions.
     '''
@@ -116,26 +123,26 @@ def display_menu_help(menu_dictionary, args):
     ### Section 2 : Define dictioanry menu ###
 
     Set up your program options as a dictionary with leaf nodes
-    being functions to call. 
+    being functions to call.
 '''
 menu_options = {
-    "list" : {
-        "cart" : {
-            "contents" : list_cart_contents
+    "list": {
+        "cart": {
+            "contents": list_cart_contents
         },
-        "products" : list_products,
-        "locations" : list_locations
+        "products": list_products,
+        "locations": list_locations
     } ,
-    "get" : {
-        "price" : get_price
+    "get": {
+        "price": get_price
     },
-    "help" : display_menu_help,
-    "quit" : quit
+    "help": display_menu_help,
+    "quit": quit
 }
 
 '''
     Finally, we can put a program loop in place that no matter what
-    is defined above, will work as expected. 
+    is defined above, will work as expected.
 
     Note that both help and quit are special cases
         1. Help needs the menu passed along
@@ -147,7 +154,7 @@ menu_options = {
         help
         quit
 '''
-while True:   
+while True:
     user_input = input("What would you like to do : > ")
     inputs = user_input.split(' ')
 
@@ -168,7 +175,7 @@ while True:
             elif callable(current_action[next_input]):
                 if next_input == 'help':
                     # Special case is help where we need to pass in our menu
-                    # dictionary, all others expect just the remainder of the 
+                    # dictionary, all others expect just the remainder of the
                     # arguments provided.
                     current_action[next_input](menu_options, inputs[last_command_index:])
                 elif next_input == 'quit':

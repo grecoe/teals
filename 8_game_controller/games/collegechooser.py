@@ -7,6 +7,9 @@ def show_description():
     print("""
 Based on your choices, the program will help you pick a college
 that most suits you.
+
+Code is located at: /games/collegechooser.py
+
 """)
 
 

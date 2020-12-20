@@ -10,6 +10,9 @@ A simple program that will show you how to use a random number
 generator by mimicking the toy Magic 8 Ball.
 
 Ask questions and be amazed at the answers!
+
+Code is located at: /games/magic.py
+
 """)
 
 

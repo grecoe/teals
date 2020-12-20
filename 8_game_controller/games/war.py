@@ -229,6 +229,9 @@ def show_description():
     """
     print("""
 Simulates the card game WAR between two people.
+
+Code is located at: /games/war.py
+
 """)
 
 
