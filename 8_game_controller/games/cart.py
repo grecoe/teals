@@ -69,6 +69,40 @@ def print_cart(shopping_cart):
 
 
 @TraceDecorator
+def count_qtips(shopping_cart):
+    """
+    Count q-tip instances
+    """
+    instances = 0
+    for list_idx in range(len(shopping_cart)):
+        instances += shopping_cart[list_idx].count('q-tips')
+
+    print("There are {} instances of 'q-tip' in your list!".format(instances))
+
+
+@TraceDecorator
+def drink_more_milk(shopping_cart):
+    """
+    Count q-tip instances
+    """
+    for list_idx in range(len(shopping_cart)):
+        if 'milk' not in shopping_cart[list_idx]:
+            shopping_cart[list_idx].append('milk')
+
+    print("Finished adding milk to each list")
+
+
+@TraceDecorator
+def if_you_give_a_moose_a_cookie(shopping_cart):
+    for list_idx in range(len(shopping_cart)):
+        if 'milk' in shopping_cart[list_idx]:
+            milk_index = shopping_cart[list_idx].index('milk')
+            shopping_cart[list_idx][milk_index] = "milk and cookies"
+
+    print("Updated milk entries..")
+
+
+@TraceDecorator
 def play():
     shopping_cart = [
         ['tooth paste', 'q-tips', 'milk'],
@@ -83,6 +117,9 @@ def play():
         ["view item", print_item],
         ["view list", print_list],
         ["view cart", print_cart],
+        ["qtip", count_qtips],
+        ["milk", drink_more_milk],
+        ["moose", if_you_give_a_moose_a_cookie]
     ]
 
     user_commands = input("What do you want to do? ").lower()
