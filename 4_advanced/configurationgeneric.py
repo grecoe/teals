@@ -1,10 +1,15 @@
 '''
-    Almost any application you ever write will include the need to save some sort of configuration.
+    Almost any application you ever write will include the need to save
+    some sort of configuration.
 
-    This example creates a base class GenericConfigurationArchive that will load/save ANY class
-    to disk.
+    This example creates a base class GenericConfigurationArchive that
+    will load/save ANY class to disk.
 
-    We then create another simple configuration Configuration and practice with it.
+    We then create another simple configuration Configuration and
+    practice with it.
+
+    This is a more complex version for saving a configuration than the
+    configurationbasic.py version.
 '''
 
 import json
@@ -14,14 +19,17 @@ import os
 
 class GenericConfigurationArchive:
     """
-        Non instaniable base class. Configuration classes that want save/load functionlity
-        just derive from this class and directly implement save/load
+        Non instaniable base class. Configuration classes that want
+        save/load functionlity just derive from this class and directly
+        implement save/load
 
-        I there they call GenericConfigurationArchive.XXX(self) to get to load/save here
-        that requires the super class information (name/dict)
+        I there they call GenericConfigurationArchive.XXX(self) to get
+        to load/save here that requires the super class information
+        (name/dict)
 
-        A json file with the class name is is created in the current directory so many classes
-        in the same application can create thier own saved state.
+        A json file with the class name is is created in the current
+        directory so many classes in the same application can create
+        thier own saved state.
     """
     ARCHIVE_FMT_NAME = "{}.json"
     ARCHIVE_CLASS = "classname"
@@ -35,8 +43,8 @@ class GenericConfigurationArchive:
 
     def save(self):
         """
-            Create a json file with superclass class name.json with the contents
-            of it's __dict__ in the output.
+            Create a json file with superclass class name.json with the
+            contents of it's __dict__ in the output.
         """
         conf_name = GenericConfigurationArchive.ARCHIVE_FMT_NAME.format(
             type(self).__name__
@@ -54,13 +62,14 @@ class GenericConfigurationArchive:
 
     def load(self):
         """
-            Loads a json file with superclass class name.json. File should follow
-            the expected format:
+            Loads a json file with superclass class name.json. File
+            should follow the expected format:
 
-            1. Class is not of type of the same super class - ignore file
+            1. Class is not of type of the same super class
+                - ignore file
             2. File may not even exist.
-            3. It exists and the type is correct, extend the class __dict__ with
-            the content from the file.
+            3. It exists and the type is correct, extend the class
+                __dict__ with the content from the file.
         """
         return_config = False
 
@@ -77,14 +86,17 @@ class GenericConfigurationArchive:
             if file_content:
                 settings = json.loads(file_content)
 
-                config_type = settings[GenericConfigurationArchive.ARCHIVE_CLASS]
+                key = GenericConfigurationArchive.ARCHIVE_CLASS
+                config_type = settings[key]
                 config_type = eval(config_type)
 
                 # Is this the right type?
                 if (isinstance(self, config_type)):
                     # We could create one like this...
                     # return_config = config_type()
-                    loaded_dict = json.loads(settings[GenericConfigurationArchive.ARCHIVE_DATA])
+                    loaded_dict = json.loads(
+                        settings[GenericConfigurationArchive.ARCHIVE_DATA]
+                    )
 
                     # Check for type?
                     loaded_dict["loaded"] = str(datetime.datetime.utcnow())
@@ -96,8 +108,8 @@ class GenericConfigurationArchive:
 
 class Configuration(GenericConfigurationArchive):
     """
-        First configuration file for testing. Extend the class variables that makes
-        sense for your application.
+        First configuration file for testing. Extend the class variables
+        that makes sense for your application.
 
         Creates Configuration.json
     """
@@ -114,8 +126,8 @@ class Configuration(GenericConfigurationArchive):
 
 class Configuration2(GenericConfigurationArchive):
     """
-        Second configuration file for testing. Extend the class variables that makes
-        sense for your application.
+        Second configuration file for testing. Extend the class variables
+        that makes sense for your application.
 
         Creates Configuration2.json
     """

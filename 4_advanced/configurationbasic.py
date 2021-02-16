@@ -40,4 +40,3 @@ loaded_config_2 = load_configuration("config2.json")
 # Compare them
 print(config_1 == loaded_config_1)
 print(config_2 == loaded_config_2)
-
