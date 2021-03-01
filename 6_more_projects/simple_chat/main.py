@@ -29,33 +29,19 @@
         For each instance, seed it with a different name and then send messages back and
         forth between them. You should be able to see inbox
 """
-import json
+
 from users.chat_users import ChatUsers, ChatUser
 from users.chat_history import ChatHistory
-
+from config.configuration import Configuration
 
 CONFIG_FILE = "./configuration.json"
-CONFIG_USERS = 'user_file'
-CONFIG_HISTORY = "history"
 
+# Create items we need
+config = Configuration(CONFIG_FILE)
+all_history = ChatHistory(config.get_history_file())
+all_users = ChatUsers(config.get_user_file())
 
-def load_configuration():
-    global CONFIG_FILE
-
-    data = None
-    with open(CONFIG_FILE, "r") as config:
-        data = config.readlines()
-
-    if data:
-        data = json.loads("\n".join(data))
-
-    return data
-
-
-config = load_configuration()
-all_history = ChatHistory(config[CONFIG_HISTORY])
-all_users = ChatUsers(config[CONFIG_USERS])
-
+# Create two users.
 user = ChatUser("Dan", all_users, all_history)
 user2 = ChatUser("Sue", all_users, all_history)
 

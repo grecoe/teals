@@ -47,8 +47,9 @@ class ChatHistory(FileBase):
 
     def get_inbox_history(self, user_name):
         """
-        Inbox items means that the user was the recipient
+        Inbox items means that the user was the recipient, reload as it might have changed
         """
+        self.load_file()
         history = [self.settings[x] for x in self.settings if self.settings[x]["recipient"] == user_name]
         history.reverse()
         return self._parse_msg_list(history)
