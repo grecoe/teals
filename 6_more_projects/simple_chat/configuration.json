@@ -1,0 +1,4 @@
+{
+    "user_file" : "./data/users.json",
+    "history" : "./data/history.json"
+}

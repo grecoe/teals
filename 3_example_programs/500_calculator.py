@@ -1,6 +1,6 @@
 '''
-    As a carry over from functions and divide and conquer, this application creates a very 
-    basic, text based, calculator that works on numbers and operators. 
+    As a carry over from functions and divide and conquer, this application creates a very
+    basic, text based, calculator that works on numbers and operators.
 
     It should be able to accept inputs such as:
 
@@ -8,7 +8,7 @@
         ((2%3 * 7) - (87 / 14)) + 21 - (34 * 7 / 3)
         10 + 5 * 7 - 89
         etc...
-    
+
     Inputs are limited to:
         Parenthesis separating calculations
         Integer or Float values
@@ -27,22 +27,22 @@
                 Then solve (7*9)
         2. Operators (*,+,-, etc) have an order in which to execute
 
-    This seems simple, right? Well it takes a bit of massaging to get it done. There are 
+    This seems simple, right? Well it takes a bit of massaging to get it done. There are
     a lot of steps so lets list them out:
 
     1. Find all of the parenthesis and solve them in proper order
-    2. Execute the contents of the parenthesis 
+    2. Execute the contents of the parenthesis
         a. If nested, do all the nested calculations first
     4. Replace the results of the parenthesis back into the original equation
-    5. Solve the original equation 
+    5. Solve the original equation
 
 '''
-import inspect 
+import inspect
 import math
 
 '''
-    Set up operations for the calculator, you can add more or 
-    less depending on what you want to do. 
+    Set up operations for the calculator, you can add more or
+    less depending on what you want to do.
 '''
 def sum(left,right):
     return left + right
@@ -71,11 +71,11 @@ calculator_operations = {
 
 class Calculator:
     '''
-        The calculator class takes in an equation (string), and a 
+        The calculator class takes in an equation (string), and a
         dictionary of operations (key=char, val=fn).
 
         Internally the calculator will dissasemble the string into parts
-        then solve the equation. 
+        then solve the equation.
 
         To do so, call resolveEquation()
     '''
@@ -96,8 +96,8 @@ class Calculator:
 
         print('''Calculator Usage:
             Enter in an equation that consists of integers, floating point numbers, and
-            parenthesis, combined with any of the operators that follow. 
-            
+            parenthesis, combined with any of the operators that follow.
+
             The order of execution for operators are from top to bottom: ''')
 
         for op in self.operations.keys():
@@ -129,17 +129,17 @@ class Calculator:
     @staticmethod
     def _getNumber(str_input):
     	'''
-    		Convert a string to an integer or a float. 
-    
+    		Convert a string to an integer or a float.
+
     		PARAMETER:
     			str_input : String representing an int or float
-    
+
     		RETURNS:
     			An int or float value.
-    		
-    		NOTE:   
-    			If the string is in the wrong format, this function 
-    			will throw an exception. 
+
+    		NOTE:
+    			If the string is in the wrong format, this function
+    			will throw an exception.
     	'''
     	return_value = None
     	try:
@@ -147,29 +147,29 @@ class Calculator:
     	except:
     		return_value = float(str_input)
     	return return_value
-    
+
     def _disassembleEquation(self, equation_as_string):
     	'''
-            Parse the original equation into separate parts in which each 
+            Parse the original equation into separate parts in which each
             list item is either a:
                 integer, float, operator, parenthesis
-    
-    		This function breaks down that string into a list of strings. 
-    
+
+    		This function breaks down that string into a list of strings.
+
     		For example:
                 Example 1:
     			    9 + 100.9 * 7 would return [9, '+', 100.9, '*', 7]
-    
+
                 Example 2:
     			    (9 + 100.9) * 7 would return ['(', 9, '+', 100.9, ')', '*', 7]
     		PARAMETERS:
     			input_string : The raw equation
-    		
+
             NOTES:
                 Uses static _getNumber function to modify inputs to actual numbers.
 
     		RETURNS:
-    			The input_string broken down into a list of it's parts. 
+    			The input_string broken down into a list of it's parts.
     	'''
     	return_arr = []
 
@@ -178,19 +178,19 @@ class Calculator:
     		not any space character.
     	'''
     	input_arr = [x for x in equation_as_string if not x.isspace()]
-    
+
     	buffer = ''
     	for char in input_arr:
     		if not char in self.operations.keys() and not char in ['(', ')']:
     			'''
-    				Character is not one of the calculator operators so 
+    				Character is not one of the calculator operators so
     				collect anythign in there. This will account for float (2.5)
     				or multi value (100) integers.
     			'''
     			buffer += char
     		else:
     			'''
-    				When we get an operator, whatever we were collecting in the 
+    				When we get an operator, whatever we were collecting in the
     				buffer is complete. Add that to the list and clear it. Also
     				add in whatever operator we just encountered.
     			'''
@@ -198,10 +198,10 @@ class Calculator:
     				return_arr.append(Calculator._getNumber(buffer))
     			return_arr.append(char)
     			buffer = ''
-    
+
     	'''
-    		If the buffer still has a value, which in most cases it will, 
-    		add it as the last item in the list. 
+    		If the buffer still has a value, which in most cases it will,
+    		add it as the last item in the list.
     	'''
     	if buffer:
     		'''
@@ -211,13 +211,13 @@ class Calculator:
     			return_arr.append(Calculator._getNumber(buffer))
     		except:
     			return_arr.append(buffer)
-    
+
     	'''
     		One final check, make sure paren counts are equal
     	'''
     	if return_arr.count(')') != return_arr.count('('):
     		raise Exception("Parenthesis count do not match")
-    
+
     	self.disassembledEquation = return_arr
     	return return_arr
 
@@ -226,14 +226,14 @@ class Calculator:
     '''
     def _resolveParenthesis(self):
         '''
-            Solve each of the parethesis starting from the left to right. 
+            Solve each of the parethesis starting from the left to right.
 
-            This is done by 
+            This is done by
                 1. Find  a closing parenthesis index
-                2. Back up from that index to the first open parenthesis. 
-                3. Capture what's there in a sub list as sub equation. 
-                4. Solve the sub equation 
-                4. Replace the original list items, from open to close parenthesis, with the solution to sub equation. 
+                2. Back up from that index to the first open parenthesis.
+                3. Capture what's there in a sub list as sub equation.
+                4. Solve the sub equation
+                5. Replace the original list items, from open to close parenthesis, with the solution to sub equation.
         '''
         private_disassembled_equation = None
 
@@ -273,16 +273,16 @@ class Calculator:
         '''
             Get the number of parameters for a function
 
-            PARAMETER: 
-                function : An actual function to determine number of 
+            PARAMETER:
+                function : An actual function to determine number of
                            parameters to accept. This is primarily used
                            for square root '<' because it only takes a single
                            parameter.
 
-                           It is used on the operatons function. 
+                           It is used on the operatons function.
 
             RETURNS:
-                Number of parameters. 
+                Number of parameters.
         '''
         sig = inspect.signature(function)
         return len(sig.parameters)
@@ -290,25 +290,25 @@ class Calculator:
     @staticmethod
     def _getIndexes(sequence, obj):
         '''
-            Python allows you to find an object in a sequence with the 
-            index() funciton. However, for parenthesis we want to find 
+            Python allows you to find an object in a sequence with the
+            index() funciton. However, for parenthesis we want to find
             ALL of the indexes of particular characters.
-    
+
             For this application, particularly '(' and ')' so we can
-            break down an equation. 
-    
-            This function, however, remains generic and could be used in 
+            break down an equation.
+
+            This function, however, remains generic and could be used in
             other projects.
-    
+
             PARAMETERS:
                 sequence : A Python sequence to search
-                obj : An object in the sequence to find all indexes of in 
+                obj : An object in the sequence to find all indexes of in
                       the provided sequence.
-    
+
             RETURNS:
-                A list of indexes in which obj was found in sequence. 
+                A list of indexes in which obj was found in sequence.
         '''
-        
+
         indexes = []
         sub_seq = sequence
         while obj in sub_seq:
@@ -316,22 +316,22 @@ class Calculator:
             additional_idx = 0 if len(indexes) == 0 else indexes[-1] + 1
             indexes.append(cur_idx + additional_idx)
             sub_seq = sub_seq[cur_idx + 1:]
-    
+
         return indexes
 
     def _calculateResult(self, equation_list):
         '''
             Calculating the final results. This function will calculate
-            the results of a simple (no parethesis) equation 
-    
+            the results of a simple (no parethesis) equation
+
             PARAMETERS:
                 equation_list : List of numbers and operations
-            
+
             RETURNS:
-                Either an int or float value of the calculation of the input.  
+                Either an int or float value of the calculation of the input.
         '''
         list_copy = equation_list.copy()
-    
+
         '''
             Operations are ordered in precedence in the global operations
             dictionary. We are going:
@@ -341,9 +341,9 @@ class Calculator:
                     op_index -1 = Left side of operation
                     op_index +1 = Right side of operation
                     op_index    = The index of the operator.
-                4. Resolve the operation using the function stored in the 
-                   variable operations dictionary value using the operator 
-                   as the look up value. 
+                4. Resolve the operation using the function stored in the
+                   variable operations dictionary value using the operator
+                   as the look up value.
                 4. Determine how many parameters there are required for the operation.
                     4.1 If operands == 2
                         - Pop op_index and op_index + 1 to remove them from the list.
@@ -351,19 +351,19 @@ class Calculator:
                     4.2 If operands == 1
                         - Pop op_index + 1 to remove it from the list
                         - Set op_index to the calculated value
-    
+
                 We will run the aboe steps until all operations have been checked
-                which will result in a list with exactly one value, the final 
+                which will result in a list with exactly one value, the final
                 calculation.
         '''
         for op_id in self.operations:
             '''
-                Get the operation indexes then reverse them. We do that 
-                because we are going to destructively work on the list. 
-    
-                This means if we work on the end of the list first. If we 
-                started at the head of the list to do this the follow on 
-                indexes would not align. 
+                Get the operation indexes then reverse them. We do that
+                because we are going to destructively work on the list.
+
+                This means if we work on the end of the list first. If we
+                started at the head of the list to do this the follow on
+                indexes would not align.
             '''
             idxs = Calculator._getIndexes(list_copy, op_id)
             idxs.reverse()
@@ -371,25 +371,25 @@ class Calculator:
                 right = idx + 1
                 left = idx - 1
                 op_fn = self.operations[op_id]
-    
+
                 '''
                     Find out how many arguments are required for the operation
                 '''
                 op_arg_count = Calculator._getFunctionParamsCount(op_fn)
 
-                if op_arg_count == 2: 
+                if op_arg_count == 2:
                     '''
-                        Call the actual operation function 
+                        Call the actual operation function
                     '''
                     result = op_fn(list_copy[left], list_copy[right])
-    
+
                     '''
-                        This line just lets the user know what we are calculating right now. 
+                        This line just lets the user know what we are calculating right now.
                     '''
                     print("Calculating : {} {} {} = {}".format(list_copy[left], op_id, list_copy[right], result))
-    
+
                     '''
-                        Finally, remove the right and op items from the list and 
+                        Finally, remove the right and op items from the list and
                         replace the left item with the calculated value.
                     '''
                     list_copy.pop(right)
@@ -397,12 +397,12 @@ class Calculator:
                     list_copy[left] = result
                 elif op_arg_count == 1:
                     '''
-                        Call the actual operation function 
+                        Call the actual operation function
                     '''
                     result = op_fn(list_copy[right])
 
                     '''
-                        This line just lets the user know what we are calculating right now. 
+                        This line just lets the user know what we are calculating right now.
                     '''
                     print("Calculating : {} {} = {}".format(op_id, list_copy[right], result))
 
@@ -412,7 +412,7 @@ class Calculator:
                     list_copy.pop(right)
                     list_copy[idx] = result
 
-    
+
         return list_copy[0]
 
 
@@ -422,8 +422,8 @@ class Calculator:
 '''
 
 '''
-UNIT TESTING 
-user_input = [ 
+UNIT TESTING
+user_input = [
     "((100.0 + 5) - (6 + 10)) * (2.5 + 3)",
     "(2^2*4)+(4%2*9)",
     "((2%3 * 7) - (87 / 14)) + 21 - (34 * 7 / 3)"]
