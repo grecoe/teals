@@ -102,7 +102,7 @@ while user_option not in ['q', 'Q', 'quit', 'Quit', 'QUIT']:
 
         if user_option.lower() == 'b':
             context["state"] = 0
-        else:
+        elif len(user_option):
             try:
                 msg_num = int(user_option)
                 os.system('cls')
@@ -112,3 +112,6 @@ while user_option not in ['q', 'Q', 'quit', 'Quit', 'QUIT']:
                 show_folder(context)
             except Exception as ex:
                 pass
+        elif not len(user_option):
+            os.system('cls')
+            show_folder(context)
