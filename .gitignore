@@ -22,3 +22,7 @@ abstractclass.py
 oregon_start.py
 _hooktest/*
 req.py
+dictionaryex.py
+guess_who.py
+guess_who.json
+tttcontext.json

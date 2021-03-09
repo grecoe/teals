@@ -1,76 +1,104 @@
 import json
 
-def dummy_func():
-    print("dummy_func called")
 
-# Show how a dict can have any sort of value
-basic_dict = {
-    "int": 1,
-    "float": 2.0,
-    "string": "Data",
-    "array": [],
-    "collection" : {},
-    "dummy" : dummy_func
-}
+"""
+    Tic Tac Toe Review
+
+    You know lists? Use them :)
+"""
+
+users = ["Joe", "Fred"]
+marks = ["X", "O"]
+board = ['', '', '', '', '', '', '', '', '']
+turns = 0
+
+while turns < 9:
+    # We can simulate 2 players using modulo math, get an index and then use
+    # that with users/marks
+    current_index = turns % 2
+
+    print("Player {} with mark {} it's your turn".format(
+        users[current_index],
+        marks[current_index]
+        )
+    )
+    board[turns] = marks[current_index]
+    print(board)
+    turns += 1
+
+print("Game hit 9 turns")
+
+#quit()
+
+print("\nSIMPLE DICTIONARY\n")
+
+# Create one
+simple_dict = {}
+
+# You add to it by simply referencing a location
+simple_dict["name"] = "Mr. Grecoe"
+print(simple_dict["name"])
+
+# Iterate over the dictionary using keys
+for key in simple_dict.keys():
+    print("Key = {}, Value = {}".format(key, simple_dict[key]))
+
+# Remove using pop or delete
+# Pop allows you to pop a key IF PRESENT or return a default value. If present
+# you get the stored value.
+pop_res = simple_dict.pop("foo", None)
+print("POP MISSING KEY RESULT ->", pop_res)
+
+# Delete the key MUST exist, if it doesn't you will get an exception (unlike pop)
+del simple_dict["name"]
+print("AFTER DELETE ->", simple_dict)
+
+#quit()
 
 
-# Iterate those values and see what you actually have.
-for key in basic_dict:
+"""
+    Word counter using a dictionary.
 
-    if isinstance(basic_dict[key], int):
-        print("INTEGER VALUE", key, basic_dict[key])
-    elif isinstance(basic_dict[key], float):
-        print("FLOAT VALUE", key, basic_dict[key])
-    elif isinstance(basic_dict[key], str):
-        print("STRING VALUE", key, basic_dict[key])
-    elif isinstance(basic_dict[key], list):
-        print("LIST VALUE", key, basic_dict[key])
-    elif isinstance(basic_dict[key], dict):
-        print("DICTIONARY VALUE", key, basic_dict[key])
-    elif callable(basic_dict[key]):
-        print("FUNCTION", key, basic_dict[key])
-        # Call it!
-        basic_dict[key]()
+    key = word, value = count (# of times it's been seen)
+
+    String can be broken up using split()
+"""
+
+print("\nWORD COUNTER\n")
+paragraph = """Last season, Nico Hulkenberg made a dramatic return to F1 in place of Sergio Perez and then Lance Stroll, while George Russell stepped in for Lewis Hamilton late on. As a result, Albon is staying sharp in case he's needed this season if Max Verstappen, Yuki Tsunoda, Perez or Pierre Gasly can't race for any reason."""
+
+total_words = 0
+found_words = {}
+# Break up "paragraph" into seperate words.
+break_down = paragraph.split(' ')
+for word in break_down:
+    total_words += 1
+
+    # Strip off any periods and make lower case for checking
+    cur_word = word.strip('.').lower()
+
+    # If it's not in our dict, add it, otherwise increment count.
+    if cur_word not in found_words:
+        found_words[cur_word] = 1
     else:
-        print("NO IDEA WHAT THIS IS")
+        found_words[cur_word] += 1
 
-# Common usages
-#   Configuraiton settings
-#   Tracking data
-#   Program context
-#   Easily translated to JSON
+# Print out some context (how many total, how many unique)
+print("TOTAL WORDS:", total_words, "UNIQUE WORDS:", len(found_words))
+print("ALL FOUND WORDS:\n", found_words)
 
-"""
-    When starting you'd ask for information to fill in here, but going to assume
-    we've already done that.
-"""
-tic_tac_toe_context = {
-    "board_width": 3,
-    "player_count": 2,
-    "available_marks": ["X","O"],
-    "players": {
-        "X" : {
-            "name": "Dan",
-            "turns": 0
-        },
-        "O": {
-            "name": "Jody",
-            "turns": 0
-        },
-    },
-    "board" : [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
-}
+# Go through and just pop each one off
+for w in list(found_words.keys()):
+    found_words.pop(w)
 
-turn = 0
-while turn < len(tic_tac_toe_context["board"]):
-    current_mark = tic_tac_toe_context["available_marks"][ (turn % 2)]
-    current_player = tic_tac_toe_context["players"][current_mark]["name"]
-    print("It's now", current_player, "'s turn.")
+# Now our dictionary is empty
+print("CLEANED DICT LEN:", len(found_words))
 
-    turn+=1
+quit()
 
-# Now save the context
 
-string_context = json.dumps(tic_tac_toe_context, indent=4)
-with open("./tttcontext.json", 'w') as context_file:
-    context_file.writelines(string_context)
+
+
+
+
+
