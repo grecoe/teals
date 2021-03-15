@@ -5,6 +5,48 @@ This is true whether the method is free standing (outside a class) or contained 
 
 This repo has a decorator class that can be used in both cases.
 
+## Usage
+To use this functionality, you need to use the validation_decorator.ParameterValidator to decorate your methods.
+
+Regardless of method type (standalone or class) you can use one of two options
+
+### 1 - Function has well defined arguments
+If you have well defined arguments such as below, this is straight forward
+
+```python
+"""
+This function takes two parameters, both of which are expected to be integers.
+
+The input to ParameterValidation is a list of tuples where
+[0] = Expected parameter type
+[1] = True if it can be None, False otherwise
+
+There MUST be the same number of definitions passed to ParameterValidator as the number of parameters passed to the method itself.
+"""
+@ParameterValidator((int, False), (int, False))
+def add(num: int, num: int):
+    print("Hello from standalone function")
+```
+
+### 2 - Function takes a variable number of parameters in kwargs (dict)
+```python
+"""
+This function takes only the kwargs parameter.
+
+However, internally the function will expect two parameters pass (contrived, yes) for left and right.
+
+The input to ParameterValidation is a kwargs input where the name of the parameter is the name expected to be found in kwargs, the value is a tuple identical to that used above.
+
+In this instance, only the incoming values in kwargs are validated against the input to the ParameterValidator class. There can be more parameters, but those will not be tested.
+
+In reality, the check should be on inputs that you EXPECT to be there.
+If you allow None (type,True) and the parameter is not in kwargs, no error will be raised.
+"""
+@ParameterValidator(left=(int, False), right=(int, False))
+def add(**kwargs):
+    print("Hello from standalone function")
+```
+
 ## Example 1 - Standalone Function with defined arguments
 
 Standalone method with arguments
