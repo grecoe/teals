@@ -13,7 +13,13 @@
         - Methods that rely on kwargs for arguments.
 """
 import typing
-from parameter_exception import ParameterTypeValidationException
+from parameter_exception import (
+    ParameterNoneValidationException,
+    ParameterTypeValidationException,
+    ParameterKwargValidationException,
+    ParameterCountValidationException,
+    ParameterValidationException
+)
 
 
 class ParameterValidator:
@@ -81,24 +87,14 @@ class ParameterValidator:
                 args_to_validate = args[1:]
 
             if len(args_to_validate) and (len(args) != func.__code__.co_argcount):
-                err = "Func {} in {} expects {} parameters but {} were given.".format(
-                    func.__qualname__,
-                    func.__module__,
-                    func.__code__.co_argcount,
-                    len(args)
-                )
-                raise ParameterTypeValidationException(err)
+                raise ParameterCountValidationException(func, len(args))
 
             if len(args_to_validate):
                 self._validate_args_arguments(func, args_to_validate, self.validation_args)
             elif len(kwargs) and len(self.validation_kwargs):
                 self._validate_kwargs_arguments(func, kwargs, self.validation_kwargs)
             else:
-                err = "There are no present arguments for Func {} in {}".format(
-                    func.__qualname__,
-                    func.__module__
-                )
-                raise ParameterTypeValidationException(err)
+                raise ParameterCountValidationException(func, 0)
 
             return func(*args, **kwargs)
         return wrapper
@@ -144,12 +140,7 @@ class ParameterValidator:
             # Overload the boolean in the validation, if it's True and not present
             # this is not an error.
             if (not validation_args[expected_arg][1]) and (expected_arg not in call_arguments):
-                err = "Expected kwarg {} not present in call to func {} in {}".format(
-                    expected_arg,
-                    func.__qualname__,
-                    func.__module__
-                )
-                raise ParameterTypeValidationException(err)
+                raise ParameterKwargValidationException(func, expected_arg)
             elif validation_args[expected_arg][1] and (expected_arg not in call_arguments):
                 # Allowed None (or not present) and not there. no error.
                 pass
@@ -182,23 +173,13 @@ class ParameterValidator:
         """
         if not validation[1] and (argument is None):
             # Not allowed None but is
-            err = "Func {} in {}, parameter {} not allowed null but is.".format(
-                func.__qualname__,
-                func.__module__,
-                param_index
-            )
-            raise ParameterTypeValidationException(err)
+            raise ParameterNoneValidationException(func, param_index)
         elif validation[1] and argument is None:
+            # Allow None and it's None
             pass
         elif not isinstance(argument, validation[0]):
-            err = "Func {} in {}, parameter {} type does not match {} != {}.".format(
-                func.__qualname__,
-                func.__module__,
-                param_index,
-                str(type(argument)),
-                str(validation[0])
-            )
-            raise ParameterTypeValidationException(err)
+            # Not none and have value, types to not match.
+            raise ParameterTypeValidationException(func, param_index, type(argument), validation[0])
 
 
 """
@@ -218,9 +199,14 @@ single_args = [1, "hey", None]
 print("Standalone Args Splatting -")
 myfunc(*single_args)
 
-# Standard call
-print("Standalone Args Standard -")
-myfunc(1, "hey", None)
+
+# Standard call but make first parameter None where it's not allowed
+try:
+    print("Standalone Args Standard -")
+    myfunc("1", "hey", None)
+except ParameterValidationException as ex:
+    print("Exception caught", ex.__class__.__name__)
+    print(str(ex))
 
 
 # Test standalone method with kwargs
@@ -231,6 +217,13 @@ def mykwfunc(**kwargs):
 
 print("Standalone Kwargs Standard -")
 mykwfunc(age=25, name="Fred Jones")
+
+try:
+    print("Standalone Kwargs Standard -")
+    mykwfunc(age=25)
+except ParameterValidationException as ex:
+    print("Exception caught", ex.__class__.__name__)
+    print(str(ex))
 
 
 # Test with a class using both args and kwargs
