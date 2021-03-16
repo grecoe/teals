@@ -1,0 +1,1 @@
+from .testsolver import DummySolver

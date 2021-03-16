@@ -1,11 +1,13 @@
 """
-    Validating function/method inputs can prevent many problems down the road
-    once software has been released. This quick and somewhat painless process
-    can be achieved either through several lines of validation code in each
-    method or can be managed in Python by decorating a function with the
-    ParameterValidator below.
+(c) Microsoft. All rights reserved.
 
-    This class can be used with:
+Validating function/method inputs can prevent many problems down the road
+once software has been released. This quick and somewhat painless process
+can be achieved either through several lines of validation code in each
+method or can be managed in Python by decorating a function with the
+ParameterValidator below.
+
+This class can be used with:
     - Stand alone methods
     - Class methods
     - Regardless of method type, it can validate:
@@ -13,11 +15,12 @@
         - Methods that rely on kwargs for arguments.
 """
 import typing
-from parameter_exception import (
+from paramvalidator.exceptions import (
     ParameterNoneValidationException,
     ParameterTypeValidationException,
     ParameterKwargValidationException,
     ParameterCountValidationException,
+    ParameterRangeValidationException,
     ParameterValidationException
 )
 
@@ -25,24 +28,28 @@ from parameter_exception import (
 class ParameterValidator:
     """
     Function decorator to validate arguments to a function. This can be used
-    to ensure that parameters are (1) present, (2) meet a type requirement and
-    (3) actually have a value and are not None (if desired)
+    to ensure that parameters are (1) present, (2) meet a type requirement
+    (3) actually have a value and are not None (if desired) (4) if int/float 
+    type that they are within a range.
+
+    Range is completely optional but type and if none cannot be
 
     For functions that expect a set number of arguments, you seed the class with
     a free formed list of tuples that are in the form
     (
         Argument expected type,
         Boolean - true = can be None, false = must be present
+        tuple - Optional - range for int float, i.e. (1,100) or (0.0, 1.0)
     )
 
-    i.e. ( (int, True), (str, False), (list, True))
+    i.e. ( (int, True, (3,5)), (str, False), (list, True))
 
     For functions that expect to use the kwargs for variable arguments you can also
     validate that certain required fields are always in the input with a slight change
     to the above format, you set up kwargs using the name of the field expected with
     the same format above.
 
-    i.e. ( age=(int, True), name=(str, False), addresses=(list, True))
+    i.e. ( age=(int, True, (3,5)), name=(str, False), addresses=(list, True))
     """
     def __init__(self, *args, **kwargs):
         """
@@ -169,7 +176,9 @@ class ParameterValidator:
         None
 
         Throws:
-        ParameterTypeValidationException if there is an issue
+        ParameterNoneValidationException if a param not allowed null but is
+        ParameterTypeValidationException if arg type does not match validation
+        ParameterRangeValidationException if numeric type is out of range
         """
         if not validation[1] and (argument is None):
             # Not allowed None but is
@@ -180,68 +189,7 @@ class ParameterValidator:
         elif not isinstance(argument, validation[0]):
             # Not none and have value, types to not match.
             raise ParameterTypeValidationException(func, param_index, type(argument), validation[0])
-
-
-"""
-    Test this out with both a standalone function and a class with a method
-    that is decorated.
-"""
-
-
-# Test standalone method with a set number of arguments
-@ParameterValidator((int, False), (str, False), (list, True))
-def myfunc(num, str, list):
-    print("Hello from standalone function")
-
-
-# Splatting
-single_args = [1, "hey", None]
-print("Standalone Args Splatting -")
-myfunc(*single_args)
-
-
-# Standard call but make first parameter None where it's not allowed
-try:
-    print("Standalone Args Standard -")
-    myfunc("1", "hey", None)
-except ParameterValidationException as ex:
-    print("Exception caught", ex.__class__.__name__)
-    print(str(ex))
-
-
-# Test standalone method with kwargs
-@ParameterValidator(age=(int, False), name=(str, False), addresses=(list, True))
-def mykwfunc(**kwargs):
-    print("Hello from kwargs standalone function")
-
-
-print("Standalone Kwargs Standard -")
-mykwfunc(age=25, name="Fred Jones")
-
-try:
-    print("Standalone Kwargs Standard -")
-    mykwfunc(age=25)
-except ParameterValidationException as ex:
-    print("Exception caught", ex.__class__.__name__)
-    print(str(ex))
-
-
-# Test with a class using both args and kwargs
-class TestDecorator:
-    def __init__(self):
-        pass
-
-    @ParameterValidator((int, False), (str, False), (list, True))
-    def myfunc(self, num: int, str: str, list: typing.List[object]):
-        print("Hello from class method")
-
-    @ParameterValidator(age=(int, False), name=(str, False), addresses=(list, True))
-    def mykwfunc(self, **kwargs):
-        print("Hello from kwargs class function")
-
-
-td = TestDecorator()
-print("Class Args Standard -")
-td.myfunc(1, "str", [])
-print("Class Kwargs Standard -")
-td.mykwfunc(age=25, name="Fred Jones")
+        elif len(validation) == 3 and isinstance(validation[2], tuple):
+            if isinstance(argument,int) or isinstance(argument, float):
+                if argument < validation[2][0] or argument > validation[2][1]:
+                    raise ParameterRangeValidationException(func, param_index, validation[2], argument)
