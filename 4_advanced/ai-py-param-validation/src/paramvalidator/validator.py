@@ -29,7 +29,7 @@ class ParameterValidator:
     """
     Function decorator to validate arguments to a function. This can be used
     to ensure that parameters are (1) present, (2) meet a type requirement
-    (3) actually have a value and are not None (if desired) (4) if int/float 
+    (3) actually have a value and are not None (if desired) (4) if int/float
     type that they are within a range.
 
     Range is completely optional but type and if none cannot be
@@ -96,12 +96,18 @@ class ParameterValidator:
             if len(args_to_validate) and (len(args) != func.__code__.co_argcount):
                 raise ParameterCountValidationException(func, len(args))
 
+            args_validated = False
             if len(args_to_validate):
+                args_validated = True
                 self._validate_args_arguments(func, args_to_validate, self.validation_args)
             elif len(kwargs) and len(self.validation_kwargs):
                 self._validate_kwargs_arguments(func, kwargs, self.validation_kwargs)
             else:
                 raise ParameterCountValidationException(func, 0)
+
+            # If argsvalidated AND kwargs, kwargs was not processed yet.
+            if args_validated and len(kwargs) and len(self.validation_kwargs):
+                self._validate_kwargs_arguments(func, kwargs, self.validation_kwargs)
 
             return func(*args, **kwargs)
         return wrapper
@@ -190,6 +196,6 @@ class ParameterValidator:
             # Not none and have value, types to not match.
             raise ParameterTypeValidationException(func, param_index, type(argument), validation[0])
         elif len(validation) == 3 and isinstance(validation[2], tuple):
-            if isinstance(argument,int) or isinstance(argument, float):
+            if isinstance(argument, int) or isinstance(argument, float):
                 if argument < validation[2][0] or argument > validation[2][1]:
                     raise ParameterRangeValidationException(func, param_index, validation[2], argument)
