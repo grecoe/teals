@@ -91,6 +91,7 @@ for car in cars:
     print("Car:", car.brand, car.model)
     print("Is Car:", isinstance(car, Car))
     print("Is Honda:", isinstance(car, Honda))
+    print("Is BMW:", isinstance(car, BMW))
     print("Is F1:", isinstance(car, RedbullF1))
     print("")
 
