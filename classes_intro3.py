@@ -28,6 +28,7 @@ import threading
 
 race_finishers = []
 
+
 class Car:
     def __init__(self, brand, model):
         self.brand = brand
@@ -36,16 +37,21 @@ class Car:
     def accelerate_to_100(self, seconds):
         global race_finishers
 
+        # Capture a time and indicate we are starting
         start = time.perf_counter()
         print("{} Starting".format(self))
+
+        # Acceleration? Well, we'll wait a prescribed time
         time.sleep(seconds)
 
-
+        # Now print out we are done and the time it took
         print("{} is done in {} seconds!".format(
-            self,
-            (time.perf_counter() - start)
+                self,
+                (time.perf_counter() - start)
             )
         )
+
+        # Update the global list so we know we have a finisher
         race_finishers.append(str(self))
 
     def __str__(self):
@@ -88,7 +94,7 @@ cars = [Honda("Acura"), BMW("X5"), RedbullF1()]
     Lets look again at isinstance to see the inhertiance
 """
 for car in cars:
-    print("Car:", car.brand, car.model)
+    print("Car:", car)
     print("Is Car:", isinstance(car, Car))
     print("Is Honda:", isinstance(car, Honda))
     print("Is BMW:", isinstance(car, BMW))
