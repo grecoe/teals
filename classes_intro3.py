@@ -24,7 +24,9 @@
     https://www.youtube.com/watch?v=2qWamZTy56I
 """
 import time
+import threading
 
+race_finishers = []
 
 class Car:
     def __init__(self, brand, model):
@@ -32,8 +34,19 @@ class Car:
         self.model = model
 
     def accelerate_to_100(self, seconds):
+        global race_finishers
+
+        start = time.perf_counter()
+        print("{} Starting".format(self))
         time.sleep(seconds)
-        print("{} {} is done!".format(self.brand, self.model))
+
+
+        print("{} is done in {} seconds!".format(
+            self,
+            (time.perf_counter() - start)
+            )
+        )
+        race_finishers.append(str(self))
 
     def __str__(self):
         return "{} {}".format(self.brand, self.model)
@@ -45,7 +58,6 @@ class Honda(Car):
 
     def go(self):
         """ Standard acceleration for Honda"""
-        print("HONDA ACCELLERATING")
         self.accelerate_to_100(8.1)
 
 
@@ -55,7 +67,6 @@ class RedbullF1(Honda):
 
     def go(self):
         """ Overrides Honda.go() """
-        print("RB13 ACCELLERATING")
         self.accelerate_to_100(2.5)
 
 
@@ -65,7 +76,6 @@ class BMW(Car):
 
     def go(self):
         """Standard acceleration for BMW"""
-        print("BMW ACCELLERATING")
         self.accelerate_to_100(5.9)
 
 
@@ -90,7 +100,11 @@ for car in cars:
 """
 input("Now lets race! Press Enter")
 for car in cars:
-    print("0-100KPG test for - ", car)
-    start = time.perf_counter()
-    car.go()
-    print("Done in {} seconds\n".format(time.perf_counter() - start))
+    th = threading.Thread(target=car.go)
+    th.start()
+
+while len(cars) != len(race_finishers):
+    time.sleep(.1)
+
+print("\nRace Finished -> Order")
+print(race_finishers)
