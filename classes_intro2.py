@@ -20,10 +20,25 @@
     1. __add__ overrides the default Python implementation
     2. __str__ which is called every time the object is accessed as a string
 """
+
+
 class Dog:
     def __init__(self, dog_name, dog_sound):
         self.name = dog_name
         self.sound = dog_sound
+
+    def __str__(self):
+        """ This overrides the base functionality
+        and returns a custom string when we want
+        to print out a Dog class"""
+        return "{} says {}".format(
+            self.name,
+            self.sound
+        )
+
+
+print(Dog("Joel", "woofwoof"))
+input("Next update DogPound")
 
 
 class DogPound:
@@ -31,7 +46,9 @@ class DogPound:
         self.dogs_in_pound = []
 
     def __add__(self, dog):
-        """ This allows you to add to the pound like
+        """ Overrides the default python adding
+        of two objects, and now you can add a dog
+        to the pound like this
 
         pound += dog
         """
@@ -39,14 +56,13 @@ class DogPound:
         return self
 
     def __str__(self):
-        """ Called anytime someone wants a string of the class"""
+        """ Override str just like in dog """
         return_value = ""
         for dog in self.dogs_in_pound:
-            return_value += "{} that says {}\n".format(
-                dog.name,
-                dog.sound
-            )
+            return_value += str(dog) + "\n"
+
         return return_value
+
 
 """
     Now lets test this out...very different from the last one.
@@ -58,6 +74,9 @@ pound = DogPound()
 pound += Dog("Rover", "bark")
 pound += Dog("Biff", "yelp")
 print("Pound Content:\n{}".format(pound))
+
+input("\nNext try inheritance")
+
 
 """
     Ok, mind blown right? But like one of those TV adds....
@@ -77,6 +96,7 @@ print("Pound Content:\n{}".format(pound))
 
     Now your class has all the same functionality of the base class.
 """
+
 
 class BigDog(Dog):
     def __init__(self, name, sound):
@@ -121,6 +141,7 @@ print("Pound Content:\n{}".format(pound))
     this....
 """
 
+input("\nNow show the isinstance() functionality")
 for dog in pound.dogs_in_pound:
     print("{} is of type {}, and is instance of a dog? {}".format(
         dog.name,
