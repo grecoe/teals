@@ -1,117 +1,156 @@
 """
-    Ok, so we've covered a lot...hope you're still
-    with me on classes.
+    Now we've learned a few things about classes. Specifically
 
-    In this section we'll talk about 'over riding' a
-    parent class. We'll use most of what we've already
-    learned, but lets get away from dog!
+    - How to declare one
+    - How to create one
+    - Class methods ALWAYS take self as the first parameter
+    - How to add members and intialize them with __init__
 
-    Lets use cars :)
-
-    Honda Accord 0-100 (62 mph) km/h in about ~8.1 seconds
-    BMW x5 xDrive35i 0-100 (62 mph) km/h in about ~5.9 seconds
-    Honda Formula 1 0-100 km/h in ~2.5 seconds
-        F1 Fun Facts:
-        - Every F1 car on the grid is capable of going from 0 to
-          160 km/h (0 to 99 mph) and back to 0 in less than five seconds.
-        - Acceleration from 100-200km/h is < 2 seconds because it's
-          not fighting for traction...physics is hard!
-        - F1 cars can go from 0-300km/h (186m/h) in <10 seconds
-
-
-    Cool Videos:
-    https://www.youtube.com/watch?v=5XK3QjzN560
-    https://www.youtube.com/watch?v=2qWamZTy56I
+    Now some more extended functionality. In particular how to use
+    some other overrides in Python classes, and further still, how
+    a class can derive from another, which is called inheritance.
 """
-import time
-import threading
 
-race_finishers = []
+"""
+    Lets continue with the classes we already defined in the first class
+    on classes, specifically Dog and DogPound.
+
+    Dog remains unchanged, but look at DogPound with some pretty specific changes.
+
+    1. __add__ overrides the default Python implementation
+    2. __str__ which is called every time the object is accessed as a string
+"""
 
 
-class Car:
-    def __init__(self, brand, model):
-        self.brand = brand
-        self.model = model
-
-    def accelerate_to_100(self, seconds):
-        global race_finishers
-
-        # Capture a time and indicate we are starting
-        start = time.perf_counter()
-        print("{} Starting".format(self))
-
-        # Acceleration? Well, we'll wait a prescribed time
-        time.sleep(seconds)
-
-        # Now print out we are done and the time it took
-        print("{} is done in {} seconds!".format(
-                self,
-                (time.perf_counter() - start)
-            )
-        )
-
-        # Update the global list so we know we have a finisher
-        race_finishers.append(str(self))
+class Dog:
+    def __init__(self, dog_name, dog_sound):
+        self.name = dog_name
+        self.sound = dog_sound
 
     def __str__(self):
-        return "{} {}".format(self.brand, self.model)
+        """ This overrides the base functionality
+        and returns a custom string when we want
+        to print out a Dog class"""
+        return "{} says {}".format(
+            self.name,
+            self.sound
+        )
 
 
-class Honda(Car):
-    def __init__(self, model):
-        super().__init__("Honda", model)
-
-    def go(self):
-        """ Standard acceleration for Honda"""
-        self.accelerate_to_100(8.1)
+print(Dog("Joel", "woofwoof"))
+input("Next update DogPound")
 
 
-class RedbullF1(Honda):
+class DogPound:
     def __init__(self):
-        super().__init__("RB13")
+        self.dogs_in_pound = []
 
-    def go(self):
-        """ Overrides Honda.go() """
-        self.accelerate_to_100(2.5)
+    def __add__(self, dog):
+        """ Overrides the default python adding
+        of two objects, and now you can add a dog
+        to the pound like this
+
+        pound += dog
+        """
+        self.dogs_in_pound.append(dog)
+        return self
+
+    def __str__(self):
+        """ Override str just like in dog """
+        return_value = ""
+        for dog in self.dogs_in_pound:
+            return_value += str(dog) + "\n"
+
+        return return_value
 
 
-class BMW(Car):
-    def __init__(self, model):
-        super().__init__("BMW", model)
+"""
+    Now lets test this out...very different from the last one.
+    Notice we can use += on the pound to add a dog and we don't
+    need to do anything to print out the pound as a string we
+    just access it with print, which will call __str__
+"""
+pound = DogPound()
+pound += Dog("Rover", "bark")
+pound += Dog("Biff", "yelp")
+print("Pound Content:\n{}".format(pound))
 
-    def go(self):
-        """Standard acceleration for BMW"""
-        self.accelerate_to_100(5.9)
+input("\nNext try inheritance")
 
 
 """
-    Now lets create two cars (Accord and F1) and put them in a list
+    Ok, mind blown right? But like one of those TV adds....
+
+    "Wait, theres more!"
+
+    Inheritance, this is how a lot of programming problems are solved.
+    We use something called a "base" class that holds common functionality
+    of two similar things.
+
+    For this example, lets keep going with dogs. We can have big dogs and
+    little dogs..
+
+    Inheritance is declared with the class declaration as
+
+    class ClassName(DerivingClass)
+
+    Now your class has all the same functionality of the base class.
 """
-cars = [Honda("Acura"), BMW("X5"), RedbullF1()]
+
+
+class BigDog(Dog):
+    def __init__(self, name, sound):
+        """ Because Dog has a constructor that takes arguments
+        we have to call it's constructor.
+        We do that by using super() which finds the deriving class
+        and then we call it's __init__ directly.
+        The only thing we change is the sound, big dogs are loud so
+        we will upper case whatever it says.
+        """
+        super().__init__(name, sound.upper())
+
 
 """
-    Lets look again at isinstance to see the inhertiance
+ Now we'll do the following
+ - Create a BigDog
+ - Add it to the pound
+ - Print the pound
+
+ Note that we just add a big dog like a regular dog and the pound still
+ has everything we added before.
 """
-for car in cars:
-    print("Car:", car)
-    print("Is Car:", isinstance(car, Car))
-    print("Is Honda:", isinstance(car, Honda))
-    print("Is BMW:", isinstance(car, BMW))
-    print("Is F1:", isinstance(car, RedbullF1))
-    print("")
+bd = BigDog("Ralf", "bark")
+pound += bd
+print("Pound Content:\n{}".format(pound))
+
 
 """
-    This is more than we are going to cover, but lets run them
-    at the same time!
+    BONUS - If time permits
+
+    We can also use a python function to determine if the object we have
+    is a type of object we want to work with.
+
+    That is 'isinstance' and we give it two arguments
+        1. The object we want to inspect
+        2. The type we are checking for
+
+    We can play with this using the dog pound - dogs_in_pound
+
+    NOTE: This is a really advanced idea, so it is totally fine if this
+    confuses you...some people in Computer Science programs struggle with
+    this....
 """
-input("Now lets race! Press Enter")
-for car in cars:
-    th = threading.Thread(target=car.go)
-    th.start()
 
-while len(cars) != len(race_finishers):
-    time.sleep(.1)
+input("\nNow show the isinstance() functionality")
+for dog in pound.dogs_in_pound:
+    print("{} is of type {}, and is instance of a dog? {}".format(
+        dog.name,
+        type(dog),
+        isinstance(dog, Dog)
+    ))
 
-print("\nRace Finished -> Order")
-print(race_finishers)
+"""
+    Takeaway - Ralf is a BigDog, but BigDog derives (inherits) from
+    Dog....so Ralf is a Dog after all because Dog is in the inheritance
+    chain.
+"""
